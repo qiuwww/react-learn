@@ -21,3 +21,19 @@ react-scripts 是一个生成的项目所需要的开发依赖
 React测试必须使用官方的测试工具库，但是它用起来不够方便，所以有人做了封装，推出了一些第三方库，其中Airbnb公司的Enzyme最容易上手。
 
 
+### connect 详解
+
+究竟 connect 方法到底做了什么，我们来一探究竟。
+
+首先看下函数的签名：
+
+connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+
+connect() 接收四个参数，它们分别是 mapStateToProps，mapDispatchToProps，mergeProps和options。
+
+mapStateToProps(state, ownProps) : stateProps
+
+这个函数允许我们将 store 中的数据作为 props 绑定到组件上。
+
+
+### 以视图区域来切分reducers

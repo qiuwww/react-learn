@@ -7,6 +7,7 @@
 // Action 创建函数 就是生成 action 的方法。“action” 和 “action 创建函数” 这两个概念很容易混在一起，使用时最好注意区分。
 let nextTodoId = 0
 // action 创建函数，说明参数改变类型，并传入需要改变的参数
+// 就像是一个模板
 export const addTodo = text => ({
   type: 'ADD_TODO', // action的类型
   id: nextTodoId++,
