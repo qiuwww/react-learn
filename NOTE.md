@@ -21,13 +21,32 @@ react-scripts 是一个生成的项目所需要的开发依赖
 React测试必须使用官方的测试工具库，但是它用起来不够方便，所以有人做了封装，推出了一些第三方库，其中Airbnb公司的Enzyme最容易上手。
 
 
-### connect 详解
+## API
+http://www.redux.org.cn/docs/react-redux/api.html
+
+### Provider
+<Provider store> 使组件层级中的 connect() 方法都能够获得 Redux store。正常情况下，你的根组件应该嵌套在 <Provider> 中才能使用 connect() 方法。
+
+#### 传入方式
+
+1. 把根组件嵌套在 <Provider> 中。
+2. 把 store 作为 props 传递到每一个被 connect() 包装的组件。
+
+
+### connect 详解，似乎就是mobx的inject步骤
+
+connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+
+连接 React 组件与 Redux store。
+连接操作不会改变原来的组件类（由原来的生成一个新的）。反而返回一个新的已与 Redux store 连接的组件类。
+
+
 
 究竟 connect 方法到底做了什么，我们来一探究竟。
 
 首先看下函数的签名：
 
-connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+
 
 connect() 接收四个参数，它们分别是 mapStateToProps，mapDispatchToProps，mergeProps和options。
 
