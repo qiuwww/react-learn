@@ -54,5 +54,10 @@ mapStateToProps(state, ownProps) : stateProps
 
 这个函数允许我们将 store 中的数据作为 props 绑定到组件上。
 
-
 ### 以视图区域来切分reducers
+
+### Webpack DefinePlugin使用
+
+DefinePlugin插件可以从打包运行的node环境给代码注入变量
+
+[使用参考文档](https://www.jianshu.com/p/887f0454ef96)

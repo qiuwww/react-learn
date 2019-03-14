@@ -1,0 +1,42 @@
+.baseColor {
+  height: 100%;
+  background-color: #f8f8f8;
+  .backgroundWrapper {
+  padding-top: 100px;
+    background: url('../../assets/login_bg.jpg')no-repeat ;
+    height: 100%;
+    // background-size: 100% 100%;
+    /*overflow: hidden;*/
+    position: relative;
+    min-width: 1200px;
+    background-position: top center;
+    @media screen and (max-width: 1500px) {
+      img.logo {
+        position: absolute;
+        top: 50%;
+        left: 180px;
+        margin-top: -70px;
+        width: 327px;
+      }
+    }
+    .titleWrapper {
+      width: 100%;
+      /*position: fixed;*/
+      top: 150px;
+      margin: 0 auto;
+      text-align: center;
+      .loginWrapper {
+        width: 390px;
+        margin: 0 auto;
+        // transform: translateX(-50%) translateY(-50%);
+        :global {
+          .ant-form-item-required:before {
+            content: '' !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+
