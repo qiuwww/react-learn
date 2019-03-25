@@ -1,13 +1,13 @@
 /**
  * Created by yujianfu on 2016/11/10.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Card, Table, Collapse, Icon, Popover, Input, Button, message, Popconfirm } from 'antd'
 import Styles from '../Index.less'
 import { fetchPost } from '../../../../../utils/request'
 const Panel = Collapse.Panel
 
-class Carrier extends React.Component {
+class Carrier extends Component {
   constructor (props) {
     super(props)
     this.state = {

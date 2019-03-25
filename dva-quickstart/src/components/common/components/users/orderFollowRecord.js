@@ -4,11 +4,11 @@
 /**
  * Created by ziyu on 17/3/13.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Table, Icon, Card } from 'antd'
 import Styles from '../../../overdue/case/details/Index.less'
 import { fetchPost } from '../../../../utils/request'
-class OrderFollowRecord extends React.Component {
+class OrderFollowRecord extends Component {
   constructor (props) {
     super(props)
     this.state = {

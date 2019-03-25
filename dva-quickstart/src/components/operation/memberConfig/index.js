@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component,  } from 'react';
 import { connect } from 'dva';
 import { Card, InputNumber, Button, Form, Switch } from 'antd';
 const FormItem = Form.Item;
@@ -8,7 +8,7 @@ const FormItem = Form.Item;
 }))
 @Form.create()
 
-export default class MemberConfig extends React.Component {
+export default class MemberConfig extends Component {
   constructor (props) {
     super(props)
     this.state = {

@@ -1,12 +1,20 @@
-import React from "react";
-import {fetchPost} from "../../../utils/request";
-import {Button, Card, Col, Form, Input, message, Table, Popconfirm} from "antd";
+import React, { Component } from "react";
+import { fetchPost } from "../../../utils/request";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  message,
+  Table,
+  Popconfirm
+} from "antd";
 import Styles from "./Index.less";
 
 const InputGroup = Input.Group;
 
-class List extends React.Component {
-
+class List extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +30,7 @@ class List extends React.Component {
       clickRowId: null,
       selectedRowKeys: [],
       selectRows: [],
-      visible: false,
+      visible: false
     };
   }
 
@@ -31,7 +39,7 @@ class List extends React.Component {
       loading: false,
       selectedRowKeys: [],
       selectRows: []
-    }
+    };
   }
 
   componentDidMount() {
@@ -39,23 +47,30 @@ class List extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    if(props.params!=this.state.params){
-      this.setState(this.initState);// 页面重新打开后初始化成员
-      this.setState({
-        params: props.params
-      }, ()=> {
-        this.getData();
-      });
+    if (props.params != this.state.params) {
+      this.setState(this.initState); // 页面重新打开后初始化成员
+      this.setState(
+        {
+          params: props.params
+        },
+        () => {
+          this.getData();
+        }
+      );
     }
   }
-
 
   getData() {
     this.setState({
       loading: true
     });
-    fetchPost('/collection/outOrderDetailGet/list?currentPage=' + this.state.page.currentPage + "&pageSize=" + this.state.page.pageSize,
-      this.state.params).then(json => {
+    fetchPost(
+      "/collection/outOrderDetailGet/list?currentPage=" +
+        this.state.page.currentPage +
+        "&pageSize=" +
+        this.state.page.pageSize,
+      this.state.params
+    ).then(json => {
       if (json.code == 0) {
         this.setState({
           listDetail: json.data.list,
@@ -69,16 +84,19 @@ class List extends React.Component {
   }
 
   nextpage(current) {
-    this.setState({
-      page: {
-        ...this.state.page,
-        currentPage: current
+    this.setState(
+      {
+        page: {
+          ...this.state.page,
+          currentPage: current
+        },
+        selectedRowKeys: [],
+        selectRows: []
       },
-      selectedRowKeys: [],
-      selectRows: []
-    }, ()=> {
-      this.getData();
-    });
+      () => {
+        this.getData();
+      }
+    );
   }
 
   //单击行
@@ -90,47 +108,52 @@ class List extends React.Component {
 
   //单击行，样式改变
   handleChosedRow(itemId) {
-    if (this.state.tradeNo !=null && itemId == this.state.tradeNo) {
+    if (this.state.tradeNo != null && itemId == this.state.tradeNo) {
       return Styles.active;
     } else {
       return "";
     }
-  };
+  }
 
   handleChange(key, value) {
     this.setState(this.initState);
-    if (key == 'params') {
-      this.setState({
-        [key]: value
-      }, () => {
-        this.getData()
-      });
-    } else {
-      this.setState({
-        params: {
-          ...this.state.params,
+    if (key == "params") {
+      this.setState(
+        {
           [key]: value
+        },
+        () => {
+          this.getData();
         }
-      }, () => {
-        this.getData()
-      })
+      );
+    } else {
+      this.setState(
+        {
+          params: {
+            ...this.state.params,
+            [key]: value
+          }
+        },
+        () => {
+          this.getData();
+        }
+      );
     }
   }
 
   isShow(record) {
-    if ("已催回" == record.paidStatus)
-      return true;
-    else
-      return false;
+    if ("已催回" == record.paidStatus) return true;
+    else return false;
   }
 
-  batchCancel(e) {//全部撤单
+  batchCancel(e) {
+    //全部撤单
     e.preventDefault();
-    fetchPost('/collection/outOrder/cancel', {
+    fetchPost("/collection/outOrder/cancel", {
       batchNo: this.state.params.curBatchNo
     }).then(json => {
       if (json.code == 0) {
-        message.info('单批次撤单成功');
+        message.info("单批次撤单成功");
         this.setState(this.initState, () => {
           this.getData();
         });
@@ -140,13 +163,14 @@ class List extends React.Component {
     });
   }
 
-  collectionCancel(e) {//发送撤单请求
+  collectionCancel(e) {
+    //发送撤单请求
     e.preventDefault();
-    fetchPost('/collection/outOrder/cancel', {
+    fetchPost("/collection/outOrder/cancel", {
       tradeNos: this.state.selectRows
     }).then(json => {
       if (json.code == 0) {
-        message.info('撤单成功');
+        message.info("撤单成功");
         this.setState(this.initState, () => {
           this.getData();
         });
@@ -162,32 +186,37 @@ class List extends React.Component {
         ...this.state.params,
         [key]: value
       }
-    })
+    });
   }
 
   render() {
     var self = this;
-    const columns = [{
-      title: '借款人姓名',
-      dataIndex: 'name',
-      key: 'name',
-    }, {
-      title: '手机号码',
-      dataIndex: 'mobile',
-      key: 'mobile'
-    }, {
-      title: '订单号',
-      key: 'tradeNo',
-      dataIndex: 'tradeNo'
-    }, {
-      title: '未还金额',
-      key: 'noPayAmount',
-      dataIndex: 'noPayAmount'
-    }, {
-      title: '当前状态',
-      key: 'paidStatus',
-      dataIndex: 'paidStatus'
-    }
+    const columns = [
+      {
+        title: "借款人姓名",
+        dataIndex: "name",
+        key: "name"
+      },
+      {
+        title: "手机号码",
+        dataIndex: "mobile",
+        key: "mobile"
+      },
+      {
+        title: "订单号",
+        key: "tradeNo",
+        dataIndex: "tradeNo"
+      },
+      {
+        title: "未还金额",
+        key: "noPayAmount",
+        dataIndex: "noPayAmount"
+      },
+      {
+        title: "当前状态",
+        key: "paidStatus",
+        dataIndex: "paidStatus"
+      }
     ];
 
     const pagination = {
@@ -195,11 +224,11 @@ class List extends React.Component {
       pageSize: self.state.page.pageSize,
       showSizeChanger: false,
       showQuickJumper: true,
-      showTotal(total){
+      showTotal(total) {
         return `总共 ${total} 条`;
       },
       onChange(current) {
-        self.nextpage(current)
+        self.nextpage(current);
       }
     };
 
@@ -208,15 +237,15 @@ class List extends React.Component {
       selectedRowKeys: selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
         var selectRows = [];
-        selectedRows.map(function (item) {
+        selectedRows.map(function(item) {
           selectRows.push(item.tradeNo);
         });
         this.setState({
           selectedRowKeys: selectedRowKeys,
           selectRows: selectRows
-        })
+        });
       },
-      getCheckboxProps: (record) => ({
+      getCheckboxProps: record => ({
         disabled: this.isShow(record)
       })
     };
@@ -227,49 +256,65 @@ class List extends React.Component {
       <div className="ant-layout-container">
         <InputGroup size="large">
           <Col span="5">
-            <Input addonBefore="借款人姓名" value={this.state.params.realName}
-                   onChange={(e) => this.changeItem('realName', e.target.value)}
-                   onBlur={(e) => this.handleChange('realName', e.target.value)}/>
+            <Input
+              addonBefore="借款人姓名"
+              value={this.state.params.realName}
+              onChange={e => this.changeItem("realName", e.target.value)}
+              onBlur={e => this.handleChange("realName", e.target.value)}
+            />
           </Col>
           <Col span="5">
-            <Input addonBefore="手机号码" value={this.state.params.mobile}
-                   onChange={(e) => this.changeItem('mobile', e.target.value)}
-                   onBlur={(e) => this.handleChange('mobile', e.target.value)}/>
+            <Input
+              addonBefore="手机号码"
+              value={this.state.params.mobile}
+              onChange={e => this.changeItem("mobile", e.target.value)}
+              onBlur={e => this.handleChange("mobile", e.target.value)}
+            />
           </Col>
           <Col span="5">
-            <Input addonBefore="订单号" value={this.state.params.tradeNo}
-                   onChange={(e) => this.changeItem('tradeNo', e.target.value)}
-                   onBlur={(e) => this.handleChange('tradeNo', e.target.value)}/>
+            <Input
+              addonBefore="订单号"
+              value={this.state.params.tradeNo}
+              onChange={e => this.changeItem("tradeNo", e.target.value)}
+              onBlur={e => this.handleChange("tradeNo", e.target.value)}
+            />
           </Col>
-          <Button type="primary" onClick={(e) => this.collectionCancel(e)}>撤单</Button>&nbsp;&nbsp;
-          <Popconfirm title="确认全部撤单?" onConfirm={(e) => this.batchCancel(e)}>
+          <Button type="primary" onClick={e => this.collectionCancel(e)}>
+            撤单
+          </Button>
+          &nbsp;&nbsp;
+          <Popconfirm
+            title="确认全部撤单?"
+            onConfirm={e => this.batchCancel(e)}
+          >
             <Button type="primary">全部撤单</Button>
           </Popconfirm>
         </InputGroup>
 
         <div style={{ marginBottom: 16 }}>
-          <span style={{ marginLeft: 8 }}>{hasSelected ? `已选中 ${selectedRowKeys.length} 条` : ''}</span>
+          <span style={{ marginLeft: 8 }}>
+            {hasSelected ? `已选中 ${selectedRowKeys.length} 条` : ""}
+          </span>
         </div>
 
-        <Card bodyStyle={{padding: 0}} bordered={false} noHovering={true}>
+        <Card bodyStyle={{ padding: 0 }} bordered={false} noHovering={true}>
           <Table
-            rowKey='tradeNo'
+            rowKey="tradeNo"
             pagination={pagination}
             columns={columns}
             dataSource={self.state.listDetail}
             loading={self.state.loading}
-            onRowClick={(record) => this.handleClickRow(record)}
-            rowClassName={(record) => this.handleChosedRow(record.tradeNo)}
+            onRowClick={record => this.handleClickRow(record)}
+            rowClassName={record => this.handleChosedRow(record.tradeNo)}
             bordered
             size="small"
-            style={{background: '#FFFFFF'}}
+            style={{ background: "#FFFFFF" }}
             rowSelection={rowSelection}
-          >
-          </Table>
+          />
         </Card>
       </div>
-    )
+    );
   }
 }
 
-export  default List;
+export default List;

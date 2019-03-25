@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/11/10.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { fetchPost } from '../../../../../utils/request'
 import {
   Table,
@@ -9,7 +9,7 @@ import {
   Collapse,
 } from 'antd'
 
-class OverdueRecord extends React.Component {
+class OverdueRecord extends Component {
   constructor (props) {
     super(props)
     this.state = {

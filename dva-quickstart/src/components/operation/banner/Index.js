@@ -1,7 +1,7 @@
 /**
  * Created by yujianfu on 2016/11/23.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Card, Radio, Button, Popconfirm, message } from 'antd'
 import { sortable } from 'react-sortable'
 import Styles from './Index.less'
@@ -11,7 +11,7 @@ import { fetchPost } from './../../../utils/request'
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
-class Index extends React.Component {
+class Index extends Component {
   constructor (props) {
     super(props)
     this.state = {

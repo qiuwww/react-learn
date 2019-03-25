@@ -1,11 +1,11 @@
 /**
  * Created by ziyu on 17/3/13.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Table, Icon, Card } from 'antd'
 import Styles from '../../../finance/common/detail/Index.less'
 import { fetchPost } from '../../../../utils/request'
-class BorrowRecord extends React.Component {
+class BorrowRecord extends Component {
   constructor (props) {
     super(props)
     this.state = {

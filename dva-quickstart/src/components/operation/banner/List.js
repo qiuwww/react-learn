@@ -1,12 +1,12 @@
 /**
  * Created by yujianfu on 2016/11/17.
  */
-import React, {Component, PropTypes} from 'react'
+import React, {Component, } from 'react'
 import {fetchPost} from './../../../utils/request'
 import {Table , Select} from 'antd';
 const Option = Select.Option;
 
-class List extends React.Component {
+class List extends Component {
   constructor(props) {
     super(props);
     this.state = {

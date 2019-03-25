@@ -1,7 +1,7 @@
 /**
  * Created by ziyu on 17/3/7.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import Styles from './Index.less'
 import SearchStyle from '../../../common/less/search.less'
 import { message, Col, Icon } from 'antd'
@@ -9,9 +9,9 @@ import { fetchPost } from '../../../../utils/request'
 import List from './List'
 import Search from '../../../common/components/Search'
 import Detail from './detail/Detail'
-import $ from 'jquery'
+// import $ from 'jquery'
 
-class Index extends React.Component {
+class Index extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -117,7 +117,7 @@ class Index extends React.Component {
   }
 
   componentDidMount () {
-    this.state.detailDom = $('#detailClass')
+    // this.state.detailDom = $('#detailClass')
     this.getData()
     // this.state.detailDom.addClass('animated fadeInRightBig').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
     //   $(this).removeClass('animated fadeInRightBig');
@@ -145,7 +145,7 @@ class Index extends React.Component {
     }
 
     fetchPost(
-      `${this.state.getListApi}?currentPage=${this.state.page.currentPage}&pageSize=${this.state.page.pageSize}`,
+      // `${this.state.getListApi}?currentPage=${this.state.page.currentPage}&pageSize=${this.state.page.pageSize}`,
       {...copyState, isNewAdd: this.state.isNewAdd, processNode: this.state.processNode}).then((res) => {
         if (res.code === 0) {
           const {orderList, isAuditorHeadman} = res.data;
@@ -286,11 +286,11 @@ class Index extends React.Component {
   }
 
   showList () {
-    return `${Styles.listClass} ${Styles.listRight}`
+    // return `${Styles.listClass} ${Styles.listRight}`
   }
 
   detailClass () {
-    return `${Styles.detailClass} ${Styles.detailRight}`
+    // return `${Styles.detailClass} ${Styles.detailRight}`
   }
 
   render () {

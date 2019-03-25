@@ -1,7 +1,7 @@
 /**
  * Created by ziyu on 17/3/15.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import {
   Input,
   Card,
@@ -24,7 +24,7 @@ import Styles from '../Index.less'
 const FormItem = Form.Item
 const Option = Select.Option
 
-class HotContent extends React.Component {
+class HotContent extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -302,8 +302,8 @@ class HotContent extends React.Component {
                     rules: [{required: true, message: '请选择展示位置'}],
                   })(
                     <Select>
-                      <Option value='2'>H5</Option>
-                      <Option value='1'>APP</Option>
+                      <Select.Option value='2'>H5</Select.Option>
+                      <Select.Option value='1'>APP</Select.Option>
                     </Select>,
                   )
                 }
@@ -510,8 +510,8 @@ class HotContent extends React.Component {
                   rules: [{required: true, message: '跳转种类'}],
                 })(
                   <Select>
-                    <Option value='0'>H5跳转</Option>
-                    <Option value='1'>app跳转</Option>
+                    <Select.Option value='0'>H5跳转</Select.Option>
+                    <Select.Option value='1'>app跳转</Select.Option>
                   </Select>,
                 )
               }

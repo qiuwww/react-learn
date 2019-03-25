@@ -1,7 +1,7 @@
 /**
  * Created by yujianfu on 2016/11/17.
  */
-import React, {Component, PropTypes} from 'react'
+import React, {Component, } from 'react'
 import {Form, message, Select, Input, Button, Upload, Icon, Modal, DatePicker} from 'antd';
 
 import {fetchPost} from './../../../utils/request'
@@ -10,7 +10,7 @@ import {origin} from '../../../utils/config'
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-class Active extends React.Component {
+class Active extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -105,9 +105,9 @@ class Active extends React.Component {
     const res = this.state.data;
     const banners = [];
 
-    banners.push(<Option key=" ">全部</Option>);
+    banners.push(<Select.Option key=" ">全部</Select.Option>);
     res.map(function (banner) {
-      banners.push(<Option key={banner.id}>{banner.name}</Option>);
+      banners.push(<Select.Option key={banner.id}>{banner.name}</Select.Option>);
     });
 
     return (

@@ -1,7 +1,7 @@
 /**
  * Created by yujianfu on 2016/11/9.
  */
-import React, {Component, PropTypes} from 'react'
+import React, {Component, } from 'react'
 import {Tabs, Card, Table, Icon} from 'antd'
 
 import Identity from '../../../../common/components/users/Identity'
@@ -12,7 +12,7 @@ import Profession from '../../../../common/components/users/Profession'
 import Photo from '../../../../common/components/users/Photos'
 import ApplyRecord from '../../../../common/components/users/applyRecord'
 
-class Info extends React.Component {
+class Info extends Component {
   constructor(props) {
     super(props)
     this.state = {

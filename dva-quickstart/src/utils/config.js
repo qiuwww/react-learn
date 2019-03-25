@@ -26,4 +26,5 @@ switch (env) {
     break
 }
 
+export { history, origin, env }
 export default out

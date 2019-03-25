@@ -1,10 +1,10 @@
 /**
  * Created by ziyu on 2017/7/31.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Icon } from 'antd'
 import Style from '../less/title.less'
-class Index extends React.Component {
+class Index extends Component {
   constructor (props) {
     super(props)
     this.state = {}

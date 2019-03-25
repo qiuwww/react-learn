@@ -1,7 +1,7 @@
 /**
  * Created by yujianfu on 2016/11/16.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { fetchPost } from './../../../utils/request'
 import { Table, Card, Button, Form, Upload, message, Modal, Select, Input, Icon } from 'antd'
 import {origin} from '../../../utils/config'
@@ -9,7 +9,7 @@ import {origin} from '../../../utils/config'
 const FormItem = Form.Item
 const Option = Select.Option
 
-class List extends React.Component {
+class List extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -156,9 +156,9 @@ class List extends React.Component {
                         }
                     })
                   }} placeholder="用户类型">
-                    <Option key="1">单个用户</Option>
-                    <Option key="2">批量用户</Option>
-                    <Option key="3">所有用户</Option>
+                    <Select.Option key="1">单个用户</Select.Option>
+                    <Select.Option key="2">批量用户</Select.Option>
+                    <Select.Option key="3">所有用户</Select.Option>
                   </Select>
                 )}
               </FormItem>
@@ -178,10 +178,10 @@ class List extends React.Component {
                       }
                     })
                   }} placeholder="类型">
-                    <Option key="0">app首页</Option>
-                    <Option key="2">H5页面</Option>
-                    <Option key="3">邀请页</Option>
-                    <Option key="4">卡券包</Option>
+                    <Select.Option key="0">app首页</Select.Option>
+                    <Select.Option key="2">H5页面</Select.Option>
+                    <Select.Option key="3">邀请页</Select.Option>
+                    <Select.Option key="4">卡券包</Select.Option>
                   </Select>
                 )}
               </FormItem>

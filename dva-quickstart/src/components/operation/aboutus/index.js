@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component,  } from 'react';
 import { connect } from 'dva';
 import { Card, Input, Button, Popconfirm, Form } from 'antd';
 const FormItem = Form.Item;
@@ -12,7 +12,7 @@ const TextArea = Input.TextArea;
 
 @Form.create()
 
-export default class AboutUs extends React.Component {
+export default class AboutUs extends Component {
   constructor (props) {
     super(props)
     this.state = {

@@ -1,18 +1,18 @@
 /**
  * Created by Administrator on 2016/11/9.
  */
-import React, { Component, PropTypes } from 'react'
-import { fetchPost } from '../../../../../../utils/request'
+import React, { Component } from "react";
+import { fetchPost } from "../../../../../../utils/request";
 
-import { Icon, Card, Spin } from 'antd'
-import Tongdun from './Tongdun'
-import Black from './Black'
-import Jy from './Jy'
-import Pingan from './Pingan'
+import { Icon, Card, Spin } from "antd";
+import Tongdun from "./Tongdun";
+import Black from "./Black";
+import Jy from "./Jy";
+import Pingan from "./Pingan";
 
-class Risk extends React.Component {
-  constructor (props) {
-    super(props)
+class Risk extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
       id: props.id,
       tongDun: null,
@@ -21,38 +21,45 @@ class Risk extends React.Component {
       pinganResult: null,
       loading: true,
       userId: props.userId,
-      message: '',
+      message: "",
       timer: null,
       item: {}
-    }
+    };
   }
 
   // 初始化方法
-  componentDidMount () {
-    this.getData()
+  componentDidMount() {
+    this.getData();
   }
 
-  componentWillReceiveProps (props) {
+  componentWillReceiveProps(props) {
     if (props.id != this.state.id || props.userId != this.state.userId) {
-      this.setState({
-        id: props.id,
-        userId: props.userId,
-        loading: true,
-        item: props.item
-      }, () => {
-        this.getData()
-      })
+      this.setState(
+        {
+          id: props.id,
+          userId: props.userId,
+          loading: true,
+          item: props.item
+        },
+        () => {
+          this.getData();
+        }
+      );
     }
   }
 
-  componentWillUnmount () {
-    clearTimeout(this.state.timer)
+  componentWillUnmount() {
+    clearTimeout(this.state.timer);
   }
 
   // 请求数据
-  getData () {
+  getData() {
     if (this.state.id != null) {
-      fetchPost('/risk/riskpage', {userCode: this.state.userId, tradeNo: this.state.id, productType: this.state.item.productType}).then(json => {
+      fetchPost("/risk/riskpage", {
+        userCode: this.state.userId,
+        tradeNo: this.state.id,
+        productType: this.state.item.productType
+      }).then(json => {
         if (json.code === 0) {
           if (json.data != null) {
             this.setState({
@@ -61,40 +68,52 @@ class Risk extends React.Component {
               jyResult: json.data.jyResult,
               pinganResult: json.data.pinganQueryResult,
               loading: false
-            })
+            });
           }
         } else {
           this.setState({
             loading: false,
             message: json.msg
-          })
+          });
         }
-      })
+      });
     }
   }
 
-  message () {
+  message() {
     if (this.state.message) {
       this.state.timer = setTimeout(() => {
         this.setState({
-          message: ''
-        })
-      }, 3000)
+          message: ""
+        });
+      }, 3000);
       return (
-        <span className='color-warning warning-animate'><Icon type='info-circle-o' />                                {this.state.message}</span>
-      )
+        <span className="color-warning warning-animate">
+          <Icon type="info-circle-o" /> {this.state.message}
+        </span>
+      );
     } else {
-      return ''
+      return "";
     }
   }
 
-  render () {
+  render() {
     if (this.state.id == null) {
-      return <span className="no-data"><Icon type='frown-o' />暂无数据</span>
+      return (
+        <span className="no-data">
+          <Icon type="frown-o" />
+          暂无数据
+        </span>
+      );
     }
 
     return (
-      <Card title='风控数据' extra={this.message()} bodyStyle={{padding: '5px'}} noHovering={true}>
+      <Card
+        title="风控数据"
+        extra={this.message()}
+        bodyStyle={{ padding: "5px" }}
+        noHovering={true}
+      >
         <Spin spinning={this.state.loading}>
           <Tongdun tongDun={this.state.tongDun} />
           <Black blackList={this.state.blackList} />
@@ -102,7 +121,7 @@ class Risk extends React.Component {
           <Pingan pinganResult={this.state.pinganResult} />
         </Spin>
       </Card>
-    )
+    );
   }
 }
-export default Risk
+export default Risk;

@@ -1,12 +1,12 @@
 /**
  * Created by xuxiaoqi on 2017/9/18.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Table, Card, Icon } from 'antd'
 import Styles from '../../../finance/common/detail/Index.less'
 import { fetchPost } from '../../../../utils/request'
 
-class CheckRecord extends React.Component {
+class CheckRecord extends Component {
   constructor (props) {
     super(props)
     this.state = {

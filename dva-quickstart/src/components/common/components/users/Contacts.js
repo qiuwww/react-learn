@@ -1,12 +1,12 @@
 /**
  * Created by yujianfu on 2016/11/10.
  */
-import React, {Component, PropTypes} from 'react'
+import React, {Component, } from 'react'
 import {Card, Table, message, Button, Icon, Popover, Input} from 'antd'
 import Styles from '../../../finance/common/detail/Index.less'
 import {fetchPost} from '../../../../utils/request'
 
-class Contacts extends React.Component {
+class Contacts extends Component {
   constructor (props) {
     super(props)
     this.state = {

@@ -4,7 +4,7 @@
 /**
  * Created by yujianfu on 2016/11/16.
  */
-import React, {Component, PropTypes} from 'react'
+import React, {Component, } from 'react'
 import moment from 'moment';
 import {Form, Radio, DatePicker, Modal, Upload, Select, Input, Button, Icon, message} from 'antd';
 import {origin, env} from '../../../utils/config'
@@ -13,7 +13,7 @@ import {fetchPost} from '../../../utils/request'
 const FormItem = Form.Item;
 const {MonthPicker, RangePicker} = DatePicker;
 
-class Index extends React.Component {
+class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -272,10 +272,10 @@ class Index extends React.Component {
                         console.log(this.state.params)
                       })
                     }} placeholder="类型">
-                      <Option key="0">H5页面</Option>
-                      <Option key="1">卡券包</Option>
-                      <Option key="2">邀请页</Option>
-                      <Option key="3">不跳转</Option>
+                      <Select.Option key="0">H5页面</Select.Option>
+                      <Select.Option key="1">卡券包</Select.Option>
+                      <Select.Option key="2">邀请页</Select.Option>
+                      <Select.Option key="3">不跳转</Select.Option>
                     </Select>
                   )}
                 </FormItem>

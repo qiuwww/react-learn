@@ -1,6 +1,15 @@
 const path = require("path");
 export default {
   entry: {
+    vendor: [
+      // "jquery",
+      "moment",
+      // "animate.css",
+      // "dva",
+      "react",
+      "react-dom",
+      "antd"
+    ],
     index: "./src/index.js"
   },
   // 注入外部引入的全局变量
@@ -16,7 +25,7 @@ export default {
         "process.env": "dev",
         USE_COMMA: 2
       },
-      extraBabelPlugins: ["dva-hmr"],
+      // extraBabelPlugins: ["dva-hmr"],
       publicPath: "/"
     },
     production: {

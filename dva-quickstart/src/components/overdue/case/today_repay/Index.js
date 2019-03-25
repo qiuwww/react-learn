@@ -1,9 +1,9 @@
 /**
  * Created by ziyu on 2017/7/26.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import Common from '../Today_repay'
-class Index extends React.Component {
+class Index extends Component {
   constructor (props) {
     super(props)
   }

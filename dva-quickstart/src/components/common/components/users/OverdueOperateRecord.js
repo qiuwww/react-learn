@@ -2,11 +2,11 @@
  * Created by ziyu on 17/5/9.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Table, Icon, Card } from 'antd'
 import Styles from '../../../overdue/case/details/Index.less'
 import { fetchPost } from '../../../../utils/request'
-class OverdueOperateRecord extends React.Component {
+class OverdueOperateRecord extends Component {
   constructor (props) {
     super(props)
     this.state = {

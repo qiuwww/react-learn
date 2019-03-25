@@ -2,7 +2,7 @@
  * Created by ziyu on 17/3/9.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Form, Input, Button, DatePicker, Select, Icon, Radio, Row, Col } from 'antd'
 import {fetchPost} from '../../../utils/request'
 import Styles from '../less/search.less'
@@ -13,7 +13,7 @@ const RadioGroup = Radio.Group
 const Option = Select.Option
 const { RangePicker } = DatePicker
 const dateFormat = 'YYYY-MM-DD'
-class Search extends React.Component {
+class Search extends Component {
   /*
   父元素传递参数格式
    {

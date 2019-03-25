@@ -1,41 +1,44 @@
 /**
  * Created by ziyu on 17/3/13.
  */
-import React, { Component, PropTypes } from 'react'
-import { Table, Card, Icon } from 'antd'
-import Styles from '../../../finance/common/detail/Index.less'
-import { fetchPost } from '../../../../utils/request'
+import React, { Component } from "react";
+import { Table, Card, Icon } from "antd";
+import Styles from "../../../finance/common/detail/Index.less";
+import { fetchPost } from "../../../../utils/request";
 
-class PhoneRemarkRecord extends React.Component {
-  constructor (props) {
-    super(props)
+class PhoneRemarkRecord extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
       userId: props.userId,
       loading: false,
       list: [],
-      message: '',
+      message: "",
       timer: null
-    }
+    };
   }
 
-  componentWillReceiveProps (props) {
+  componentWillReceiveProps(props) {
     if (this.state.userId != props.userId) {
-      this.setState({
-        userId: props.userId
-      }, () => {
-        this.getData()
-      })
+      this.setState(
+        {
+          userId: props.userId
+        },
+        () => {
+          this.getData();
+        }
+      );
     }
   }
 
-  componentDidMount () {
-    this.getData()
+  componentDidMount() {
+    this.getData();
   }
 
-  getData () {
+  getData() {
     this.setState({
       loading: true
-    })
+    });
     if (this.state.userId) {
       fetchPost(`/audit/user/${this.state.userId}/phone/remark`).then(json => {
         if (json.code === 0) {
@@ -43,83 +46,90 @@ class PhoneRemarkRecord extends React.Component {
             this.setState({
               list: json.data.list,
               loading: false
-            })
+            });
           }
         } else {
           this.setState({
             list: [],
             loading: false,
             message: json.msg
-          })
+          });
         }
-      })
+      });
     } else {
       this.setState({
         list: [],
         loading: false
-      })
+      });
     }
   }
 
-  message () {
+  message() {
     if (this.state.message) {
       this.state.timer = setTimeout(() => {
         this.setState({
-          message: ''
-        })
-      }, 3000)
+          message: ""
+        });
+      }, 3000);
       return (
-        <span className='color-warning warning-animate'><Icon type='info-circle-o' />                                {this.state.message}</span>
-      )
+        <span className="color-warning warning-animate">
+          <Icon type="info-circle-o" /> {this.state.message}
+        </span>
+      );
     } else {
-      return ''
+      return "";
     }
   }
 
-  componentWillUnmount () {
-    clearTimeout(this.state.timer)
+  componentWillUnmount() {
+    clearTimeout(this.state.timer);
   }
 
-  render () {
+  render() {
     const columns = [
       {
-        title: '操作人',
-        dataIndex: 'auditor',
-        key: 'auditor'
+        title: "操作人",
+        dataIndex: "auditor",
+        key: "auditor"
       },
       {
-        title: '操作时间',
-        dataIndex: 'promisePayDate',
-        key: 'promisePayDate'
+        title: "操作时间",
+        dataIndex: "promisePayDate",
+        key: "promisePayDate"
       },
       {
-        title: '姓名',
-        dataIndex: 'name',
-        key: 'name'
+        title: "姓名",
+        dataIndex: "name",
+        key: "name"
       },
       {
-        title: '电话',
-        dataIndex: 'mobile',
-        key: 'mobile'
+        title: "电话",
+        dataIndex: "mobile",
+        key: "mobile"
       },
       {
-        title: '关系',
-        dataIndex: 'relation',
-        key: 'relation'
+        title: "关系",
+        dataIndex: "relation",
+        key: "relation"
       },
       {
-        title: '操作内容',
-        dataIndex: 'content',
-        key: 'content'
+        title: "操作内容",
+        dataIndex: "content",
+        key: "content"
       }
-    ]
+    ];
 
     return (
       <div className={Styles.PhoneRemarkRecord}>
-        <Card title='信审备注记录' extra={this.message()} bodyStyle={{padding: 1}} noHovering={true}>
+        <Card
+          title="信审备注记录"
+          extra={this.message()}
+          bodyStyle={{ padding: 1 }}
+          noHovering={true}
+        >
           <Table
             pagination={false}
-            size='small'
+            size="small"
             bordered
             dataSource={this.state.list}
             columns={columns}
@@ -127,9 +137,8 @@ class PhoneRemarkRecord extends React.Component {
           />
         </Card>
       </div>
-
-    )
+    );
   }
 }
 
-export default PhoneRemarkRecord
+export default PhoneRemarkRecord;

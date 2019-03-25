@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
-import List from './List';
+import React, { Component } from "react";
+import List from "./List";
 
 export default class NoApply extends Component {
-  state = {
-  }
+  state = {};
 
   render() {
     return (

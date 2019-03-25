@@ -1,4 +1,4 @@
-export function getLocationSearch(href = location.href) {
+export function getLocationSearch(href = window.location.href) {
   const theRequest = new Object();
   if (href.indexOf("?") > -1) {
     const hrefStr = href.substr(href.indexOf("?") + 1);

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import {
   Tabs,
   Card,
@@ -28,7 +28,7 @@ const TabPane = Tabs.TabPane
 const FormItem = Form.Item
 const Panel = Collapse.Panel
 
-class Detail extends React.Component {
+class Detail extends Component {
   constructor (props) {
     super(props)
     this.state = {

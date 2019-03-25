@@ -9,7 +9,7 @@ import { Modal, Form, Select } from 'antd';
 const Option = Select.Option;
 const FormItem = Form.Item;
 
-class Index extends React.Component {
+class Index extends Component {
   constructor (props) {
     super (props);
     this.state = {

@@ -1,11 +1,11 @@
 /**
  * Created by ziyu on 17/3/7.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Table, Card, Button, Row, Col, Icon } from 'antd'
 import styles from './Index.less'
 
-class List extends React.Component {
+class List extends Component {
   constructor (props) {
     super(props)
     this.state = {

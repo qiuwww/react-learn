@@ -5,12 +5,12 @@
  * Created by ziyu on 17/3/14.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Card, Col } from 'antd'
 import Styles from '../../../users/manage/detail/Index.less'
 import { fetchPost } from '../../../../utils/request'
 
-class CardInfo extends React.Component {
+class CardInfo extends Component {
   constructor (props) {
     super(props)
     this.state = {

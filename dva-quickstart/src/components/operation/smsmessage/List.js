@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { fetchPost } from '../../../utils/request'
 import { Table, Card, Button, Form, Upload, Message, Modal, Select, Input, Icon, Checkbox, Popconfirm, Row, Col, DatePicker, message } from 'antd'
 
@@ -9,7 +9,7 @@ const FormItem = Form.Item
 const Option = Select.Option
 const CheckBoxGroup = Checkbox.Group
 
-class List extends React.Component {
+class List extends Component {
   constructor (props) {
     super(props)
     this.changeIsLoading = this.changeIsLoading.bind(this)

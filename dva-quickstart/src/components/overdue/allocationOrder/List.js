@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { fetchPost } from '../../../utils/request'
 import {
   Table,
@@ -15,7 +15,7 @@ import Styles from './Index.less'
 const FormItem = Form.Item
 const Option = Select.Option
 
-class List extends React.Component {
+class List extends Component {
   constructor (props) {
     super(props)
     this.state = {

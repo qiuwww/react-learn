@@ -1,14 +1,14 @@
 /**
  * Created by yujianfu on 2016/11/10.
  */
-import React, {Component, PropTypes} from 'react'
+import React, {Component, } from 'react'
 import {Tabs, Card, Table, Icon, Collapse} from 'antd'
 import Styles from './../Index.less'
 import {fetchPost} from './../../../../../utils/request'
 import Viewer from 'react-viewer'
 import 'react-viewer/dist/index.css'
 const Panel = Collapse.Panel
-class Identity extends React.Component {
+class Identity extends Component {
   constructor (props) {
     super(props)
     this.state = {

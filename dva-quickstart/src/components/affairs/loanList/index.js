@@ -7,7 +7,7 @@ import { fetchPost } from "../../../utils/request";
 import moment from "moment";
 import { origin } from "../../../utils/hostName";
 
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import {
   Table,
   Button,
@@ -28,15 +28,13 @@ const RadioGroup = Radio.Group;
 const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
 
-
-
 // 日期选择，默认当天
 const today = moment();
 const formatReg = "YYYY-MM-DD";
 const defaultDate = today.format(formatReg);
 const FormItem = Form.Item;
 
-class LoanList extends React.Component {
+class LoanList extends Component {
   constructor(props) {
     super(props);
     this.state = {

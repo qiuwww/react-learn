@@ -76,7 +76,7 @@ export default class ApiStatistical extends Component {
     const columns = [
       {
         title: "贷超",
-        dataIndex: "channelName",
+        dataIndex: "channelName"
       },
       {
         title: "进件数",

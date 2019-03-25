@@ -3,19 +3,19 @@
  * @date 2017-11-09
  * */
 
-import React from 'react';
-import { Tabs } from 'antd';
-import LoanRecord from './loanRecord';
-import RepaymentRecord from './repaymentRecord';
+import React, { Component } from "react";
+import { Tabs } from "antd";
+import LoanRecord from "./loanRecord";
+import RepaymentRecord from "./repaymentRecord";
 
 const { TabPane } = Tabs;
 
-class Index extends React.Component {
-  constructor (props) {
-    super (props);
+class Index extends Component {
+  constructor(props) {
+    super(props);
   }
 
-  render () {
+  render() {
     function callback(key) {
       console.log(key);
     }
@@ -31,8 +31,8 @@ class Index extends React.Component {
           </TabPane>
         </Tabs>
       </div>
-    )
+    );
   }
 }
 
-export default Index
+export default Index;

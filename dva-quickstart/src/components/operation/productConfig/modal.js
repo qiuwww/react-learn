@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component,  } from 'react';
 import { connect } from 'dva';
 import { Modal, Row, Col, Input, Button, Popconfirm, Form, Switch, Select, InputNumber } from 'antd';
 const FormItem = Form.Item;
@@ -14,7 +14,7 @@ const Option = Select.Option;
 
 @Form.create()
 
-export default class ProductModal extends React.Component {
+export default class ProductModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -176,7 +176,7 @@ export default class ProductModal extends React.Component {
               rules: [{ required: true, message: '请选择借款周期！' }],
             })(
               <Select disabled={disabled} placeholder="请选择" onChange={this.handleCalculation}>
-                {periodsOptions.map(item => <Option value={item.type} key={item.type}>{item.desc}</Option>)}
+                {periodsOptions.map(item => <Select.Option value={item.type} key={item.type}>{item.desc}</Select.Option>)}
               </Select>
             )}
           </FormItem>

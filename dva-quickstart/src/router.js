@@ -1,5 +1,5 @@
-import React, { PropTypes } from "react";
-import { Router, Route } from "dva/router";
+import React from "react";
+import { Router, Route, Switch } from "dva/router";
 import auth from "./services/auth";
 
 import HomePage from "./components/homePage/Index";
@@ -37,7 +37,7 @@ import internalOverdueCaseRepeat from "./components/overdue/case/internalCollect
 import externalOverdueCaseNew from "./components/overdue/case/externalCollection/NewCase";
 import externalOverdueCaseRepeat from "./components/overdue/case/externalCollection/RepeatCase";
 import OverdueList from "./components/overdue/allocationOrder/Index";
-import TodayOverdueList from "./components/overdue/TodayAllocationOrder/Index";
+import TodayOverdueList from "./components/overdue/todayAllocationOrder/Index";
 import ExternalOverdueCheck from "./components/overdue/externalOverdueCheck/Index";
 import PersonalCheckList from "./components/overdue/personalCheckList/Index";
 import SheildPhone from "./components/overdue/sheildPhone/sheildPhone";
@@ -125,173 +125,175 @@ const requireAuth = (nextState, replace) => {
 export default function({ history }) {
   return (
     <Router history={history}>
-      <Route path="/login" component={Login} />
-      <Route path="/homePage" component={HomePage} />
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/homePage" component={HomePage} />
 
-      <Route path="/" component={MainLayout} onEnter={requireAuth}>
-        {/*权限*/}
-        <Route path="/admin">
-          <Route path="menu/add" component={MenuAdd} />
-          <Route path="menu/list" component={MenuList} />
-          <Route path="list" component={AdminList} />
-          <Route path="add" component={AdminEdit} />
-          <Route path="edit/:id" component={AdminEdit} />
-          <Route path="role/add" component={AddAdminRole} />
-          <Route path="role/edit/:id" component={AddAdminRole} />
-          <Route path="role/list" component={AdminRoleList} />
-        </Route>
+        <Route path="/" component={MainLayout} onEnter={requireAuth}>
+          {/*权限*/}
+          <Route path="/admin">
+            <Route path="menu/add" component={MenuAdd} />
+            <Route path="menu/list" component={MenuList} />
+            <Route path="list" component={AdminList} />
+            <Route path="add" component={AdminEdit} />
+            <Route path="edit/:id" component={AdminEdit} />
+            <Route path="role/add" component={AddAdminRole} />
+            <Route path="role/edit/:id" component={AddAdminRole} />
+            <Route path="role/list" component={AdminRoleList} />
+          </Route>
 
-        {/*信审*/}
-        <Route path="/finance">
-          <Route path="initialOrder/new" component={InitialOrderNew} />
-          <Route path="initialOrder/repeat" component={InitialOrderRepeat} />
-          <Route path="telOrder/new" component={TelOrderNew} />
-          <Route path="telOrder/repeat" component={TelOrderRepeat} />
-          <Route path="photoCheck/new" component={PhotoCheckNew} />
-          <Route path="photoCheck/repeat" component={PhotoCheckRepeat} />
-          <Route path="passOrder/index" component={PassOrder} />
-          <Route path="refuseOrder/index" component={RefuseOrder} />
-          <Route path="check_total/index" component={CheckTotal} />
-          <Route path="apply/index" component={Apply} />
-        </Route>
+          {/*信审*/}
+          <Route path="/finance">
+            <Route path="initialOrder/new" component={InitialOrderNew} />
+            <Route path="initialOrder/repeat" component={InitialOrderRepeat} />
+            <Route path="telOrder/new" component={TelOrderNew} />
+            <Route path="telOrder/repeat" component={TelOrderRepeat} />
+            <Route path="photoCheck/new" component={PhotoCheckNew} />
+            <Route path="photoCheck/repeat" component={PhotoCheckRepeat} />
+            <Route path="passOrder/index" component={PassOrder} />
+            <Route path="refuseOrder/index" component={RefuseOrder} />
+            <Route path="check_total/index" component={CheckTotal} />
+            <Route path="apply/index" component={Apply} />
+          </Route>
 
-        {/*催收管理*/}
-        <Route path="/overdue">
-          <Route
-            path="externalOverdueCheck"
-            component={ExternalOverdueCheck}
-          />
-          <Route path="overduelist" component={OverdueList} />
-          <Route path="today-overduelist" component={TodayOverdueList} />
-          <Route
-            path="case/internal/new"
-            component={internalOverdueCaseNew}
-          />
-          <Route
-            path="case/internal/repeat"
-            component={internalOverdueCaseRepeat}
-          />
-          <Route
-            path="case/external/new"
-            component={externalOverdueCaseNew}
-          />
-          <Route
-            path="case/external/repeat"
-            component={externalOverdueCaseRepeat}
-          />
-          <Route path="personalCheck" component={PersonalCheckList} />
-          <Route path="urgentSwitch" component={SheildPhone} />
-          {/* 当日应还列表 */}
-          <Route path="today_repay" component={Today_repay} />
-        </Route>
+          {/*催收管理*/}
+          <Route path="/overdue">
+            <Route
+              path="externalOverdueCheck"
+              component={ExternalOverdueCheck}
+            />
+            <Route path="overduelist" component={OverdueList} />
+            <Route path="today-overduelist" component={TodayOverdueList} />
+            <Route
+              path="case/internal/new"
+              component={internalOverdueCaseNew}
+            />
+            <Route
+              path="case/internal/repeat"
+              component={internalOverdueCaseRepeat}
+            />
+            <Route
+              path="case/external/new"
+              component={externalOverdueCaseNew}
+            />
+            <Route
+              path="case/external/repeat"
+              component={externalOverdueCaseRepeat}
+            />
+            <Route path="personalCheck" component={PersonalCheckList} />
+            <Route path="urgentSwitch" component={SheildPhone} />
+            {/* 当日应还列表 */}
+            <Route path="today_repay" component={Today_repay} />
+          </Route>
 
-        {/*用户管理*/}
-        <Route path="/users">
-          <Route path="manage" component={UserManage} />
-          <Route path="thaw" component={UserThaw} />
-          <Route path="no-apply" component={registerNoApply} />
-          <Route
-            path="normal-repayment"
-            component={registerNormalRepayment}
-          />
-        </Route>
+          {/*用户管理*/}
+          <Route path="/users">
+            <Route path="manage" component={UserManage} />
+            <Route path="thaw" component={UserThaw} />
+            <Route path="no-apply" component={registerNoApply} />
+            <Route
+              path="normal-repayment"
+              component={registerNormalRepayment}
+            />
+          </Route>
 
-        {/*财务*/}
-        <Route path="/affairs">
-          <Route path="paid" component={Paid} />
-          <Route path="fund_confirm" component={FundConfirm} />
-          <Route path="repayment_list" component={PayBack} />
-          <Route path="booking_list" component={EnterAccount} />
-          <Route path="capitalClear" component={CapitalClear} />
-          <Route path="handInput" component={HandInput} />
-          <Route path="inputRecord" component={InputRecord} />
-          <Route path="lineCapitalList" component={LineCapitalList} />
-          <Route path="paymentCenter" component={PaymentCenter} />
+          {/*财务*/}
+          <Route path="/affairs">
+            <Route path="paid" component={Paid} />
+            <Route path="fund_confirm" component={FundConfirm} />
+            <Route path="repayment_list" component={PayBack} />
+            <Route path="booking_list" component={EnterAccount} />
+            <Route path="capitalClear" component={CapitalClear} />
+            <Route path="handInput" component={HandInput} />
+            <Route path="inputRecord" component={InputRecord} />
+            <Route path="lineCapitalList" component={LineCapitalList} />
+            <Route path="paymentCenter" component={PaymentCenter} />
 
-          <Route path="service" component={ServiceFeeRepayment} />
-          <Route path="loan" component={LoanList} />
-          <Route path="repayment" component={RepaymentList} />
-          <Route path="withholding" component={Withholding} />
-          <Route path="withholding/details" component={WithholdingDetails} />
+            <Route path="service" component={ServiceFeeRepayment} />
+            <Route path="loan" component={LoanList} />
+            <Route path="repayment" component={RepaymentList} />
+            <Route path="withholding" component={Withholding} />
+            <Route path="withholding/details" component={WithholdingDetails} />
 
-          {/*<Route path='transfer_sign' component={TransferSign}/>*/}
+            {/*<Route path='transfer_sign' component={TransferSign}/>*/}
+          </Route>
+          {/*运营*/}
+          <Route path="/operation">
+            <Route path="hotspot/list" component={HotspotList} />
+            <Route path="hotspot/add" component={HotContent} />
+            <Route path="hotspot/edit" component={HotContent} />
+            <Route path="banner/add" component={BannerAdd} />
+            <Route path="banner/list" component={BannerList} />
+            <Route path="push/list" component={PushList} />
+            <Route path="smsmessage/list" component={SmsMessage} />
+            <Route path="message/search" component={MessageSearch} />
+            <Route path="message/app" component={MessageApp} />
+            <Route path="message/biz" component={MessageBiz} />
+            <Route path="message/servicer" component={MessageServicer} />
+            <Route path="message/template" component={MessageTemplate} />
+            <Route path="message/messageList" component={MessageList} />
+            <Route path="aboutus/config" component={AboutUs} />
+            <Route path="product/config" component={ProductConfig} />
+            <Route path="member/config" component={MemberConfig} />
+          </Route>
+          {/*报表*/}
+          <Route path="/operation">
+            <Route path="channel/list" component={channelList} />
+            <Route path="loan/statistical" component={loanStatistical} />
+            {/*放款统计*/}
+            <Route path="overdue/statistical" component={overdueStatistical} />
+            {/*逾期统计*/}
+            <Route path="account/statistical" component={accountStatistical} />
+            {/* 报表借款统计 */}
+            <Route
+              path="repayment/statistical"
+              component={Q_repaymentStatistical}
+            />
+            <Route
+              path="loan/account/statistical"
+              component={Q_LoanStatistical}
+            />
+            <Route
+              path="new-loan/account/statistical"
+              component={NewLoanStatistical}
+            />
+            <Route
+              path="new-repayment/statistical"
+              component={newRepaymentStatistical}
+            />
+            <Route path="consume/statistical" component={ConsumeStatistical} />
+            <Route path="statistic-board" component={StatisticBoard} />
+            <Route
+              path="loan/statistical-details"
+              component={loanStatisticalDetails}
+            />
+            {/*放款统计详情*/}
+            <Route
+              path="overdue/statistical-details"
+              component={overdueStatisticalDetails}
+            />
+            {/*逾期统计详情*/}
+            {/* api进件统计 */}
+            <Route path="report/apiStatistical" component={apiStatistical} />
+            {/* api逾期统计 */}
+            <Route
+              path="report/apiOverdueStatistical"
+              component={apiOverdueStatistical}
+            />
+            {/* api逾期统计查看详情 */}
+            <Route
+              path="report/apiOverdueStatistical/detail"
+              component={apiOverdueStatisticalDetail}
+            />
+          </Route>
+          {/*订单*/}
+          <Route path="/order">
+            <Route path="repayment/list-payoff" component={PayOffOrder} />
+            <Route path="repayment/list-wait" component={WaitForPayOrder} />
+            <Route path="repayment/audit-pass" component={AuditPassOrder} />
+          </Route>
         </Route>
-        {/*运营*/}
-        <Route path="/operation">
-          <Route path="hotspot/list" component={HotspotList} />
-          <Route path="hotspot/add" component={HotContent} />
-          <Route path="hotspot/edit" component={HotContent} />
-          <Route path="banner/add" component={BannerAdd} />
-          <Route path="banner/list" component={BannerList} />
-          <Route path="push/list" component={PushList} />
-          <Route path="smsmessage/list" component={SmsMessage} />
-          <Route path="message/search" component={MessageSearch} />
-          <Route path="message/app" component={MessageApp} />
-          <Route path="message/biz" component={MessageBiz} />
-          <Route path="message/servicer" component={MessageServicer} />
-          <Route path="message/template" component={MessageTemplate} />
-          <Route path="message/messageList" component={MessageList} />
-          <Route path="aboutus/config" component={AboutUs} />
-          <Route path="product/config" component={ProductConfig} />
-          <Route path="member/config" component={MemberConfig} />
-        </Route>
-        {/*报表*/}
-        <Route path="/operation">
-          <Route path="channel/list" component={channelList} />
-          <Route path="loan/statistical" component={loanStatistical} />
-          {/*放款统计*/}
-          <Route path="overdue/statistical" component={overdueStatistical} />
-          {/*逾期统计*/}
-          <Route path="account/statistical" component={accountStatistical} />
-          {/* 报表借款统计 */}
-          <Route
-            path="repayment/statistical"
-            component={Q_repaymentStatistical}
-          />
-          <Route
-            path="loan/account/statistical"
-            component={Q_LoanStatistical}
-          />
-          <Route
-            path="new-loan/account/statistical"
-            component={NewLoanStatistical}
-          />
-          <Route
-            path="new-repayment/statistical"
-            component={newRepaymentStatistical}
-          />
-          <Route path="consume/statistical" component={ConsumeStatistical} />
-          <Route path="statistic-board" component={StatisticBoard} />
-          <Route
-            path="loan/statistical-details"
-            component={loanStatisticalDetails}
-          />
-          {/*放款统计详情*/}
-          <Route
-            path="overdue/statistical-details"
-            component={overdueStatisticalDetails}
-          />
-          {/*逾期统计详情*/}
-          {/* api进件统计 */}
-          <Route path="report/apiStatistical" component={apiStatistical} />
-          {/* api逾期统计 */}
-          <Route
-            path="report/apiOverdueStatistical"
-            component={apiOverdueStatistical}
-          />
-          {/* api逾期统计查看详情 */}
-          <Route
-            path="report/apiOverdueStatistical/detail"
-            component={apiOverdueStatisticalDetail}
-          />
-        </Route>
-        {/*订单*/}
-        <Route path="/order">
-          <Route path="repayment/list-payoff" component={PayOffOrder} />
-          <Route path="repayment/list-wait" component={WaitForPayOrder} />
-          <Route path="repayment/audit-pass" component={AuditPassOrder} />
-        </Route>
-      </Route>
+      </Switch>
     </Router>
   );
 }

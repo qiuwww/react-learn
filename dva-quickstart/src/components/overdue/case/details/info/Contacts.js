@@ -1,7 +1,7 @@
 /**
  * Created by yujianfu on 2016/11/10.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import {
   Tabs,
   Card,
@@ -15,7 +15,7 @@ import {
 } from 'antd'
 import Styles from './../Index.less'
 import { fetchPost } from './../../../../../utils/request'
-class Contacts extends React.Component {
+class Contacts extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -202,8 +202,8 @@ class Contacts extends React.Component {
         collectionNo: this.state.item.collectionNo,
         followId: this.state.item.followId,
         followUp: this.state.item.followUp,
-        content,
-        type,
+        // content,
+        // type,
         items: this.state.selectRows,
       }).then(json => {
         if (json.code === 0) {

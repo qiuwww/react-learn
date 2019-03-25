@@ -2,7 +2,7 @@
  * Created by ziyu on 17/5/8.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import Styles from './Index.less'
 import SearchStyle from '../../common/less/search.less'
 import { message, Col, Icon,Button,Modal,Form ,Input} from 'antd'
@@ -14,7 +14,7 @@ import Detail from './details/Index'
 import tel from './../../../assets/tel.png';
 const FormItem = Form.Item
 
-class Index extends React.Component {
+class Index extends Component {
   constructor (props) {
     super(props)
     this.state = {

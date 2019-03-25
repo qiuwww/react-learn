@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 
 import { Card, Col } from 'antd'
 import List from './List'
@@ -6,7 +6,7 @@ import Search from './Search'
 import Detail from '../common/Record'
 import BillDetail from '../common/BillDetail'
 
-class Index extends React.Component {
+class Index extends Component {
   constructor (props) {
     super(props)
     this.state = {

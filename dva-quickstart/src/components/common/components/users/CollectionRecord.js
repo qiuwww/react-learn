@@ -1,10 +1,10 @@
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Table, Card, Icon } from 'antd'
 import { fetchPost } from '../../../../utils/request'
 import Styles from '../../../finance/common/detail/Index.less'
 
-class CollectionRecord extends React.Component {
+class CollectionRecord extends Component {
   constructor (props) {
     super(props)
     this.state = {

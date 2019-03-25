@@ -2,7 +2,7 @@
  * Created by ziyu on 2017/8/7.
  */
 
-import React, {Component, PropTypes} from 'react'
+import React, {Component, } from 'react'
 import moment from 'moment'
 import { connect } from 'dva';
 import { message, Table, Button } from 'antd';
@@ -13,7 +13,7 @@ import {origin} from '../../../utils/config'
 @connect(() => ({
 
 }))
-class PersonalCheckList extends React.Component {
+class PersonalCheckList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -187,10 +187,10 @@ class PersonalCheckList extends React.Component {
         jsonData: JSON.stringify({
           ...paramsJson,
         }),
-        exportType: 'checkStat', 
+        exportType: 'checkStat',
       },
       callback: () => {
-        location.href = url;
+        window.location.href = url;
       }
     });
   }

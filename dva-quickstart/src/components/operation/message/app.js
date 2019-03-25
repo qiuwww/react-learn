@@ -1,34 +1,48 @@
-import React from 'react'
-import {fetchPost} from './common/request'
-import { Tree,Table, Card, Button, Form, Message, Row, Col, DatePicker,Modal,Input,Lable, Select,Popconfirm } from 'antd'
-import {successNotify,errorNotify} from './common/common'
+import React, { Component } from "react";
+import { fetchPost } from "./common/request";
+import {
+  Tree,
+  Table,
+  Card,
+  Button,
+  Form,
+  Message,
+  Row,
+  Col,
+  DatePicker,
+  Modal,
+  Input,
+  Lable,
+  Select,
+  Popconfirm
+} from "antd";
+import { successNotify, errorNotify } from "./common/common";
 
-const FormItem = Form.Item
+const FormItem = Form.Item;
 
-class MessageApp extends React.Component {
-  constructor (props) {
-    super(props)
+class MessageApp extends Component {
+  constructor(props) {
+    super(props);
   }
 
   record = null;
 
   state = {
-    appData : [],
+    appData: [],
     sortedInfo: null,
     recordIsNew: false,
-    record :{},
-    appOwnerList : []
-  }
+    record: {},
+    appOwnerList: []
+  };
 
-
-  onNewApp = ()=>{
-    fetchPost('/appInfo/addAppInfo',this.state.record).then( json => {
+  onNewApp = () => {
+    fetchPost("/appInfo/addAppInfo", this.state.record).then(json => {
       if (json.code != 200) {
-        errorNotify('添加失败',json.msg)
+        errorNotify("添加失败", json.msg);
       } else {
-        successNotify('添加成功');
-        this.state.record = {}
-        this.getAppList()
+        successNotify("添加成功");
+        this.state.record = {};
+        this.getAppList();
       }
       // if (json.data != null) {
       //   var data = json.data
@@ -36,31 +50,29 @@ class MessageApp extends React.Component {
       //   this.getAppList();
       // }
     });
-  }
+  };
 
   appOwner = () => {
     fetchPost("/appInfo/getAllBusinessType").then(json => {
       this.setState({
-        appOwnerList : json.data || [],
-      })
-    })
-  }
+        appOwnerList: json.data || []
+      });
+    });
+  };
 
   componentDidMount() {
-    this.getAppList()
+    this.getAppList();
   }
 
   // 删除选中
-  onDeleteLists = ()=> {
-
-  }
+  onDeleteLists = () => {};
 
   getAppList() {
-    fetchPost('/appInfo/getAppInfo').then( json => {
+    fetchPost("/appInfo/getAppInfo").then(json => {
       if (json.data != null) {
-        var data = json.data
+        var data = json.data;
         this.setState({
-          appData: data || [],
+          appData: data || []
         });
       }
     });
@@ -74,10 +86,8 @@ class MessageApp extends React.Component {
       newModalVis: true,
       recordIsNew: true
     });
-
-
-  }
-/*
+  };
+  /*
   // 修改对话框
   showUpdateModal = (record) => {
     this.props.form.resetFields();
@@ -92,45 +102,42 @@ class MessageApp extends React.Component {
     });
   }
 */
-  handleVisOk = (e) => {
+  handleVisOk = e => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // 判断是新增还是修改
-        if (this.state.recordIsNew){
-          this.onNewApp()
+        if (this.state.recordIsNew) {
+          this.onNewApp();
         } else {
-          console.log(this.state.record? this.state.record : "")
+          console.log(this.state.record ? this.state.record : "");
         }
         this.setState({
-          newModalVis: false,
+          newModalVis: false
         });
       }
     });
-
-  }
-  handleVisCancel = (e) => {
+  };
+  handleVisCancel = e => {
     this.setState({
-      newModalVis: false,
+      newModalVis: false
     });
-  }
+  };
 
   //排序
   handleChange = (pagination, filters, sorter) => {
     this.setState({
       filteredInfo: filters,
-      sortedInfo: sorter,
+      sortedInfo: sorter
     });
-  }
-
+  };
 
   //模态框的code，name改变
-  recordNameChange= (e)=> {
+  recordNameChange = e => {
     this.state.record.appName = e.target.value;
-  }
-  recordBusinessIdChange= (value)=> {
-    this.state.record.businessTypeId = value
-  }
-
+  };
+  recordBusinessIdChange = value => {
+    this.state.record.businessTypeId = value;
+  };
 
   render() {
     let { sortedInfo, filteredInfo } = this.state;
@@ -139,27 +146,30 @@ class MessageApp extends React.Component {
 
     const columns = [
       {
-        title: 'app所属',
-        dataIndex: 'businessTypeName',
-        key: 'businessTypeName',
-        sorter: (a, b) => a.businessTypeName > b.businessTypeName ? 1 : -1,
-        sortOrder: sortedInfo.columnKey === 'businessTypeName' && sortedInfo.order,
+        title: "app所属",
+        dataIndex: "businessTypeName",
+        key: "businessTypeName",
+        sorter: (a, b) => (a.businessTypeName > b.businessTypeName ? 1 : -1),
+        sortOrder:
+          sortedInfo.columnKey === "businessTypeName" && sortedInfo.order
         // render: text => <a href="#">{text}</a>,
-      }, {
-      title: 'app码',
-      dataIndex: 'appCode',
-      key: 'appCode',
-      sorter: (a, b) => a.appCode > b.appCode ? 1 : -1,
-      sortOrder: sortedInfo.columnKey === 'appCode' && sortedInfo.order,
-      // render: text => <a href="#">{text}</a>,
-    }, {
-      title: 'app名称',
-      dataIndex: 'appName',
-      key: 'appName',
-      sorter: (a, b) => a.appName > b.appName ? 1 : -1,
-      sortOrder: sortedInfo.columnKey === 'appName' && sortedInfo.order,
-    }
-    /*
+      },
+      {
+        title: "app码",
+        dataIndex: "appCode",
+        key: "appCode",
+        sorter: (a, b) => (a.appCode > b.appCode ? 1 : -1),
+        sortOrder: sortedInfo.columnKey === "appCode" && sortedInfo.order
+        // render: text => <a href="#">{text}</a>,
+      },
+      {
+        title: "app名称",
+        dataIndex: "appName",
+        key: "appName",
+        sorter: (a, b) => (a.appName > b.appName ? 1 : -1),
+        sortOrder: sortedInfo.columnKey === "appName" && sortedInfo.order
+      }
+      /*
      , {
        title: '操作',
        dataIndex: 'action',
@@ -185,61 +195,70 @@ class MessageApp extends React.Component {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 4 },
+        sm: { span: 4 }
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 20 },
-      },
+        sm: { span: 20 }
+      }
     };
 
-    const appOwnerOpt = this.state.appOwnerList.map(d => <Option key={d.businessTypeId }>{d.businessTypeName}</Option>);
+    const appOwnerOpt = this.state.appOwnerList.map(d => (
+      <Select.Option key={d.businessTypeId}>{d.businessTypeName}</Select.Option>
+    ));
     const { getFieldDecorator } = this.props.form;
-    return(
+    return (
       <Card>
         <Row>
-          <Table dataSource={this.state.appData} onChange={this.handleChange} columns={columns} rowKey="appId" bordered
-                 footer={() =>
-                   <div>
-                     <Button onClick={this.showNewModal}>新增配置</Button>
-                     <Popconfirm title="确定删除这些数据?" onConfirm={() => this.onDeleteLists()}>
-                       <Button  style={{display:'none'}}>
-                         删除选中
-                       </Button>
-                     </Popconfirm>
-                   </div>
-                 }>
-          </Table>
-
+          <Table
+            dataSource={this.state.appData}
+            onChange={this.handleChange}
+            columns={columns}
+            rowKey="appId"
+            bordered
+            footer={() => (
+              <div>
+                <Button onClick={this.showNewModal}>新增配置</Button>
+                <Popconfirm
+                  title="确定删除这些数据?"
+                  onConfirm={() => this.onDeleteLists()}
+                >
+                  <Button style={{ display: "none" }}>删除选中</Button>
+                </Popconfirm>
+              </div>
+            )}
+          />
         </Row>
 
         <Modal
-          title={this.state.recordIsNew ? "新增":"修改"}
+          title={this.state.recordIsNew ? "新增" : "修改"}
           visible={this.state.newModalVis}
           onOk={this.handleVisOk}
           onCancel={this.handleVisCancel}
         >
           <Form>
-            <FormItem {...formItemLayout} label = "app名称">
-
-              {getFieldDecorator('appName', {
-                initialValue : this.state.record?this.state.record.appName || null : null,
-                rules: [
-                  { required: true, message: '请选择app!' },
-                ],
+            <FormItem {...formItemLayout} label="app名称">
+              {getFieldDecorator("appName", {
+                initialValue: this.state.record
+                  ? this.state.record.appName || null
+                  : null,
+                rules: [{ required: true, message: "请选择app!" }]
               })(
-                <Input onChange={this.recordNameChange} placeholder="请输入app名称"/>
+                <Input
+                  onChange={this.recordNameChange}
+                  placeholder="请输入app名称"
+                />
               )}
             </FormItem>
 
-            <FormItem {...formItemLayout} label = "所属">
-
-              {getFieldDecorator('businessTypeId', {
-                rules: [
-                  { required: true, message: '请选择app所属!' },
-                ],
+            <FormItem {...formItemLayout} label="所属">
+              {getFieldDecorator("businessTypeId", {
+                rules: [{ required: true, message: "请选择app所属!" }]
               })(
-                <Select placeholder="请选择app所属" onChange={this.recordBusinessIdChange }>
+                <Select
+                  placeholder="请选择app所属"
+                  onChange={this.recordBusinessIdChange}
+                >
                   {appOwnerOpt}
                 </Select>
               )}
@@ -251,7 +270,5 @@ class MessageApp extends React.Component {
   }
 }
 
-MessageApp = Form.create()(MessageApp)
-export default MessageApp
-
-
+MessageApp = Form.create()(MessageApp);
+export default MessageApp;

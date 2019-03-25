@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component,  } from 'react';
 import { connect } from 'dva';
 import { Card, Input, Button, Popconfirm, Table } from 'antd';
 import AddModal from './modal';
@@ -10,7 +10,7 @@ const TextArea = Input.TextArea;
 }))
 
 
-export default class ProductConfig extends React.Component {
+export default class ProductConfig extends Component {
   constructor (props) {
     super(props)
     this.state = {

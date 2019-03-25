@@ -2,11 +2,11 @@
  * Created by ziyu on 17/5/9.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Icon, Card, Col } from 'antd'
 import Styles from '../Index.less'
 import { fetchPost } from '../../../../../utils/request'
-class PhotoInfo extends React.Component {
+class PhotoInfo extends Component {
   constructor (props) {
     super(props)
     this.state = {

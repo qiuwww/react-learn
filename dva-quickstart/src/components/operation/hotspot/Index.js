@@ -1,7 +1,7 @@
 /**
  * Created by ziyu on 17/3/15.
  */
-import React, { Component, PropTypes } from 'react';
+import React, { Component,  } from 'react';
 import { Table, Button, Popconfirm } from 'antd';
 import { fetchPost } from '../../../utils/request'
 import {history} from '../../../utils/config'
@@ -9,7 +9,7 @@ import {history} from '../../../utils/config'
 import Styles from './Index.less';
 
 
-class HotMenu extends React.Component {
+class HotMenu extends Component {
   constructor (props) {
     super(props);
     this.state = {

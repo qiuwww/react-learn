@@ -1,40 +1,56 @@
-import React from 'react'
-import {fetchPost} from './common/request'
-import {Tree, Table, Card, Button, Form, notification,Message, Row, Col, DatePicker,Modal,Input,Lable, Select,Popconfirm } from 'antd'
-import {treeDeal} from './common/common.js'
-import {successNotify,errorNotify} from './common/common'
+import React, { Component } from "react";
+import { fetchPost } from "./common/request";
+import {
+  Tree,
+  Table,
+  Card,
+  Button,
+  Form,
+  notification,
+  Message,
+  Row,
+  Col,
+  DatePicker,
+  Modal,
+  Input,
+  Lable,
+  Select,
+  Popconfirm
+} from "antd";
+import { treeDeal } from "./common/common.js";
+import { successNotify, errorNotify } from "./common/common";
 
-const TreeNode = Tree.TreeNode
-const FormItem = Form.Item
+const TreeNode = Tree.TreeNode;
+const FormItem = Form.Item;
 
-class MessageBiz extends React.Component {
-  constructor (props) {
-    super(props)
+class MessageBiz extends Component {
+  constructor(props) {
+    super(props);
   }
 
   state = {
-    bizFuncDate : [],
+    bizFuncDate: [],
     sortedInfo: null,
-    newModalVis : false,
-    record :{},
-    appList :[],
-    servicerList :[],
-    selectedKey:null
-  }
+    newModalVis: false,
+    record: {},
+    appList: [],
+    servicerList: [],
+    selectedKey: null
+  };
 
-  componentDidMount= () => {
+  componentDidMount = () => {
     this.getBizFuncList();
     this.getAppList();
-  }
+  };
 
   //获取app列表
   getAppList() {
-    fetchPost('/appInfo/getAppInfo',).then( json => {
+    fetchPost("/appInfo/getAppInfo").then(json => {
       if (json.data != null) {
-        var data = json.data
-        treeDeal(data)
+        var data = json.data;
+        treeDeal(data);
         this.setState({
-          appList: data || [],
+          appList: data || []
         });
       }
     });
@@ -42,167 +58,174 @@ class MessageBiz extends React.Component {
   //获取业务列表
   getBizFuncList(appId) {
     var param = null;
-    if(appId) {
-      param = {}
-      param.appId = appId
+    if (appId) {
+      param = {};
+      param.appId = appId;
     }
-    fetchPost('/bizFunc/getBizFuncList',param).then( json => {
+    fetchPost("/bizFunc/getBizFuncList", param).then(json => {
       if (json.data != null) {
         this.setState({
-          bizFuncDate: json.data || [],
+          bizFuncDate: json.data || []
         });
       }
     });
   }
   //新增业务
   newBizFunc() {
-    fetchPost('/bizFunc/newBizFunc',this.state.record).then( json => {
+    fetchPost("/bizFunc/newBizFunc", this.state.record).then(json => {
       //
       if (json.code != 200) {
-        errorNotify('添加失败',json.msg)
+        errorNotify("添加失败", json.msg);
       } else {
-        successNotify('新增业务成功')
-        this.state.record = {}
-        console.log(this.state.record )
+        successNotify("新增业务成功");
+        this.state.record = {};
+        console.log(this.state.record);
         if (this.state.selectedKey)
-          this.loadTemplateInfo(this.state.selectedKey)
-        else{
-          this.loadTemplateInfo()
+          this.loadTemplateInfo(this.state.selectedKey);
+        else {
+          this.loadTemplateInfo();
         }
       }
     });
   }
 
   // 加载树形控件（app列表）
-  onLoadTreeData = (treeNode) => {
-    return new Promise((resolve) => {
+  onLoadTreeData = treeNode => {
+    return new Promise(resolve => {
       if (treeNode.props.children) {
         resolve();
         return;
       }
     });
-  }
-  renderTreeNodes = (data) => {
-    return data.map((item) => {
-      return <TreeNode title={item.appName} isLeaf={item.isLeaf} key={item.appId}   dataRef={item} />;
+  };
+  renderTreeNodes = data => {
+    return data.map(item => {
+      return (
+        <TreeNode
+          title={item.appName}
+          isLeaf={item.isLeaf}
+          key={item.appId}
+          dataRef={item}
+        />
+      );
     });
-  }
+  };
   // 当点击app时 显示对应app信息
-  loadTemplateInfo = (selectedKeys) => {
+  loadTemplateInfo = selectedKeys => {
     if (selectedKeys) {
-      this.state.selectedKey = selectedKeys
-      this.getBizFuncList(selectedKeys[0])
+      this.state.selectedKey = selectedKeys;
+      this.getBizFuncList(selectedKeys[0]);
     } else {
-      this.getBizFuncList(this.state.selectedKey )
+      this.getBizFuncList(this.state.selectedKey);
     }
-  }
-
+  };
 
   // 新增和修改对话框的维护
   showNewModal = () => {
     this.props.form.resetFields();
-    console.log(this.state.record)
-    this.getAppList()
-    this.state.record.appId = this.state.selectedKey?this.state.selectedKey[0]: this.state.record.appId;
+    console.log(this.state.record);
+    this.getAppList();
+    this.state.record.appId = this.state.selectedKey
+      ? this.state.selectedKey[0]
+      : this.state.record.appId;
 
     this.setState({
       newModalVis: true,
       recordIsNew: true
     });
-
-  }
+  };
   // 新增和修改对话框的维护
-  showUpdateModal = (record) => {
+  showUpdateModal = record => {
     this.props.form.resetFields();
-    this.state.record = record
+    this.state.record = record;
     this.setState({
-      record : {},
+      record: {},
       newModalVis: true,
-      recordIsNew: false,
+      recordIsNew: false
     });
-  }
-  handleVisOk = (e) => {
-
+  };
+  handleVisOk = e => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // 判断是新增还是修改
-        if(this.state.recordIsNew){
-          this.newBizFunc()
+        if (this.state.recordIsNew) {
+          this.newBizFunc();
         }
         this.setState({
-          newModalVis: false,
+          newModalVis: false
         });
       }
     });
-
-  }
-  handleVisCancel = (e) => {
+  };
+  handleVisCancel = e => {
     this.setState({
-      newModalVis: false,
+      newModalVis: false
     });
-  }
+  };
 
   // 新增业务所填字段
-  recordAppNameChange= (value, option)=> {
+  recordAppNameChange = (value, option) => {
     this.state.record.bizName = null;
     this.props.form.resetFields();
 
     this.state.record.appId = value;
     this.state.appList.map(app => {
-      var a = this.state.record
-      if (app.appId == value){
-        a.businessTypeId = app.businessTypeId
+      var a = this.state.record;
+      if (app.appId == value) {
+        a.businessTypeId = app.businessTypeId;
       }
       this.setState({
         record: a
-      })
-    })
-  }
-  recordBizNameChange= (e)=> {
+      });
+    });
+  };
+  recordBizNameChange = e => {
     this.state.record.bizName = e.target.value;
-  }
-  recordDescChange= (e)=> {
+  };
+  recordDescChange = e => {
     this.state.record.descInfo = e.target.value;
-  }
+  };
 
   // 排序
   handleChange = (pagination, filters, sorter) => {
     this.setState({
       filteredInfo: filters,
-      sortedInfo: sorter,
+      sortedInfo: sorter
     });
-  }
+  };
 
   // 删除选中
-  onDeleteLists = () => {
-  }
+  onDeleteLists = () => {};
 
   render() {
     let { sortedInfo, filteredInfo } = this.state;
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
 
-    const columns = [{
-      title: '业务码',
-      dataIndex: 'bizCode',
-      key: 'bizCode',
-      sorter: (a, b) => a.bizCode > b.bizCode ? 1 : -1,
-      sortOrder: sortedInfo.columnKey === 'bizCode' && sortedInfo.order,
-      // render: text => <a href="#">{text}</a>,
-    }, {
-      title: 'app名称',
-      dataIndex: 'appName',
-      key: 'appName',
-      sorter: (a, b) => a.appName > b.appName ? 1 : -1,
-      sortOrder: sortedInfo.columnKey === 'appName' && sortedInfo.order,
-    }, {
-      title: '业务名',
-      dataIndex: 'bizName',
-      key: 'bizName',
-      sorter: (a, b) => a.bizName > b.bizName ? 1 : -1,
-      sortOrder: sortedInfo.columnKey === 'bizName' && sortedInfo.order,
-    },
-/*      {
+    const columns = [
+      {
+        title: "业务码",
+        dataIndex: "bizCode",
+        key: "bizCode",
+        sorter: (a, b) => (a.bizCode > b.bizCode ? 1 : -1),
+        sortOrder: sortedInfo.columnKey === "bizCode" && sortedInfo.order
+        // render: text => <a href="#">{text}</a>,
+      },
+      {
+        title: "app名称",
+        dataIndex: "appName",
+        key: "appName",
+        sorter: (a, b) => (a.appName > b.appName ? 1 : -1),
+        sortOrder: sortedInfo.columnKey === "appName" && sortedInfo.order
+      },
+      {
+        title: "业务名",
+        dataIndex: "bizName",
+        key: "bizName",
+        sorter: (a, b) => (a.bizName > b.bizName ? 1 : -1),
+        sortOrder: sortedInfo.columnKey === "bizName" && sortedInfo.order
+      },
+      /*      {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
@@ -210,13 +233,13 @@ class MessageBiz extends React.Component {
       sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
     },*/
       {
-      title: '描述',
-      dataIndex: 'descInfo',
-      key: 'descInfo',
-      sorter: (a, b) => a.descInfo > b.descInfo ? 1 : -1,
-      sortOrder: sortedInfo.columnKey === 'descInfo' && sortedInfo.order,
+        title: "描述",
+        dataIndex: "descInfo",
+        key: "descInfo",
+        sorter: (a, b) => (a.descInfo > b.descInfo ? 1 : -1),
+        sortOrder: sortedInfo.columnKey === "descInfo" && sortedInfo.order
 
-     /* }, {
+        /* }, {
       title: '操作',
       dataIndex: 'action',
       key: 'action',
@@ -235,109 +258,123 @@ class MessageBiz extends React.Component {
           </div>
         );
       }*/
-    }];
+      }
+    ];
 
     // 表单排版
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 4 },
+        sm: { span: 4 }
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 20 },
-      },
+        sm: { span: 20 }
+      }
     };
 
     // app单选框
-    const appOptions = this.state.appList.map(d => <Option key={d.appId}>{d.appName}</Option>);
+    const appOptions = this.state.appList.map(d => (
+      <Select.Option key={d.appId}>{d.appName}</Select.Option>
+    ));
     // 服务商单选框
-    const servicerOptions = this.state.servicerList.map(d => <Option key={d.servicerId}>{d.servicerName}</Option>);
+    const servicerOptions = this.state.servicerList.map(d => (
+      <Select.Option key={d.servicerId}>{d.servicerName}</Select.Option>
+    ));
     const { getFieldDecorator } = this.props.form;
 
-    return(
+    return (
       <Card>
-          <Row>
-            <Col span={3}>
-              <Tree ref="tree" loadData={this.onLoadTreeData} onSelect={this.loadTemplateInfo} >
-                {this.renderTreeNodes(this.state.appList)}
-              </Tree>
-            </Col>
-            <Col span={21}>
-              <Table ref="table" dataSource={this.state.bizFuncDate} onChange={this.handleChange} columns={columns} bordered
-                   rowKey="bizId"
-                   footer={() =>
-                     <div>
-                       <Button onClick={this.showNewModal}>新增配置</Button>
-                       <Popconfirm title="确定删除这些数据?" onConfirm={() => this.onDeleteLists()}>
-                         <Button  style={{display:'none'}}>
-                           删除选中
-                         </Button>
-                       </Popconfirm>
-                     </div>
-                   }>
-              </Table>
-            </Col>
-          </Row>
+        <Row>
+          <Col span={3}>
+            <Tree
+              ref="tree"
+              loadData={this.onLoadTreeData}
+              onSelect={this.loadTemplateInfo}
+            >
+              {this.renderTreeNodes(this.state.appList)}
+            </Tree>
+          </Col>
+          <Col span={21}>
+            <Table
+              ref="table"
+              dataSource={this.state.bizFuncDate}
+              onChange={this.handleChange}
+              columns={columns}
+              bordered
+              rowKey="bizId"
+              footer={() => (
+                <div>
+                  <Button onClick={this.showNewModal}>新增配置</Button>
+                  <Popconfirm
+                    title="确定删除这些数据?"
+                    onConfirm={() => this.onDeleteLists()}
+                  >
+                    <Button style={{ display: "none" }}>删除选中</Button>
+                  </Popconfirm>
+                </div>
+              )}
+            />
+          </Col>
+        </Row>
 
         <Modal
-          title={this.state.recordIsNew ? "新增":"修改"}
+          title={this.state.recordIsNew ? "新增" : "修改"}
           visible={this.state.newModalVis}
           onOk={this.handleVisOk}
           onCancel={this.handleVisCancel}
         >
-          <Form >
+          <Form>
+            <FormItem {...formItemLayout} label="app名称">
+              {getFieldDecorator("appId", {
+                initialValue: this.state.record
+                  ? this.state.record.appId || ""
+                  : "",
 
-            <FormItem {...formItemLayout} label = "app名称">
-
-              {getFieldDecorator('appId', {
-                initialValue : this.state.record? this.state.record.appId || "" : "",
-
-                rules: [
-                  { required: true, message: '请输入app名称!' },
-                ],
+                rules: [{ required: true, message: "请输入app名称!" }]
               })(
-
-                <Select placeholder="Please" onSelect={this.recordAppNameChange}>
+                <Select
+                  placeholder="Please"
+                  onSelect={this.recordAppNameChange}
+                >
                   {appOptions}
                 </Select>
               )}
             </FormItem>
 
-
-            <FormItem {...formItemLayout} label = "业务名">
-
-              {getFieldDecorator('bizName', {
-                initialValue : this.state.record? this.state.record.bizName || "" : "",
-                rules: [
-                  { required: true, message: '请输入业务名' },
-                ],
+            <FormItem {...formItemLayout} label="业务名">
+              {getFieldDecorator("bizName", {
+                initialValue: this.state.record
+                  ? this.state.record.bizName || ""
+                  : "",
+                rules: [{ required: true, message: "请输入业务名" }]
               })(
-                <Input  placeholder="请输入业务名" onChange={this.recordBizNameChange}/>
+                <Input
+                  placeholder="请输入业务名"
+                  onChange={this.recordBizNameChange}
+                />
               )}
             </FormItem>
 
-            <FormItem {...formItemLayout} label = "描述">
-
-              {getFieldDecorator('descInfo', {
-                initialValue : this.state.record? this.state.record.descInfo || "" : "",
-                rules: [],
+            <FormItem {...formItemLayout} label="描述">
+              {getFieldDecorator("descInfo", {
+                initialValue: this.state.record
+                  ? this.state.record.descInfo || ""
+                  : "",
+                rules: []
               })(
-                <Input placeholder="请输入描述" onChange={this.recordDescChange}/>
+                <Input
+                  placeholder="请输入描述"
+                  onChange={this.recordDescChange}
+                />
               )}
             </FormItem>
-
-
           </Form>
         </Modal>
-
       </Card>
     );
   }
 }
 
-
-MessageBiz = Form.create()(MessageBiz)
-export default MessageBiz
-
-
+MessageBiz = Form.create()(MessageBiz);
+export default MessageBiz;

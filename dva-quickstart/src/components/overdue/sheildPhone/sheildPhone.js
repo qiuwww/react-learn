@@ -1,10 +1,10 @@
 /**
  * Created by xuxiaoqi on 2017/12/21.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import { Button} from 'antd'
 import {fetchPost} from '../../../utils/request'
-class Index extends React.Component {
+class Index extends Component {
   constructor (props) {
     super(props)
     this.state = {

@@ -65,7 +65,7 @@ export let fetchPost = (url, body = {}, method, header = {}) => {
   }).then(checkStatus).then(parseJSON).then(res => {
     if (res.code && res.code === 700000) {
       window.localStorage.clear()
-      history.push('/login')
+      // history.push('/login')
     } else {
       return res
     }

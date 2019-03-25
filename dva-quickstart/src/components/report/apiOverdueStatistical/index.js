@@ -82,13 +82,7 @@ export default class ApiOverdueStatistical extends Component {
   };
   render() {
     const { startDate, endDate, isNewUser } = this.state;
-    const {
-      selectList,
-      list,
-      pagination,
-      loading,
-      channleType
-    } = this.props;
+    const { selectList, list, pagination, loading, channleType } = this.props;
     const columns = [
       {
         title: "应还日期",

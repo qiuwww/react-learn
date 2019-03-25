@@ -1,26 +1,26 @@
-import React, {Component, PropTypes} from 'react'
-import {Tabs, Card, Form, message, Col} from 'antd';
-import Styles from './Index.less'
-import Register from './info/Register'
-import LoanStatus from './info/LoanStatus'
-import Identity from '../../../common/components/users/Identity'
-import Profession from '../../../common/components/users/Profession'
-import CardInfo from '../../../common/components/users/CardInfo'
-import CollectionRecord from '../../../common/components/users/CollectionRecord'
-import BorrowRecord from '../../../common/components/users/BorrowRecord'
-import CheckRecord from '../../../common/components/users/CheckRecord'
-import RepayDetail from '../../../common/components/users/RepayDetail'
-import ApplyRecord from '../../../common/components/users/applyRecord'
-import {fetchPost} from '../../../../utils/request'
+import React, { Component } from "react";
+import { Tabs, Card, Form, message, Col } from "antd";
+import Styles from "./Index.less";
+import Register from "./info/Register";
+import LoanStatus from "./info/LoanStatus";
+import Identity from "../../../common/components/users/Identity";
+import Profession from "../../../common/components/users/Profession";
+import CardInfo from "../../../common/components/users/CardInfo";
+import CollectionRecord from "../../../common/components/users/CollectionRecord";
+import BorrowRecord from "../../../common/components/users/BorrowRecord";
+import CheckRecord from "../../../common/components/users/CheckRecord";
+import RepayDetail from "../../../common/components/users/RepayDetail";
+import ApplyRecord from "../../../common/components/users/applyRecord";
+import { fetchPost } from "../../../../utils/request";
 
 const TabPane = Tabs.TabPane;
 
-class Detail extends React.Component {
+class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userId: props.userId,
-      tradeNo:props.tradeNo,
+      tradeNo: props.tradeNo,
       activeKey: props.activeKey,
       showDetail: true,
       showShade: false,
@@ -33,25 +33,25 @@ class Detail extends React.Component {
       this.setState({
         activeKey: props.activeKey,
         userId: props.userId,
-        tradeNo:props.tradeNo
-      })
+        tradeNo: props.tradeNo
+      });
     }
   }
 
   onChange(activeKey) {
-    this.setState({activeKey,});
+    this.setState({ activeKey });
   }
 
   changeField(field, value) {
     this.setState({
-      [field]: value,
+      [field]: value
     });
   }
 
   changeModal() {
     this.setState({
       visible: !this.state.visible
-    })
+    });
   }
 
   getDetailClass() {
@@ -63,7 +63,7 @@ class Detail extends React.Component {
   }
 
   switch() {
-    this.handleOperate()
+    this.handleOperate();
   }
 
   handleOperate() {
@@ -77,27 +77,26 @@ class Detail extends React.Component {
   handleCancel() {
     this.setState({
       visible: false
-    })
+    });
   }
 
   handleOk() {
     this.setState({
       visible: false
-    })
+    });
   }
 
   chooseTag(id, name) {
     let self = this;
-    if (self.props.form.getFieldValue('checkReason')) {
+    if (self.props.form.getFieldValue("checkReason")) {
       this.props.form.setFieldsValue({
-        checkReason: `${self.props.form.getFieldValue('checkReason') + name};`
-      })
+        checkReason: `${self.props.form.getFieldValue("checkReason") + name};`
+      });
     } else {
       this.props.form.setFieldsValue({
         checkReason: `${name};`
-      })
+      });
     }
-
   }
 
   render() {
@@ -106,7 +105,6 @@ class Detail extends React.Component {
         <div className={this.getDetailClass()}>
           {/*<Card bodyStyle={{padding:0}} bordered={false}>*/}
           <div className="">
-
             {/*<Tabs className={Styles.tabs} activeKey={this.state.activeKey} onChange={(e) => this.onChange(e)}>*/}
 
             {/*<TabPane tab="个人信息" key="detail">*/}
@@ -150,28 +148,40 @@ class Detail extends React.Component {
             {/*</Tabs>*/}
             <div>
               {/*<BorrowRecord userId={this.state.userId}/>*/}
-              <div style={{height:'auto',float:'left',width:'50%'}}>
+              <div style={{ height: "auto", float: "left", width: "50%" }}>
+                <ApplyRecord
+                  userId={this.state.userId}
+                  tradeNo={this.state.tradeNo}
+                />
 
-                <ApplyRecord userId={this.state.userId} tradeNo={this.state.tradeNo}/>
-
-                <CollectionRecord userId={this.state.userId} tradeNo={this.state.tradeNo}/>
+                <CollectionRecord
+                  userId={this.state.userId}
+                  tradeNo={this.state.tradeNo}
+                />
               </div>
-              <div style={{height:'auto',float:'left',width:'50%'}}>
-                <CheckRecord userId={this.state.userId} tradeNo={this.state.tradeNo}/>
-                <CardInfo userId={this.state.userId} type="userManage"/>
+              <div style={{ height: "auto", float: "left", width: "50%" }}>
+                <CheckRecord
+                  userId={this.state.userId}
+                  tradeNo={this.state.tradeNo}
+                />
+                <CardInfo userId={this.state.userId} type="userManage" />
               </div>
-              <RepayDetail userId={this.state.userId} tradeNo={this.state.tradeNo}/>
-              <br/>
+              <RepayDetail
+                userId={this.state.userId}
+                tradeNo={this.state.tradeNo}
+              />
+              <br />
               {/*<CheckRecord userId={this.state.userId}/>*/}
-
             </div>
           </div>
 
-          <div className={this.getShadeClass()} onClick={() => {
-            this.switch()
-          }}></div>
+          <div
+            className={this.getShadeClass()}
+            onClick={() => {
+              this.switch();
+            }}
+          />
           {/*</Card>*/}
-
         </div>
       </div>
     );
@@ -180,4 +190,4 @@ class Detail extends React.Component {
 
 Detail = Form.create()(Detail);
 
-export default Detail
+export default Detail;

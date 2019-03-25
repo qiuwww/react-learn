@@ -1,7 +1,7 @@
 /**
  * Created by yujianfu on 2016/11/10.
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component,  } from 'react'
 import {
   DatePicker,
   Table,
@@ -29,7 +29,7 @@ const Panel = Collapse.Panel
 const FormItem = Form.Item
 const Option = Select.Option
 
-class OverdueBillNoOperate extends React.Component {
+class OverdueBillNoOperate extends Component {
   constructor (props) {
     super(props)
     this.state = {

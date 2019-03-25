@@ -1,12 +1,12 @@
 /**
  * Created by yujianfu on 2016/11/10.
  */
-import React, {Component, PropTypes} from 'react'
+import React, {Component, } from 'react'
 import {Tabs, Card, Table} from 'antd'
 import Styles from './../Index.less'
 import {fetchPost} from './../../../../../utils/request'
 
-class DeliverAddress extends React.Component {
+class DeliverAddress extends Component {
   constructor (props) {
     super(props)
     this.state = {

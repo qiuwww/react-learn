@@ -2,7 +2,7 @@
  * Created by ziyu on 17/5/15.
  */
 
-import React, { Component, PropTypes } from "react";
+import React, { Component,  } from "react";
 import {
   Card,
   Table,
@@ -16,7 +16,7 @@ import {
 import Styles from "../Index.less";
 import { fetchPost } from "../../../../../utils/request";
 
-class Relation extends React.Component {
+class Relation extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -365,7 +365,9 @@ class Relation extends React.Component {
         <Card
           title="社会关系(紧急联系人)"
           extra={this.message()}
-          bodyStyle={{ padding: 0, height: 186, overflowY: scroll }}
+          bodyStyle={{ padding: 0, height: 186,
+            // overflowY: scroll
+          }}
           noHovering={true}
         >
           <Table

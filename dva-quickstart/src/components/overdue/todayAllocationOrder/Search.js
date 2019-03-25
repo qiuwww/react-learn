@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component, } from 'react'
 import { Form, Input, message, Row, Col, Button, DatePicker, Checkbox, Select, Icon, Radio, Card} from 'antd'
 import {fetchPost} from '../../../utils/request'
 
@@ -7,7 +7,7 @@ const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 const Option = Select.Option
 
-class Search extends React.Component {
+class Search extends Component {
   constructor (props) {
     super(props)
     this.state = {
