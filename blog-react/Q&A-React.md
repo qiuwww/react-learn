@@ -641,3 +641,11 @@ static getDerivedStateFromProps(nextProps, prevState) {
 - 不断发展：React得到了Facebook专业开发人员的支持，他们不断寻找改进方法致力于使其更先进。
 - 丰富的JavaScript库：来自世界各地的贡献者正在努力添加更多功能。
 - Web或移动平台： React提供React Native平台，可通过相同的React组件模型为iOS和Android开发本机呈现的应用程序。
+
+### PureComponent
+
+React.PureComponent 类似于 React.Component。它们的不同之处在于React.Component 没有实现 shouldComponentUpdate()，**但是 React.PureComponent实现了它**。采用对属性和状态用浅比较的方式。
+
+需要使用shouldComponentUpdate的时候再去继承PureComponent。
+
+在某些场景下你可以使用 React.PureComponent 来提升性能。
