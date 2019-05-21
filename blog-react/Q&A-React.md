@@ -627,25 +627,25 @@ static getDerivedStateFromProps(nextProps, prevState) {
 
 你不一定会用到这个生命周期方法，但在某些特殊情况下它可能会派上用场，特别是当你需要在 DOM 更新后从中获取一些信息。
 
-也就是如果需要在数据更新之后依据dom进行操作，就在这里操作。
+也就是如果需要在数据更新之后依据 dom 进行操作，就在这里操作。
 
 ## news
 
-如果你能深入理解React的灵魂，包括虚拟DOM， JSX ，函数式编程和immutable，单向数据流，组件化抽象，生命周期等，在面对其他轮子时你也能做到得心应手。
+如果你能深入理解 React 的灵魂，包括虚拟 DOM， JSX ，函数式编程和 immutable，单向数据流，组件化抽象，生命周期等，在面对其他轮子时你也能做到得心应手。
 
-### React之所以这么受欢迎，得益于它自身优势：
+### React 之所以这么受欢迎，得益于它自身优势：
 
-- 灵活性和响应性：React提供最大的灵活性和响应能力。
-- 虚拟DOM：由于它基于文档对象模型，因此它允许浏览器友好地以HTML，XHTML或XML格式排列文档。
-- 可扩展性：由于其灵活的结构和可扩展性，React已被证明对大型应用程序更好。
-- 不断发展：React得到了Facebook专业开发人员的支持，他们不断寻找改进方法致力于使其更先进。
-- 丰富的JavaScript库：来自世界各地的贡献者正在努力添加更多功能。
-- Web或移动平台： React提供React Native平台，可通过相同的React组件模型为iOS和Android开发本机呈现的应用程序。
+- 灵活性和响应性：React 提供最大的灵活性和响应能力。
+- 虚拟 DOM：由于它基于文档对象模型，因此它允许浏览器友好地以 HTML，XHTML 或 XML 格式排列文档。
+- 可扩展性：由于其灵活的结构和可扩展性，React 已被证明对大型应用程序更好。
+- 不断发展：React 得到了 Facebook 专业开发人员的支持，他们不断寻找改进方法致力于使其更先进。
+- 丰富的 JavaScript 库：来自世界各地的贡献者正在努力添加更多功能。
+- Web 或移动平台： React 提供 React Native 平台，可通过相同的 React 组件模型为 iOS 和 Android 开发本机呈现的应用程序。
 
 ### PureComponent
 
-React.PureComponent 类似于 React.Component。它们的不同之处在于React.Component 没有实现 shouldComponentUpdate()，**但是 React.PureComponent实现了它**。采用对属性和状态用浅比较的方式。
+React.PureComponent 类似于 React.Component。它们的不同之处在于 React.Component 没有实现 shouldComponentUpdate()，**但是 React.PureComponent 实现了它**。采用对属性和状态用浅比较的方式。
 
-需要使用shouldComponentUpdate的时候再去继承PureComponent。
+需要使用 shouldComponentUpdate 的时候再去继承 PureComponent。
 
 在某些场景下你可以使用 React.PureComponent 来提升性能。
