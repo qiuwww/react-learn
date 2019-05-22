@@ -38,21 +38,21 @@ export default class Feature0_4 extends Component {
       <React.StrictMode key="list">
         <ul className={styles.feature0_4}>
           <li>
+            RenderRelate：
             <RenderRelate />
           </li>
           <li>
-            <h2>
-              这里确实可以捕获到错误，进行局部的错误处理，不影响整体的显示。
-              在未来的版本中被废弃。 使用static
-              getDerivedStateFromError()处理退路渲染来代替。
-              <a
-                href="https://react.docschina.org/docs/react-component.html#componentdidcatch"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                详细参考这里
-              </a>
-            </h2>
+            ErrorBoundary：
+            这里确实可以捕获到错误，进行局部的错误处理，不影响整体的显示。
+            在未来的版本中被废弃。 使用static
+            getDerivedStateFromError()处理退路渲染来代替。
+            <a
+              href="https://react.docschina.org/docs/react-component.html#componentdidcatch"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              详细参考这里
+            </a>
             <ErrorBoundary>
               <p>
                 These two counters are inside the same error boundary. If one
@@ -62,6 +62,7 @@ export default class Feature0_4 extends Component {
             </ErrorBoundary>
           </li>
           <li>
+            Portals：这里可以看到portals-root与root的内容不在同一个父标签中。最终不被渲染到root标签中。
             <Portals>
               <p>
                 这里可以看到portals-root与root的内容不在同一个父标签中。最终不被渲染到root标签中。
@@ -70,7 +71,7 @@ export default class Feature0_4 extends Component {
             </Portals>
           </li>
           <li>
-            <qwer asd="asd">V16+，支持自定义标签和属性</qwer>
+            qwer：<qwer asd="asd">V16+，支持自定义标签和属性</qwer>
           </li>
           <li>优化SSR</li>
           <li>
@@ -93,7 +94,7 @@ export default class Feature0_4 extends Component {
             </React.Fragment>
           </li>
           <li>
-            getDerivedStateFromProps:这个方法用于替代componentWillReceiveProps
+            getDerivedStateFromProps: 这个方法用于替代componentWillReceiveProps
           </li>
           <li>
             <h3>跨组件数据传递的方法，不推荐使用</h3>
