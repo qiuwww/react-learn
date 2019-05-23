@@ -3,9 +3,9 @@ import Feature0_4 from "./pages/feature0_4/Feature0_4";
 import Feature4_6 from "./pages/feature4_6/Feature4_6";
 import Hoc from "./pages/hoc/index.js";
 import Hooks from "./pages/hooks/index.js";
+import ShouldComponentUpdateCycleTest from "./pages/cycle/ShouldComponentUpdateCycleTest.js";
 // using ES6 modules
 import { HashRouter, Route, Link, Switch } from "react-router-dom";
-import Feature8 from "./pages/feature8/Feature8";
 class Layout extends Component {
   render() {
     return (
@@ -20,6 +20,11 @@ class Layout extends Component {
           </li>
           <li>
             <Link to="/hoc">Hoc，higherOrderComponent，高阶组件</Link>
+          </li>
+          <li>
+            <Link to="/cycle/ShouldComponentUpdateCycleTest">
+              测试shouldComponentUpdate接口
+            </Link>
           </li>
           <li>
             <Link to="/hooks">
@@ -45,6 +50,10 @@ function Routers() {
           <Route path="/feature4_6" component={Feature4_6} />
           <Route path="/hoc" component={Hoc} />
           <Route path="/hooks" component={Hooks} />
+          <Route
+            path="/cycle/ShouldComponentUpdateCycleTest"
+            component={ShouldComponentUpdateCycleTest}
+          />
         </Layout>
       </Switch>
     </HashRouter>
