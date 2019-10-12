@@ -45,6 +45,12 @@ React 进行开发时所有的 DOM 构造都是通过**虚拟 DOM 进行**，每
 2. 定义 UI 状态的最小(但完整)表示。
 3. 确定你的 State（props|state） 应该位于哪里。
 
+### 为什么要引入 React
+
+`import React, {Component} from 'react'`，从本质上讲，JSX 只是为 React.createElement(component, props, ...children) 函数提供的语法糖。
+
+这里的 React 在 babel 转化的过程中要用到，所以需要引入。
+
 ## state 与 props
 
 ### 正确地使用状态（state）
@@ -65,6 +71,75 @@ this.setState((prevState, props) => ({
 
 - 状态更新合并：当你调用 setState() 时，React 将你提供的对象合并到当前状态。
 
+### 为什么 constructor 里要调用 super 和传递 props
+
+```js
+class Checkbox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isOn: true };
+  }
+  // ...
+}
+
+// 等价于如下
+// class fields proposal形式，这使得像 state = {} 这类表达式能够在需要的情况下引用 this.props 和 this.context 的内容。
+class Checkbox extends React.Component {
+  state = { isOn: true };
+  // ...
+}
+```
+
+在 JavaScript 中，super 指的是父类（即超类）的构造函数。一般在 React 组件中，指代 React.Component 这个父类的构造函数。这里应该用到的是原型继承。
+
+在调用父类的构造函数之前(也就是 super 之前)，你是不能在 constructor 中使用 this 关键字的。
+
+在组件实例化的时候，会有如下`super(props); => this.props = props;`，这样在构造函数内的语句就可以使用 props 了，否则如果不传入 props，这个时候也会在实例生成的时候添加 props，这样就会导致**在构造函数内的语句**没法使用 props。
+
+即便你调用 super() 的时候没有传入 props，你依然能够在 render 函数或其他方法中访问到 this.props。这是因为在生成实例的时候，props 会被添加到实例上。
+
+```js
+// React 内部
+const instance = new YourComponent(props);
+instance.props = props;
+```
+
+### 为什么要 setState
+
+setState 做的事情**不仅仅只是修改了 this.state** 的值，另外最重要的是它会触发 React 的**更新机制**，会进行 diff ，然后将 patch 部分更新到真实 dom 里。
+
+如果你直接 this.state.xx == oo 的话，state 的值确实会改，但是改了不会触发 UI 的更新，那就不是数据驱动了。这样的话，在不需要触发 ui 更新的时候倒是可以一用啊。
+
+#### setState 的更新原理
+
+#### setState 是同步还是异步
+
+**执行过程代码同步的**，只是合成事件和钩子函数的调用顺序在更新之前，导致在合成事件和钩子函数中**没法立马拿到更新后的值，形式了所谓的“异步”**，所以表现出来有时是同步，有时是“异步”。
+
+只在合成事件和钩子函数中是“异步”的，在原生事件(获取 dom，手动绑定事件)和 setTimeout/setInterval 等原生 API 中都是同步的。
+
+简单的可以理解为**被 React 控制的函数里面就会表现出“异步”**，反之表现为同步。
+
+##### 那为什么会出现异步的情况呢
+
+为了**做性能优化**，将 state 的更新延缓到最后**批量合并再去渲染**对于应用的性能优化是有极大好处的，**如果每次的状态改变都去重新渲染真实 dom，那么它将带来巨大的性能消耗**。
+
+##### 那如何在表现出异步的函数里可以准确拿到更新后的 state 呢
+
+通过第二个参数 setState(partialState, callback) 中的 callback 拿到更新后的结果。或者可以通过给 setState 传递函数来表现出同步的情况：
+
+```js
+this.setState(state => {
+  return { val: newVal };
+});
+```
+
+##### 那表现出异步的原理是怎么样的呢
+
+在 React 的 setState 函数实现中，会根据 isBatchingUpdates(默认是 false) 变量判断是否直接更新 this.state 还是放到队列中稍后更新。然后有一个 batchedUpdate 函数，可以修改 isBatchingUpdates 为 true，
+
+当 React **调用事件处理函数**之前，或者**生命周期函数**之前就会调用 batchedUpdate 函数，这样的话，setState 就不会同步更新 this.state，而是放到更新队列里面后续更新。
+
 ## 事件，构建 react 的反向数据流
 
 React 通过将事件处理器**绑定到组件上来处理事件**。
@@ -72,16 +147,25 @@ React 事件**本质上和原生 JS 一样**，鼠标事件用来处理点击操
 
 ### 概述下 React 中的事件处理逻辑
 
-为了解决跨浏览器兼容性问题，React 会将浏览器原生事件（Browser Native Event）**封装为合成事件**（SyntheticEvent）传入设置的事件处理器中。
-这里的合成事件提供了与原生事件相同的接口，不过它们屏蔽了底层浏览器的细节差异，保证了行为的一致性。另外有意思的是，React 并没有直接将事件附着到子元素上，而是以**单一事件监听器的方式**将所有的事件发送到顶层进行处理(委托事件)。这样 React 在更新 DOM 的时候就不需要考虑如何去处理附着在 DOM 上的事件监听器，最终达到优化性能的目的
+React 在组件加载(mount)和更新(update)时，将事件通过 addEventListener 统一注册到 document 上，然后**会有一个事件池存储了所有的事件**，当事件触发的时候，通过 dispatchEvent 进行事件分发。
 
-### 但是有一点语法上的不同
+#### 封装原生事件，传入内置事件处理器
+
+为了解决**跨浏览器兼容性**问题，React 会将浏览器原生事件（Browser Native Event）**封装为合成事件**（SyntheticEvent）传入设置的事件处理器中。
+
+#### 兼容多浏览器，事件委托到顶层处理
+
+这里的合成事件**提供了与原生事件相同的接口**，不过它们**屏蔽了底层浏览器的细节差异**，保证了行为的一致性。
+
+另外有意思的是，**React 并没有直接将事件附着到子元素上**，而是以**单一事件监听器的方式**将所有的事件**发送到顶层进行处理(委托事件)**。这样 React 在更新 DOM 的时候就不需要考虑如何去处理附着在 DOM 上的事件监听器，最终达到优化性能的目的。
+
+#### 语法上的差异
 
 - React 事件绑定属性的命名采用**驼峰式写法**，而不是小写。
-- 如果采用 JSX 的语法你需要**传入一个函数作为事件处理函数**，而不是一个字符串(DOM 元素的写法)
+- 如果采用 JSX 的语法你需要**传入一个函数作为事件处理函数**，而不是一个字符串(DOM 元素的写法)。
 
 ```js
-// 向事件处理程序传递参数：
+// 向事件处理程序传递参数：this指代当前的组件
 <button onClick={this.preventPop.bind(this, id)}>Delete Row</button>
 preventPop(name, e){ // 事件对象e要放在最后
   e.preventDefault();
@@ -91,13 +175,89 @@ preventPop(name, e){ // 事件对象e要放在最后
 
 值得注意的是，**通过 bind 方式向监听函数传参**，在类组件中定义的监听函数，事件对象 e 要排在所传递参数的后面。
 
-- 在 React 中另一个不同是你不能使用返回 false 的方式阻止默认行为。你必须明确的使用 preventDefault。
+- 在 React 中另一个不同是你不能使用返回 false 的方式阻止默认行为。你**必须明确的使用** preventDefault。
 - 在这里，e 是一个合成事件。
 
 ### 事件调用的时候，回调中的 this
 
 要看事件是如何绑定的，如果直接绑定 this，this(引用放最后)，就指向当前的组件或者元素。
 如果绑定了组件，然后又使用函数的形式，通过函数的参数传递给回调函数。
+
+### 为什么调用方法要 bind this
+
+```js
+// 如下代码是有问题的，发现会报 this 是 undefined 的错
+class Foo extends React.Component {
+  handleClick() {
+    this.setState({ xxx: aaa });
+  }
+
+  render() {
+    return <button onClick={this.handleClick}>Click me</button>;
+  }
+}
+```
+
+因为 render 多次调用每次都要 bind 会影响性能，所以官方建议你自己在 constructor 中手动 bind 达到性能优化。
+
+在 JavaScript 中，**class 的方法默认不会绑定 this，这里对应的是一般函数，如果是尖头函数，就是哪里定义 this 指向哪里**。如果你忘记绑定 this.handleClick 并把它传入了 onClick，当你调用这个函数的时候 this 的值为 undefined。
+
+所以通常有两种形式来处理这个问题
+
+#### 添加 bind 绑定当前组件
+
+```js
+class Foo extends React.Component {
+  handleClick() {
+    this.setState({ xxx: aaa });
+  }
+  // 性能不太好，这种方式跟 react 内部帮你 bind 一样的，每次 render 都会进行 bind，而且如果有两个元素的事件处理函数式同一个，也还是要进行 bind
+  render() {
+    return <button onClick={this.handleClick.bind(this)}>Click me</button>;
+  }
+}
+
+// 或者
+
+class Foo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    // 相比于第一种性能更好，因为构造函数只执行一次，那么只会 bind 一次
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick() {
+    this.setState({ xxx: aaa });
+  }
+
+  render() {
+    return <button onClick={this.handleClick}>Click me</button>;
+  }
+}
+```
+
+#### 使用箭头函数
+
+```js
+class Foo extends React.Component {
+  handleClick() {
+    this.setState({ xxx: aaa });
+  }
+  render() {
+    // 每次 render 都会重复创建函数，性能会差一点。
+    return <button onClick={e => this.handleClick(e)}>Click me</button>;
+  }
+}
+class Foo extends React.Component {
+  // 好看，性能好。没有明显缺点
+  handleClick = () => {
+    this.setState({ xxx: aaa });
+  };
+  render() {
+    return <button onClick={this.handleClick}>Click me</button>;
+  }
+}
+```
 
 ## 开发中遇到的问题
 
@@ -236,6 +396,7 @@ var inputRect = input.getBoundingClientRect();
 ##### componentWillReceiveProps()
 
 ```js
+// 旧的形式
 componentWillReceiveProps: function(nextProps) {
   this.setState({
     likesIncreasing: nextProps.likeCount > this.props.likeCount
@@ -349,6 +510,17 @@ let indexNum = 11;
 - 使用 production 版本的 react.js
 - 使用 key 来帮助 React 识别列表中所有子组件的最小变化
 
+### react 的父子组件的每个生命周期是怎么触发的
+
+是洋葱型的还是顺序执行的呢。
+
+```js
+// 参见react-features-test/feature4_6/Parent
+```
+
+父组件的状态改变的时候，相对于自组件多出来一个 componentWillReceiveProps 事件。
+很明显的洋葱类型，父组件只有在子组件挂载完成的时候，才能算是挂载完成。
+
 ### render()
 
 对于一个组件来说，render 是唯一一个必须的方法。render 方法需要满足这几点：
@@ -360,7 +532,7 @@ let indexNum = 11;
 
 需要注意的是，render 方法返回的是虚拟 DOM。
 
-#### 主动更新（重新渲染）：
+#### 主动更新（重新渲染）
 
 React 元素都是 **immutable** 不可变的。**当元素被创建之后，你是无法改变其内容或属性的**。一个元素就好像是动画里的**一帧**，**它代表应用界面在某一时间点的样子**。
 根据我们现阶段了解的有关 React 知识，更新界面的**唯一办法是创建一个新的元素**，然后将它传入 ReactDOM.render() 方法。
@@ -505,7 +677,7 @@ let disabled = isReadonly ? { disabled: "disabled" } : {};
 />
 ```
 
-#### 受控组件，设置的 value，对应 state 的值，逆向通过 onChange 事件回传。
+#### 受控组件，设置的 value，对应 state 的值，逆向通过 onChange 事件回传
 
 组件的可更改的位置的状态都保存在 state 与 props 中，每次页面操作都通过`onChange`回传反馈到 state 上。
 
@@ -551,7 +723,7 @@ React 快的原因之一就是，在执行`this.setState()`时，React 没有忙
 
 答案是即将要执行下一次的`render`函数时。
 
-#### 这之间发生了什么？
+#### 这之间发生了什么
 
 `setState`调用后，React 会执行一个**事务（Transaction）**，在这个事务中，React 将新 state 放进一个**队列**中，**当事务完成后，React 就会刷新队列**，然后启动另一个事务，这个事务包括执行 `shouldComponentUpdate` 方法来判断是否重新渲染，如果是，React 就会进行 state 合并（`state merge`）,生成新的 state 和 props；如果不是，React 仍然会更新`this.state`，只不过不会再`render`了。
 
@@ -601,7 +773,7 @@ componentWillUpdate--使用 componentDidUpdate 代替
 
 componentWillReceiveProps--使用一个新的方法：static getDerivedStateFromProps 来代替。
 
-### getDerivedStateFromProps，在挂载和更新阶段都会调用这个方法。
+### getDerivedStateFromProps，在挂载和更新阶段都会调用这个方法
 
 这个方法以 props 和 state 作为参数。这个方法在组件**被初始挂载到 DOM 之前调用**。组件**被渲染之前更新它的状态**。组件更新的时候还会调用这里的参数。
 
@@ -633,7 +805,7 @@ static getDerivedStateFromProps(nextProps, prevState) {
 
 如果你能深入理解 React 的灵魂，包括虚拟 DOM， JSX ，函数式编程和 immutable，单向数据流，组件化抽象，生命周期等，在面对其他轮子时你也能做到得心应手。
 
-### React 之所以这么受欢迎，得益于它自身优势：
+### React 之所以这么受欢迎，得益于它自身优势
 
 - 灵活性和响应性：React 提供最大的灵活性和响应能力。
 - 虚拟 DOM：由于它基于文档对象模型，因此它允许浏览器友好地以 HTML，XHTML 或 XML 格式排列文档。
