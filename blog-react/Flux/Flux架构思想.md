@@ -1,10 +1,12 @@
 # Flux（单向数据流，事件监听，数据渲染）
 
+Flux 是 Facebook 内部与 React 搭配使用的架构。
+
 简单说，Flux 是一种架构思想，专门解决软件的结构问题。它跟 MVC 架构是同一类东西，但是更加简单和清晰。
 
 ![Flux](D:\learn-space\blog\10.各种库与框架的设计思想和工作原理\React\Flux\Flux.png)
 
-## 首先，Flux 将一个应用分成四个部分。
+## 首先，Flux 将一个应用分成四个部分
 
 - View： 视图层
 - Action（动作）：视图层发出的消息（比如 mouseClick，事件之类的，事件绑定）

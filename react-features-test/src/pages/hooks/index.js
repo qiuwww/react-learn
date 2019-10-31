@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { useState, useEffect } from "react";
+import GetAsyncData from "./GetAsyncData.js";
 
 // 无状态组件使用hooks
 function CounterHooksExample() {
@@ -16,6 +17,21 @@ function CounterHooksExample() {
     // Update the document title using the browser API
     document.title = `You clicked ${count} times`;
   });
+  // 这里使用副作用，在根节点插入元素，然后在组件被移除的时候删除，这个组件加载完成的时候，就会被执行
+  useEffect(() => {
+    const node = document.createElement("P");
+    const textnode = document.createTextNode("使用hooks组件插入");
+    node.setAttribute("id", "hooksAdd");
+    node.appendChild(textnode);
+    document.querySelector("body").appendChild(node);
+    return () => {
+      // 这里修改标题
+      document.title = "react-features-test";
+      const hooksAddNode = document.querySelector("#hooksAdd");
+      document.querySelector("body").removeChild(hooksAddNode);
+    };
+  });
+
   return (
     <div
       className="counter-wrap"
@@ -57,6 +73,7 @@ export default class Hooks extends Component {
             </li>
           </ul>
           <CounterHooksExample />
+          <GetAsyncData wrap={"这里是Hooks组件"}>这里是children</GetAsyncData>
         </div>
       </div>
     ];

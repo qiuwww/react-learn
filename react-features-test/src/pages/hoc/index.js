@@ -1,7 +1,26 @@
 import React, { Component } from "react";
+import InheritanceInversion from "./InheritanceInversion.js";
+import PropsProxy from "./PropsProxy.js";
 
-// 目标组件
+@PropsProxy()
+class Input extends React.Component {
+  render() {
+    return <input name="name" {...this.props.name} />;
+  }
+}
+// 使用函数来操作
+class TextAreaBase extends React.Component {
+  render() {
+    return <textarea name="name" {...this.props.name}></textarea>;
+  }
+}
+
+const TextArea = PropsProxy(TextAreaBase);
+
+
+// 定义的基础组件
 class UseContent extends Component {
+  static displayName = "UseContent";
   componentWillMount() {
     console.log("UseContent willMount");
   }
@@ -14,9 +33,25 @@ class UseContent extends Component {
     );
   }
 }
+class UseContent2 extends Component {
+  componentWillMount() {
+    console.log("UseContent2 willMount");
+  }
+  render() {
+    console.log("UseContent props2:", this.props);
+    return (
+      <div>
+        {this.props.title} - {this.props.name}
+      </div>
+    );
+  }
+}
+
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || "Component";
 }
+
+// 1.直接包一层的写法
 const ExampleHoc = WrappedComponent => {
   // 这里可以使用class类型的组件，当然也可以是无状态的
   return class ExampleHoc extends Component {
@@ -40,7 +75,13 @@ const ExampleHoc = WrappedComponent => {
   };
 };
 
+// 2.反向继承的形式
+
 const TargetComponent = ExampleHoc(UseContent);
+const TargetComponent2 = ExampleHoc(UseContent2);
+
+const TargetComponent3 = PropsProxy(<p>正在加载请稍后...</p>);
+const TargetComponent4 = PropsProxy(UseContent);
 
 export default class Hoc extends Component {
   render() {
@@ -64,9 +105,14 @@ export default class Hoc extends Component {
           <li>反向继承。 高阶组件继承于被包裹的React组件</li>
         </ul>
         <div className="hoc">
-          <TargetComponent title={"TargetComponent1"} />
-          <TargetComponent title={"TargetComponent2"} />
-          <TargetComponent title={"TargetComponent3"} />
+          <p>属性代理</p>
+          <Input></Input>
+          <TextArea></TextArea>
+          
+          {/* <TargetComponent title={"TargetComponent1"} /> */}
+          {/* <TargetComponent2 title={"TargetComponent2"} /> */}
+          {/* <TargetComponent3 title={"TargetComponent3"} /> */}
+          {/* <TargetComponent4 title={"TargetComponent4"} /> */}
         </div>
       </div>
     );
