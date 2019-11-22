@@ -73,3 +73,12 @@ Hook 是一种复用状态逻辑的方式，它不复用 state 本身。事实�
 effect hook 在组件 mount 和 update 的时候都会执行。所以在 useEffect 中直接修改 state，会导致一直运行，陷入死循环。
 
 你可以在 effect hook 提供的**第二个参数中**，传入一个空数组，这样做**可以避免组件更新**的时候执行 effect hook ，但是组件在 mount 依然会执行它。**也就是说第一个参数是 DidMount，第二个是 DidUpdate，第三个 return 是，WillUnmount。**
+
+## react hooks 原理是什么
+
+hooks 是用**闭包实现**的，因为**纯函数不能记住状态**，只能通过闭包来实现。
+
+## useState 中的状态是怎么存储的
+
+通过**单向链表**，fiber tree 就是一个单向链表的**树形结构**。
+

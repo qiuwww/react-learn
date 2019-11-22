@@ -10,7 +10,11 @@
 # production
 /dist
 /dva-quickstart
+/ant-design/umi-antd-ts-pro
+/ant-design/ant-design-master
 
 # misc
 .DS_Store
+
+
 

@@ -70,3 +70,16 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 ## 修改 create-react-app 脚手架的配置
 
 `$ npm run eject`
+
+添加插件，以支持修饰符
+
+```json
+"plugins": [
+  [
+    "@babel/plugin-proposal-decorators",
+    {
+      "legacy": true
+    }
+  ]
+]
+```
