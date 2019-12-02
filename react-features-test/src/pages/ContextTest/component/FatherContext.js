@@ -1,5 +1,7 @@
-import React, { Component } from "react";
-import ChildContext from "./ChildContext";
+import React, { Component } from 'react';
+import ChildContext from './ChildContext';
+
+// 跨组件
 export default class FatherContext extends Component {
   render() {
     return (

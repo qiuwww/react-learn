@@ -41,7 +41,7 @@ comments: true
 
 ## 二、基础理论
 
-### React 原理
+### 1. React 原理
 
 一处开发，多处运行。重组件重用。
 
@@ -49,7 +49,7 @@ React 进行开发时所有的 DOM 构造都是通过**虚拟 DOM 进行**，每
 
 尽管每一次都需要构造完整的虚拟 DOM 树，但是因为**虚拟 DOM 是内存数据**，性能是极高的，而对**实际 DOM 进行操作的仅仅是 Diff 部分**，因而能达到提高性能的目的。这样，在保证性能的同时，开发者将不再需要关注某个数据的变化如何更新到一个或多个具体的 DOM 元素，而只需要关心在任意一个数据状态下，整个界面是如何 Render 的。
 
-### react 的数据流
+### 2. react 的数据流
 
 - 在 React 中，数据流是**自上而下单向的从父节点传递到子节点**，所以组件是简单且容易把握的，他们只需要从父节点提供的 props 中获取数据并渲染即可。
 - 如果顶层组件的某个**prop 改变**了，React 会**递归地向下遍历整棵组件数**，重新渲染所有使用这个属性的组件。
@@ -57,22 +57,34 @@ React 进行开发时所有的 DOM 构造都是通过**虚拟 DOM 进行**，每
 - React 的一大创新，就是**把每一个组件都看成是一个状态机**，组件**内部通过 state 来维护组件状态的变化，这也是 state 唯一的作用**。
 - 你应该在应用中保持 自上而下的数据流，而不是尝试在不同组件中同步状态。
 
-### 纯函数，没有副作用的函数
+### 3. 纯函数，没有副作用的函数
 
 纯函数是指**不依赖于且不改变它作用域之外的变量状态的函数**。
 也就是说，纯函数的返回值只由它调用时的参数决定，它的执行不依赖于系统的状态（比如：何时、何处调用它——译者注）。 纯函数是函数式编程的一个基础。
 
-### react 设计理念
+### 4. react 设计理念
 
 1. 组件单一功能原则：在理想状况下，一个组件应该只做一件事情。如果这个组件功能不断丰富，它应该被分成更小的组件。
 2. 定义 UI 状态的最小(但完整)表示。
 3. 确定你的 State（props|state） 应该位于哪里。
 
-### 为什么要引入 React
+### 5. 为什么要引入 React
 
 `import React, {Component} from 'react'`，从本质上讲，JSX 只是为 React.createElement(component, props, ...children) 函数提供的语法糖。
 
 这里的 React 在 babel 转化的过程中要用到，所以需要引入。
+
+### 6. 核心算法
+
+[参阅文章](https://juejin.im/post/5be969656fb9a049ad76931f)
+
+React Fiber 是对 React 核心算法的重写。
+
+当 JS 执行时间过长，FPS（每秒显示帧数）下降造成视觉上的顿卡。
+
+fiber reconciler 将要执行的 JS 做拆分，保证不会阻塞主线程（Main thread）即可。
+
+requestAnimationFrame 会让一个高优先级的任务在下一个栈帧被调用，从而保证了主线程按照优先级执行 fiber 单元。 优先级顺序为：文本框输入 > 本次调度结束需完成的任务 > 动画过渡 > 交互反馈 > 数据更新 > 不会显示但以防将来会显示的任务。
 
 ## 三、state 与 props
 
@@ -146,9 +158,11 @@ instance.props = props;
 
 ### 4. 为什么要 setState
 
+[setState 文档](https://zh-hans.reactjs.org/docs/react-component.html#setstate)
+
 setState 做的事情**不仅仅只是修改了 this.state** 的值，另外最重要的是它会触发 React 的**更新机制**，**会进行 diff ，然后将 patch 部分更新到真实 dom 里**。
 
-如果你直接 this.state.xx == oo 的话，**state 的值确实会改，但是改了不会触发 UI 的更新，那就不是数据驱动了**。这样的话，在不需要触发 ui 更新的时候倒是**可以一用**啊。
+如果你直接 `this.state.xx == oo` 的话，**state 的值确实会改，但是改了不会触发 UI 的更新，那就不是数据驱动了**。这样的话，在不需要触发 ui 更新的时候倒是**可以一用**啊。
 
 #### setState 的更新原理（调用 setState 之后发生了什么）
 
@@ -157,13 +171,24 @@ setState 做的事情**不仅仅只是修改了 this.state** 的值，另外最�
 3. 在 React 得到元素树之后，React 会**自动计算出新的树与老树的节点差异**，然后根据差异对界面进行**最小化重渲染**。
 4. 在差异计算算法中，React 能够相对精确地知道哪些位置发生了改变以及应该如何改变，这就保证了按需更新，而不是全部重新渲染。
 
-#### setState 是同步还是异步，值的改变与页面重新渲染
+#### setState 是同步还是异步，注意值的改变与页面重新渲染
 
-**执行过程代码同步的**，只是**合成事件**和**钩子函数**的调用顺序**在更新之前**，导致在合成事件和钩子函数中**没法立马拿到更新后的值，形式了所谓的“异步”**，所以表现出来有时是同步，有时是“异步”。
+注意区分两种类型的操作：
 
-只在合成事件和钩子函数中是“异步”的，在原生事件(获取 dom，手动绑定事件)和 setTimeout/setInterval 等原生 API 中都是同步的。
+- **生命周期和合成事件中**
+- **异步代码和原生事件中**
+
+**执行过程代码同步的**，只是**合成事件**和**生命周期（钩子）函数**的调用顺序**在更新之前**，导致在合成事件和钩子函数中**没法立马拿到更新后的值**。
+
+“异步”，所以表现出来有时是同步，有时是“异步”。
+
+- 只在合成事件和钩子函数中“页面更新是异步”的，
+
+- 在原生事件(获取 dom，手动绑定事件)和 setTimeout/setInterval 等原生 API 中都是同步的。
 
 简单的可以理解为**被 React 控制的函数里面就会表现出“异步”**，反之表现为同步。
+
+`setState`本身并不是异步的，而是 `React`的批处理机制给人一种异步的假象。
 
 ##### 那为什么会出现异步的情况呢
 
@@ -171,7 +196,7 @@ setState 做的事情**不仅仅只是修改了 this.state** 的值，另外最�
 
 ##### 那如何在表现出异步的函数里可以准确拿到更新后的 state 呢
 
-通过第二个参数 setState(partialState, callback) 中的 callback 拿到更新后的结果。或者可以通过给 setState 传递函数来表现出同步的情况：
+通过第二个参数 `setState(partialState, callback)`中的 callback 拿到更新后的结果。或者可以通过给 setState 传递函数来表现出同步的情况：
 
 ```js
 this.setState(state => {
@@ -181,18 +206,41 @@ this.setState(state => {
 
 ##### 那表现出异步的原理是怎么样的呢
 
-在 React 的 setState 函数实现中，会根据 isBatchingUpdates(默认是 false) 变量判断是否直接更新 this.state 还是放到队列中稍后更新。然后有一个 batchedUpdate 函数，可以修改 isBatchingUpdates 为 true，
+在 React 的 setState 函数实现中，会根据 `isBatchingUpdates(默认是 false)` 变量判断是否直接更新 this.state 还是放到队列中稍后更新。然后有一个 **batchedUpdate 函数**，可以修改 isBatchingUpdates 为 true，
 
 当 React **调用事件处理函数**之前，或者**生命周期函数**之前就会调用 batchedUpdate 函数，这样的话，setState 就不会同步更新 this.state，而是放到更新队列里面后续更新。
 
 ## 四、事件，构建 react 的反向数据流
 
 React 通过将事件处理器**绑定到组件上来处理事件**。
-React 事件**本质上和原生 JS 一样**，鼠标事件用来处理点击操作，表单事件用于表单元素变化等，Rreact 事件的命名、行为和原生 JS 差不多，不一样的地方是 React 事件名区分大小写。
 
-### 概述下 React 中的事件处理逻辑
+React 事件**本质上和原生 JS 一样**，鼠标事件用来处理点击操作，表单事件用于表单元素变化等，Rreact 事件的命名、行为和原生 JS 差不多，不一样的地方是 **React 事件名区分大小写**。
 
-React 在组件加载(mount)和更新(update)时，将事件通过 addEventListener 统一注册到 document 上，然后**会有一个事件池存储了所有的事件**，当事件触发的时候，通过 dispatchEvent 进行事件分发。
+### 1. react 合成事件和 DOM 原生事件的区别
+
+#### 一般的事件监听
+
+事件捕获 -> 事件冒泡
+
+使用 addEventListener 函数在事件流的的不同阶段监听事件。
+
+`DOMEle.addEventListener(‘事件名称’,handleFn,Boolean);`
+
+此处第三个参数 Boolean 即代表监听事件的阶段；
+为 true 时，在在捕获阶段监听事件，执行逻辑处理；
+为 false 时，在冒泡阶段监听事件，执行逻辑处理。
+
+#### react 合成事件
+
+如果 react 事件绑定在了真实 DOM 节点上，一个节点同时有多个事件时，页面的响应和内存的占用会受到很大的影响。因此**SyntheticEvent 作为中间层**出现了。
+
+事件没有在目标对象上绑定，而是在 document 上监听所支持的所有事件，当事件发生并冒泡至 document 时，**react 将事件内容封装并叫由真正的处理函数运行**。
+
+![合成事件原理](./imgs/合成事件.png)
+
+### 2. 概述下 React 中的事件处理逻辑
+
+React 在组件**加载(mount)和更新(update)时**，将事件通过 addEventListener 统一注册到 document 上，然后**会有一个事件池存储了所有的事件**，当事件触发的时候，**通过 dispatchEvent 进行事件分发**。
 
 #### 封装原生事件，传入内置事件处理器，合成事件
 
@@ -225,12 +273,12 @@ preventPop(name, e){ // 事件对象e要放在最后
 - 在 React 中另一个不同是你不能使用返回 false 的方式阻止默认行为。你**必须明确的使用** preventDefault。
 - 在这里，e 是一个合成事件。
 
-### 事件调用的时候，回调中的 this
+### 3. 事件调用的时候，回调中的 this
 
 要看事件是如何绑定的，如果直接绑定 this，this(引用放最后)，就指向当前的组件或者元素。
 如果绑定了组件，然后又使用函数的形式，通过函数的参数传递给回调函数。
 
-### 为什么调用方法要 bind this
+#### 为什么调用方法要 bind this
 
 ```js
 // 如下代码是有问题的，发现会报 this 是 undefined 的错
@@ -245,7 +293,7 @@ class Foo extends React.Component {
 }
 ```
 
-因为 render 多次调用每次都要 bind 会影响性能，所以官方建议你自己在 constructor 中手动 bind 达到性能优化。
+因为 **render 多次调用每次都要 bind 会影响性能**，所以官方建议你自己在 constructor 中手动 bind 达到性能优化。
 
 在 JavaScript 中，**class 的方法默认不会绑定 this，这里对应的是一般函数，如果是尖头函数，就是哪里定义 this 指向哪里**。如果你忘记绑定 this.handleClick 并把它传入了 onClick，当你调用这个函数的时候 this 的值为 undefined。
 
@@ -265,7 +313,6 @@ class Foo extends React.Component {
 }
 
 // 或者
-
 class Foo extends React.Component {
   constructor(props) {
     super(props);
@@ -397,17 +444,43 @@ const EnhancedComponent = higherOrderComponent(WrappedComponent);
 
 参考实例中的 hoc。
 
-#### 用途
+#### HOC 在业务场景中有哪些实际应用场景？
 
-- 代码复用，逻辑和引导抽象。
-- 渲染劫持。
-- 状态抽象和控制。
-- Props 操控。
+`HOC`可以实现的功能：
+
+- 组合渲染
+- 条件渲染
+- 操作 `props`
+- 获取 `refs`
+- 状态管理
+- 操作 `state`
+- 渲染劫持
+
+`HOC`在业务中的**实际应用场景**：
+
+- 日志打点
+- 权限控制
+- 双向绑定
+- 表单校验
 
 #### React 高阶组件的写法，通常有哪几种
 
 - 第一种是通过工厂模式直接 wrapper，操作组件的 props；
 - 第二种是通过组件反向继承的方式，拦截生命周期、state、渲染过程。
+
+#### 高阶组件(HOC)和 Mixin 的异同点
+
+Mixin 和 HOC 都可以用来解决 React 的代码复用问题。
+
+- Mixin 可能会相互依赖，相互耦合，不利于代码维护
+- 不同的 Mixin 中的方法可能会相互冲突
+- Mixin 非常多时，组件是可以感知到的，甚至还要为其做相关处理，这样会给代码造成滚雪球式的复杂性
+
+而 HOC 的出现可以解决这些问题
+
+- 高阶组件就是一个没有副作用的纯函数，各个高阶组件不会互相依赖耦合
+- 高阶组件也有可能造成冲突，但我们可以在遵守约定的情况下避免这些行为
+- 高阶组件并不关心数据使用的方式和原因，而被包裹的组件也不关心数据来自何处。高阶组件的增加不会为原组件增加负担
 
 #### 使用高阶组件
 
@@ -415,6 +488,8 @@ const EnhancedComponent = higherOrderComponent(WrappedComponent);
 
 - @修饰符
 - 直接调用函数
+
+#### 高阶组件(HOC)和 Mixin 的异同点是什么
 
 ### 4. PureComponent，纯组件
 
@@ -487,6 +562,8 @@ React 的渲染功能从 React 的各个部分生成一个节点树。然后，�
 
 ![虚拟DOM的工作机制](./imgs/虚拟DOM的工作机制.png)
 
+切换`config/paths`下的 appIndexJs 来查看虚拟 dom 测试。
+
 ### 7. diff 算法
 
 - 把树形结构**按照层级分解**，只比较**同级元素**。
@@ -516,13 +593,13 @@ const inputClass = classNames(styles.input, {
 });
 ```
 
-### react 的性能优化方案
+### 9. react 的性能优化方案
 
 - 重写`shouldComponentUpdate`来避免不必要的 dom 操作
 - 使用 production 版本的 react.js
 - 使用 key 来帮助 React 识别列表中所有子组件的最小变化
 
-### react 的父子组件的每个生命周期是怎么触发的
+### 10. react 的父子组件的每个生命周期是怎么触发的
 
 是洋葱型的还是顺序执行的呢。
 
@@ -533,7 +610,7 @@ const inputClass = classNames(styles.input, {
 父组件的状态改变的时候，相对于子组件多出来一个 componentWillReceiveProps 事件。
 很**明显的洋葱类型**，**父组件只有在子组件挂载完成的时候，才能算是挂载完成**。
 
-### render()
+### 11. render()
 
 对于一个组件来说，render 是唯一一个必须的方法。render 方法需要满足这几点：
 
@@ -550,6 +627,34 @@ React 元素都是 **immutable** 不可变的。**当元素被创建之后，你
 根据我们现阶段了解的有关 React 知识，更新界面的**唯一办法是创建一个新的元素**，然后将它传入 ReactDOM.render() 方法。
 
 React DOM 首先会比较**元素内容先后的不同**，而在渲染过程中只会更新改变了的部分。
+
+### 12. React.lazy()配合 Suspense，组件懒加载
+
+[官方文档](https://zh-hans.reactjs.org/docs/code-splitting.html#reactlazy)
+
+为了**避免搞出大体积的代码包**，在前期就思考该问题并对**代码包进行分割**是个不错的选择。 代码分割是由诸如 Webpack，Rollup 和 Browserify（factor-bundle）这类打包器支持的一项技术，能够创建多个包并在运行时动态加载。
+
+对你的应用进行代码分割能够帮助你“**懒加载**”当前用户所需要的内容，**能够显著地提高你的应用性能**。
+
+尽管并没有减少应用整体的代码体积，**但你可以避免加载用户永远不需要的代码**，**并在初始加载的时候减少所需加载的代码量**。
+
+React.lazy 和 Suspense 技术还不支持服务端渲染。
+
+React.lazy 函数能让你像渲染常规组件一样处理动态引入（的组件）。
+
+一个不错的选择是从路由开始。大多数网络用户习惯于页面之间能有个加载切换过程。你也可以选择重新渲染整个页面，这样您的用户就不必在渲染的同时再和页面上的其他元素进行交互。
+
+React.lazy 目前只支持**默认导出（default exports）**。如果你想被引入的模块使用命名导出（named exports），你可以创建一个中间模块，来重新导出为默认模块。
+
+查看`react-features-test/Routes.js`。
+
+fallback 属性接受任何在组件加载过程中你想展示的 React 元素。你可以将 Suspense 组件置于懒加载组件之上的任何位置。你甚至可以用一个 Suspense 组件包裹多个懒加载组件。
+
+#### React.lazy 用途
+
+- 一般的组件懒加载；
+- 异常捕获边界（Error boundaries）；
+- 路由组织，加快首次加载速度。
 
 ### 定义一个组件时候，如何决定要用 Functional 还是 Class
 
@@ -914,7 +1019,115 @@ var inputRect = input.getBoundingClientRect();
 2. 触发强制动画。
 3. 集成第三方 DOM 库
 
-## 七、changeblog
+## 七、React 性能优化
+
+在以下场景中，父组件和子组件通常会重新渲染：
+
+1. 在同一组件或父组件中调用 **setState** 时。
+2. 从**父级收到的“props”的值发生变化**。
+3. 调用组件中的 forceUpdate。
+
+具体可以从如下方面考虑：
+
+### 1. 使用纯组件，PureComponent
+
+PureComponents 负责 shouldComponentUpdate——它对状态和 props 数据进行浅层比较（shallow comparison），只比较一般类型的值和引用类型的指向，所以引用类型的内部属性改变的时候，不会重新渲染。
+
+一般组件，只要 state 发生了改变就会导致重新渲染。
+
+这里的 PureComponent 对于 class 声明的组件适用，对于 stateLess 组件，使用 React.memo()，功能类似 Ï，React.memo() 和 PureComponent 很相似，它帮助我们控制何时重新渲染组件。
+
+### 2. 懒加载组件
+
+使用 lazy 与 Suspense，根据具体的条件延迟组件加载，无需一开始就加载两个组件。
+
+#### 这个方法的好处
+
+1. 主包体积变小，消耗的网络传输时间更少。
+2. 动态单独加载的包比较小，可以迅速加载完成。
+
+### 3. 使用 React Fragments 避免额外标记
+
+可以不添加标记，这样`<></>` 。
+
+### 4. 不要使用内联函数定义
+
+当 React 进行虚拟 DOM diffing 时，它每次都会找到一个新的函数实例；因此在渲染阶段它会会绑定新函数并将旧实例扔给垃圾回收。
+
+因此直接绑定内联函数就需要额外做垃圾回收和绑定到 DOM 的新函数的工作。
+
+```js
+import React from 'react';
+
+export default class InlineFunctionComponent extends React.Component {
+
+  setNewStateData = (event) => {
+    this.setState({
+      inputValue: e.target.value
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Welcome Guest</h1>
+        <input type="button" onClick={this.setNewStateData} value="Click For Inline Function" />
+        <input
+          type="button"
+          // 这样绑定有问题，会多次绑定
+          onClick={e => {
+            this.setState({ inputValue: e.target.value });
+          }}
+          value="Click For Inline Function"
+        />
+      </div>
+    )
+}
+```
+
+上面的函数创建了内联函数。**每次调用 render 函数时都会创建一个函数的新实例**，render 函数会将该函数的新实例绑定到该按钮。
+
+### 5. 为组件创建错误边界
+
+组件错误不应该破坏整个应用。创建错误边界可避免应用在特定组件发生错误时中断。
+
+如果一个 class 组件中定义了 `static getDerivedStateFromError()` 或 `componentDidCatch()` 这两个生命周期方法中的任意一个（或两个）时，**那么它就变成一个错误边界**。当抛出错误后，请使用 static getDerivedStateFromError() **渲染备用 UI** ，使用 componentDidCatch() 打印错误信息。
+
+不过感觉一般也不会用到。
+
+### 6. 使用唯一键迭代 key
+
+使用 index 作为键就不会出现标识不唯一的问题了，因为 index 只会标识所渲染的组件。
+
+我们可以在以下场景中使用 index 作为键：
+
+- 列表项是静态的，项目不随时间变化。
+- Items 没有唯一 ID。
+- List 永远不会重新排序或过滤。
+- 不会从顶部或中间添加或删除项目。
+
+使用 index 作为键会**加大错误率并降低应用的性能**。
+
+- Key 不仅影响性能，更重要的作用是标识。随机分配和更改的值不算是标识。
+- 我们得知道数据的建模方式才能提供合适的键值。如果你没有 ID，我建议使用某种哈希函数生成 ID。
+- 我们在使用数组时已经有了内部键，但它们是数组中的索引。插入新元素时这些键是错误的。
+
+### 7. 用 CSS 动画代替 JavaScript 动画
+
+理由如下：
+
+1. 破损的 CSS 规则和样式不会导致网页损坏，而 JavaScript 则不然。
+2. **解析 CSS 是非常便宜的，因为它是声明性的**。我们可以为样式并行创建内存中的表达，可以推迟样式属性的计算，直到元素绘制完成。
+3. 为动画加载 JavaScript 库的成本相对较高，消耗更多网络带宽和计算时间。
+4. 虽然 JavaScript 可以提供比 CSS 更多的优化，但优化过的 JavaScript 代码也可能卡住 UI 并导致 Web 浏览器崩溃。
+
+### 8. 使用 Web Workers 处理 CPU 密集任务
+
+处理 UI 交互、处理响应数据、操纵 DOM 元素、启用动画等。所有这些任务都由单个线程处理。
+
+可以使用 worker 来分担主线程的负载。
+
+## 八、changeblog
 
 ### 16.3 关于生命周期的问题
 

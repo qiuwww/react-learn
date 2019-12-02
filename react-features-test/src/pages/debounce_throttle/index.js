@@ -9,14 +9,31 @@ import throttle from 'lodash/throttle';
 import cloneDeep from 'lodash/cloneDeep';
 
 import './index.css';
+
+console.log('debounce_throttle/index.js文件被运行!');
+
+setTimeout(() => {
+  console.log('debounce_throttle/index.js文件被运行!，加载2s之后打印的');
+}, 2000);
+
+// 这里延时代码的执行
+let i = 1,
+  product = 1;
+while (i < 100) {
+  product = product * i;
+  i++;
+}
+console.log('阶乘计算的结果', i, product);
+
 export default class Debounce_throttle extends Component {
   constructor(props) {
+    console.log('Debounce_throttle!组件被加载');
     super(props);
     this.state = {
       count: 1,
       regularArr: [],
       debounceArr: [],
-      throttleArr: []
+      throttleArr: [],
     };
     this.showWidth = 600;
     this.timeID = null;
@@ -35,7 +52,7 @@ export default class Debounce_throttle extends Component {
   onMouseOver = e => {
     this.timeID = setInterval(() => {
       this.setState({
-        count: this.state.count + 1
+        count: this.state.count + 1,
       });
     }, 100);
   };
@@ -51,7 +68,7 @@ export default class Debounce_throttle extends Component {
         count: 1,
         regularArr: [],
         debounceArr: [],
-        throttleArr: []
+        throttleArr: [],
       });
       arr = [];
       return;
@@ -59,13 +76,13 @@ export default class Debounce_throttle extends Component {
     arr.push(count);
     arr = [...new Set(arr)];
     this.setState({
-      [field]: arr
+      [field]: arr,
     });
   };
   regularOnMouseMove = () => {
     this.markItem('regularArr');
   };
-
+  // 防抖是指在调用停止一段时间之前忽略事件处理程序调用。
   debounceOnMouseMove = debounce(
     () => {
       console.log('debounceOnMouseMove');
@@ -75,10 +92,11 @@ export default class Debounce_throttle extends Component {
     300,
     {
       leading: false, // 指定在延迟开始前调用。
-      trailing: true // 指定在延迟结束后调用。
-    }
+      trailing: true, // 指定在延迟结束后调用。
+    },
   );
-
+  // 节流意味着延迟函数执行。
+  // 这些函数不会立即执行，在触发事件之前会加上几毫秒延迟。
   throttleOnMouseMove = throttle(
     () => {
       console.log('throttleOnMouseMove');
@@ -87,17 +105,14 @@ export default class Debounce_throttle extends Component {
     300,
     {
       leading: false, // 指定调用在节流开始前。
-      trailing: true // 指定调用在节流结束后。
-    }
+      trailing: true, // 指定调用在节流结束后。
+    },
   );
 
   renderItem = (arr, color) => {
     return arr.map((item, index) => {
       return (
-        <div
-          key={`${item}-${index}`}
-          style={{ left: item * 10, backgroundColor: color }}
-        ></div>
+        <div key={`${item}-${index}`} style={{ left: item * 10, backgroundColor: color }}></div>
       );
     });
   };
