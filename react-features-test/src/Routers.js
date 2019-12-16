@@ -7,6 +7,8 @@ import Hoc from './pages/hoc/index.js';
 import Hooks from './pages/hooks/index.js';
 import FetchRender from './pages/FetchRender/index.jsx';
 import Transitions from './pages/Transitions/index.jsx';
+import AirbnbReact from './pages/AirbnbReact/index.jsx';
+
 // import ErrorBoundaryTest from './pages/ErrorBoundaryTest/index.jsx';
 
 import ShouldComponentUpdateCycleTest from './pages/cycle/ShouldComponentUpdateCycleTest.js';
@@ -81,6 +83,9 @@ class Layout extends Component {
           <li>
             <Link to="/transitions">并发UI模式，内置useTransition()Hook</Link>
           </li>
+          <li>
+            <Link to="/Airbnb-React">Airbnb React/JSX 编码规范</Link>
+          </li>
         </ul>
         <div className="wrap" style={{ padding: '20px' }}>
           {this.props.children}
@@ -113,6 +118,7 @@ function Routers() {
             <Route path="/setState-test" component={SetStateTest} />
             <Route path="/fetch-render" component={FetchRender} />
             <Route path="/transitions" component={Transitions} />
+            <Route path="/Airbnb-React" component={AirbnbReact} />
           </Layout>
         </Switch>
       </Suspense>
