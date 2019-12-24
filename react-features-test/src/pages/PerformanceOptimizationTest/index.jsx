@@ -20,7 +20,7 @@ class RegularChildComponent extends React.Component {
 // if(this._compositeType === CompositeTypes.PureClass){
 //   shouldUpdate = !shallowEqual(prevProps,nextProps)||!shallowEqual(inst.state,nextState)
 // }
-// 这个组件会在state不想等的时候更新，即便props的值不变
+// 这个组件会在state不相等的时候更新，即便props的值不变
 class PureChildComponent extends React.PureComponent {
   state = {
     items: [1, 2, 3],
@@ -32,7 +32,8 @@ class PureChildComponent extends React.PureComponent {
     // 这里items更新了，但是页面没更新，这个时候就需要加shouldComponentUpdate判断
     this.setState({ items });
     // 这里调用强制刷新
-    this.forceUpdate();
+    // 自身的state，如果这里不调用forceUpdate，页面是不会更新的
+    // this.forceUpdate();
   };
   // Pure Components are the components that do not re-render if the State data or props data is still the same
   render() {
