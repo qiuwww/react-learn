@@ -1178,3 +1178,67 @@ static getDerivedStateFromProps(nextProps, prevState) {
 你不一定会用到这个生命周期方法，但在某些特殊情况下它可能会派上用场，特别是当你需要在 DOM 更新后从中获取一些信息。
 
 也就是如果需要在数据更新之后依据 dom 进行操作，就在这里操作。
+
+## 九、常见面试题目
+
+### 生命周期及其细节，修改了的生命周期过程
+
+- constructor
+- componentWillMount -> componentDidMount
+- componentDidmount
+- componentWillReceiveProps -> getDerivedStateFromProps
+- shouldComponentUpdate
+- componentWillUpdate -> componentDidUpdate
+- componentDidUpdate
+- render
+- componentWillUnmount
+- getSnapshotBeforeUpdate(prevProps, prevState)，会在最终的 render 之前被调用，基本用不到
+
+### 最新的功能的使用，最新功能了解，hooks
+
+它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。也就是用在无状态组件中，充当一下简单的 state。
+
+用法参见`react-learn/react-features-test/components/hooks`
+
+```js
+// 声明一个变量count,来保存中间值
+// useState返回两个参数，一个是当前state的值，还有一个其实是一个函数，用来改变state的值，就是setCount。
+// 它不会将旧的state跟新的state合并在一起，而是覆盖式的重写state的值。
+const [count, setCount] = useState(0);
+
+// Similar to componentDidMount and componentDidUpdate:
+// 在hooks里，这些生命周期函数都被统一成一个方法 useEffect。
+useEffect(() => {
+  // Update the document title using the browser API
+  document.title = `You clicked ${count} times`;
+});
+// 需要改变状态的时候
+onClick={() => setCount(count + 1)}
+```
+
+### 组件的封装
+
+组件允许你将 UI 拆分为独立可复用的代码片段，并对每个片段进行独立构思。
+
+- 复用，考虑可能用到的场景，可扩展性
+- 封装性，不影响到别的组件
+- 默认值，易用性
+- 一个组件只专注于一件事
+
+### 父子组件参数传递
+
+- props，父组件向自组件传递参数与事件
+- 子组件调用父组件的方法，实现自组件的状态传递，事件回传状态
+- context，跨组件状态传递，其实就是传了一个变量
+- mobx|redux，全局状态管理，所有的一切都可以认为是状态的表现
+- 订阅发布模式，EventEmitter
+
+### redux 相关
+
+Redux 是 JavaScript 状态容器，提供可预测化的状态管理。
+
+三大原则
+
+- 单一数据源
+- State 是只读的，只能通过 action 来触发，store.dispatch
+- 使用纯函数来执行修改，不会产生副作用，reducers
