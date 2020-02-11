@@ -86,6 +86,19 @@ class Layout extends Component {
           <li>
             <Link to="/Airbnb-React">Airbnb React/JSX 编码规范</Link>
           </li>
+          <li>
+            <Link to="/TypeScriptDemo/ClassComponent">
+              TypeScriptDemo/ClassComponent，class类型的ts组件
+            </Link>
+          </li>
+          <li>
+            <Link to="/TypeScriptDemo/StatelessComponent">
+              TypeScriptDemo/StatelessComponent，函数式类型的ts组件
+            </Link>
+          </li>
+          <li>
+            <Link to="/TsReduxComponent">TsReduxComponent，测试redux的ts，demo</Link>
+          </li>
         </ul>
         <div className="wrap" style={{ padding: '20px' }}>
           {this.props.children}
@@ -119,6 +132,19 @@ function Routers() {
             <Route path="/fetch-render" component={FetchRender} />
             <Route path="/transitions" component={Transitions} />
             <Route path="/Airbnb-React" component={AirbnbReact} />
+            {/* ts react实例 */}
+            <Route
+              path="/TypeScriptDemo/ClassComponent"
+              component={lazy(() => import('./pages/TypeScriptDemo/ClassComponent.tsx'))}
+            />
+            <Route
+              path="/TypeScriptDemo/StatelessComponent"
+              component={lazy(() => import('./pages/TypeScriptDemo/StatelessComponent.tsx'))}
+            />
+            {/* <Route
+              path="/TsReduxComponent"
+              component={lazy(() => import('./pages/TsReduxComponent/index.tsx'))}
+            /> */}
           </Layout>
         </Switch>
       </Suspense>
