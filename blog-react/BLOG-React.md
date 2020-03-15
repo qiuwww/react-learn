@@ -1242,3 +1242,14 @@ Redux 是 JavaScript 状态容器，提供可预测化的状态管理。
 - 单一数据源
 - State 是只读的，只能通过 action 来触发，store.dispatch
 - 使用纯函数来执行修改，不会产生副作用，reducers
+
+## SSR，静态站点生成器
+
+静态站点生成器融合了服务端渲染（对于 SEO 来说非常重要，也会影响初始加载时间）和单页应用程序的能力。
+
+常见的 ssr 框架：
+
+- [Next](https://www.nextjs.cn/docs/getting-started)（基于 React）
+- Nuxt（基于 Vue）
+- Gatsby（基于 React）
+- Gridsome（基于 Vue）
