@@ -99,6 +99,9 @@ class Layout extends Component {
           <li>
             <Link to="/TsReduxComponent">TsReduxComponent，测试redux的ts，demo</Link>
           </li>
+          <li>
+            <Link to="/ComponentTest">/components/Drawer，自定义组件Drawer</Link>
+          </li>
         </ul>
         <div className="wrap" style={{ padding: '20px' }}>
           {this.props.children}
@@ -133,18 +136,18 @@ function Routers() {
             <Route path="/transitions" component={Transitions} />
             <Route path="/Airbnb-React" component={AirbnbReact} />
             {/* ts react实例 */}
-            <Route
+            {/* <Route
               path="/TypeScriptDemo/ClassComponent"
-              component={lazy(() => import('./pages/TypeScriptDemo/ClassComponent.tsx'))}
-            />
-            <Route
-              path="/TypeScriptDemo/StatelessComponent"
-              component={lazy(() => import('./pages/TypeScriptDemo/StatelessComponent.tsx'))}
-            />
+              component={lazy(() => import('./pages/TypeScriptDemo/ClassComponent'))}
+            /> */}
             {/* <Route
               path="/TsReduxComponent"
               component={lazy(() => import('./pages/TsReduxComponent/index.tsx'))}
             /> */}
+            <Route
+              path="/ComponentTest"
+              component={lazy(() => import('./pages/ComponentTest/index'))}
+            />
           </Layout>
         </Switch>
       </Suspense>

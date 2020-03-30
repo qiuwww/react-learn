@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.js"></script>
+
+    <script type="text/babel">
+      const { useState } = React;
+
+      const useRandomColor = initColor => {
+        const [color, setColor] = useState(initColor);
+        const handleRandom = () => {
+          //随机颜色
+          const randomColor =
+            '#' +
+            Math.random()
+              .toString(16)
+              .slice(2, 8);
+          setColor(randomColor);
+        };
+        return [color, handleRandom];
+      };
+
+      function Com1() {
+        const [color, handleRandom] = useRandomColor('red');
+        return (
+          <div
+            style={{ backgroundColor: color, padding: 50, textAlign: 'center' }}
+          >
+            <button onClick={handleRandom}>点击换色</button>
+          </div>
+        );
+      }
+
+      function Com2() {
+        const [color, handleRandom] = useRandomColor('green');
+        const handleClick = () => {
+          setInterval(handleRandom, 1000);
+        };
+        return (
+          <div
+            style={{ backgroundColor: color, padding: 50, textAlign: 'center' }}
+          >
+            <button onClick={handleClick}>点击换色</button>
+          </div>
+        );
+      }
+
+      ReactDOM.render(
+        <div>
+          <Com1 />
+          <Com2 />
+        </div>,
+        document.getElementById('box')
+      );
+    </script>
+  </body>
+</html>

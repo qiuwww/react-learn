@@ -20,6 +20,7 @@ const TextArea = PropsProxy(TextAreaBase);
 
 // 2.反向继承的形式
 // 定义的基础组件
+// @ts-ignore
 @InheritanceInversion
 class UserPanel extends Component {
   static displayName = 'UseContent';

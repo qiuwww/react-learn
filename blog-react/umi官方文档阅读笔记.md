@@ -99,17 +99,17 @@ umi 的权限路由是通过配置路由的 Routes 属性来实现。
 
 ```js
 // 1. 声明式;
-import Link from "umi/link";
+import Link from 'umi/link';
 
 export default () => <Link to="/list">Go to list page</Link>;
 ```
 
 ```js
 // 2. 命令式;
-import router from "umi/router";
+import router from 'umi/router';
 
 function goToListPage() {
-  router.push("/list");
+  router.push('/list');
 }
 ```
 
@@ -143,7 +143,7 @@ umi 允许在 .umirc.js 或 config/config.js （二选一，.umirc.js 优先）�
 - theme：配置主题，实际上是配 less 变量。
 - treeShaking：默认值：false，tree shaking 是一个术语，通常用于描述移除 JavaScript 上下文中的未引用代码(dead-code)。
 - define：通过 webpack 的 DefinePlugin **传递给代码**，注入到代码中，值会自动做 JSON.stringify 处理。
-- [externals](https://webpack.docschina.org/configuration/externals/)： 配置 代码 不打入代码。防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖(external dependencies)。配置全局可用变量是在.eslintrc中的globals。**这里主要是说明，不打包的模块**。
+- [externals](https://webpack.docschina.org/configuration/externals/)： 配置 代码 不打入代码。防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖(external dependencies)。配置全局可用变量是在.eslintrc 中的 globals。**这里主要是说明，不打包的模块**。
 - alias： 添加别名；设置相对地址。
 - devServer
 - devtool
@@ -158,16 +158,16 @@ umi 允许在 .umirc.js 或 config/config.js （二选一，.umirc.js 优先）�
 
 模板里可通过 context 来获取到 umi 提供的变量。
 
-处理loader默认：
+处理 loader 默认：
 
 .js, .jsx, .mjs, .jsx, .json: 由 babel-loader 处理
 .ts: 由 ts-loader 处理
 .graphql, .gql: 由 graphql-tag/loader 处理
 .css, .less, .sass: 由 css-loader, postcss-loader, less-loader 处理
 .svg: 由 @svgr/core 处理。使用 umi，你可以用如下方式引入 svg
-**所有其他未列出的模块，默认都会由 url-loader 处理**，所以在需要添加额外的loader的时候，需要设置排除文件。
+**所有其他未列出的模块，默认都会由 url-loader 处理**，所以在需要添加额外的 loader 的时候，需要设置排除文件。
 
-## mock数据
+## mock 数据
 
 <https://umijs.org/zh/guide/mock-data.html#%E4%BD%BF%E7%94%A8-umi-%E7%9A%84-mock-%E5%8A%9F%E8%83%BD>
 
@@ -177,8 +177,8 @@ umi 允许在 .umirc.js 或 config/config.js （二选一，.umirc.js 优先）�
 
 model 分两类，一是全局 model，二是页面 model。全局 model 存于 /src/models/ 目录，所有页面都可引用；页面 model 不能被其他页面所引用。
 
-- src/models/**/*.js 为 global model
-- src/pages/**/models/**/*.js 为 page model
+- src/models/\*_/_.js 为 global model
+- src/pages/**/models/**/\*.js 为 page model
 - global model 全量载入，page model 在 production 时按需载入，在 development 时全量载入
 
 ### url 变化了，但页面组件不刷新，是什么原因
@@ -189,10 +189,10 @@ layouts/index.js 里如果用了 connect 传数据，需要用 umi/withRouter �
 
 ### 如何访问到 store 或 dispatch 方法
 
-window.g_app._store
-window.g_app._store.dispatch
+window.g_app.\_store
+window.g_app.\_store.dispatch
 
-这里g_app变量包含了很多的信息。
+这里 g_app 变量包含了很多的信息。
 
 ## 按需加载
 
@@ -238,7 +238,7 @@ dynamic: n，动态。adj，动态的，按需的。
 
 ## FAQ
 
-### 查看umi的依赖版本
+### 查看 umi 的依赖版本
 
 `umi -v --verbose`
 
@@ -249,7 +249,7 @@ dynamic: n，动态。adj，动态的，按需的。
 <https://umijs.org/zh/guide/faq.html#%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%E9%A2%9D%E5%A4%96%E7%9A%84-loader>
 
 1. 添加 url-loader 的 exclude
-2. 添加文件的处理loader
+2. 添加文件的处理 loader
 
 ## .env 和环境变量
 

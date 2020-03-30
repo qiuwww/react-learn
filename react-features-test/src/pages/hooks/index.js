@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { useState, useEffect } from "react";
-import GetAsyncData from "./GetAsyncData.js";
-
+import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
+import GetAsyncData from './GetAsyncData.js';
+import HookCustomize from './HookCustomize.jsx'
 // 无状态组件使用hooks
 function CounterHooksExample() {
   // 声明一个变量count,来保存中间值
@@ -19,16 +19,16 @@ function CounterHooksExample() {
   });
   // 这里使用副作用，在根节点插入元素，然后在组件被移除的时候删除，这个组件加载完成的时候，就会被执行
   useEffect(() => {
-    const node = document.createElement("P");
-    const textnode = document.createTextNode("使用hooks组件插入");
-    node.setAttribute("id", "hooksAdd");
+    const node = document.createElement('P');
+    const textnode = document.createTextNode('使用hooks组件插入');
+    node.setAttribute('id', 'hooksAdd');
     node.appendChild(textnode);
-    document.querySelector("body").appendChild(node);
+    document.querySelector('body').appendChild(node);
     return () => {
       // 这里修改标题
-      document.title = "react-features-test";
-      const hooksAddNode = document.querySelector("#hooksAdd");
-      document.querySelector("body").removeChild(hooksAddNode);
+      document.title = 'react-features-test';
+      const hooksAddNode = document.querySelector('#hooksAdd');
+      document.querySelector('body').removeChild(hooksAddNode);
     };
   });
 
@@ -36,7 +36,7 @@ function CounterHooksExample() {
     <div
       className="counter-wrap"
       style={{
-        border: "1px solid green"
+        border: '1px solid green',
       }}
     >
       <p>You clicked {count} times</p>
@@ -54,28 +54,24 @@ export default class Hooks extends Component {
         <div>
           <h3>question:</h3>
           <ul>
-            <li>
-              组件之间很难复用逻辑：React 需要为共享状态逻辑提供更好的原生途径。
-            </li>
+            <li>组件之间很难复用逻辑：React 需要为共享状态逻辑提供更好的原生途径。</li>
             <li>复杂组件很难理解</li>
             <li>class比较难学</li>
           </ul>
-          <h3>
-            Hook 是一些可以让你在函数组件里“钩入” React state
-            及生命周期等特性的函数。
-          </h3>
+          <h3>Hook 是一些可以让你在函数组件里“钩入” React state 及生命周期等特性的函数。</h3>
           <ul>
             <li>
-              useEffect 就是一个 Effect
-              Hook，给函数组件增加了操作副作用的能力。它跟 class 组件中的
+              useEffect 就是一个 Effect Hook，给函数组件增加了操作副作用的能力。它跟 class 组件中的
               componentDidMount、componentDidUpdate 和 componentWillUnmount
               具有相同的用途，只不过被合并成了一个 API。
             </li>
           </ul>
           <CounterHooksExample />
-          <GetAsyncData wrap={"这里是Hooks组件"}>这里是children</GetAsyncData>
+          <GetAsyncData wrap={'这里是Hooks组件'}>这里是children</GetAsyncData>
+
+          <HookCustomize />
         </div>
-      </div>
+      </div>,
     ];
   }
 }
