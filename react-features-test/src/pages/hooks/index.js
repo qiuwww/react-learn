@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
 import GetAsyncData from './GetAsyncData.js';
-import HookCustomize from './HookCustomize.jsx'
+import HookCustomize from './HookCustomize.jsx';
+import Count from './Count.jsx';
 // 无状态组件使用hooks
 function CounterHooksExample() {
   // 声明一个变量count,来保存中间值
@@ -70,6 +71,7 @@ export default class Hooks extends Component {
           <GetAsyncData wrap={'这里是Hooks组件'}>这里是children</GetAsyncData>
 
           <HookCustomize />
+          <Count />
         </div>
       </div>,
     ];
