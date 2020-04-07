@@ -1,30 +1,26 @@
-import React, { Component, PureComponent } from "react";
+import React, { Component, PureComponent } from 'react';
 
 // 一般的组件是没有
 class GeneralComponent extends Component {
   state = {};
   constructor(props) {
     super(props);
-    console.log("GeneralComponent, constructor: ", this);
+    console.log('GeneralComponent, constructor: ', this);
   }
   componentWillMount() {
-    console.log("GeneralComponent, componentWillMount");
+    console.log('GeneralComponent, componentWillMount');
   }
   componentDidMount() {
-    console.log("GeneralComponent, componentDidMount");
+    console.log('GeneralComponent, componentDidMount');
   }
   componentWillUpdate() {
-    console.log("GeneralComponent, componentWillUpdate");
+    console.log('GeneralComponent, componentWillUpdate');
   }
   componentWillReceiveProps(nextProps, props) {
-    console.log(
-      "GeneralComponent, componentWillReceiveProps",
-      nextProps,
-      props
-    );
+    console.log('GeneralComponent, componentWillReceiveProps', nextProps, props);
   }
   shouldComponentUpdate() {
-    console.log("GeneralComponent, shouldComponentUpdate");
+    console.log('GeneralComponent, shouldComponentUpdate');
     // 如果一直是false，就会一直不渲染
     // return false;
     // 如果一直返回true，就会一直更新，而不管是否有状态引用
@@ -36,7 +32,7 @@ class GeneralComponent extends Component {
     }
   }
   componentDidUpdate() {
-    console.log("GeneralComponent, componentDidUpdate");
+    console.log('GeneralComponent, componentDidUpdate');
   }
 
   // 测试新的生命周期
@@ -44,75 +40,63 @@ class GeneralComponent extends Component {
   // GeneralComponent uses getDerivedStateFromProps() but also contains the following legacy lifecycles: 这里不应该与will...一起用
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(
-      "GeneralComponent, componentWillReceiveProps",
-      nextProps,
-      prevState
-    );
+    console.log('GeneralComponent, componentWillReceiveProps', nextProps, prevState);
   }
   // 这里数据不改变的时候，也是不回去重新渲染的
   render() {
-    console.log("GeneralComponent, render");
+    console.log('GeneralComponent, render');
     return [
-      "GeneralComponent",
+      'GeneralComponent',
       <p key="GeneralComponent">{JSON.stringify(this.props)}</p>,
-      <p key="number">number: {this.props.number}</p>
+      <p key="number">number: {this.props.number}</p>,
     ];
   }
 }
 
 export default class ShouldComponentUpdateCycleTest extends PureComponent {
   state = {
-    number: 1
+    number: 1,
   };
   constructor(props) {
     super(props);
-    console.log("ShouldComponentUpdateCycleTest, constructor: ", this);
+    console.log('ShouldComponentUpdateCycleTest, constructor: ', this);
   }
   componentWillMount() {
-    console.log("ShouldComponentUpdateCycleTest, componentWillMount");
+    console.log('ShouldComponentUpdateCycleTest, componentWillMount');
   }
   componentDidMount() {
-    console.log("ShouldComponentUpdateCycleTest, componentDidMount");
+    console.log('ShouldComponentUpdateCycleTest, componentDidMount');
     setInterval(() => {
       this.setState({
         // number: this.state.number + 1
-        number: this.state.number
+        number: this.state.number,
       });
     }, 2000);
   }
   componentWillUpdate() {
-    console.log("ShouldComponentUpdateCycleTest, componentWillUpdate");
+    console.log('ShouldComponentUpdateCycleTest, componentWillUpdate');
   }
   componentWillReceiveProps(nextProps, props) {
-    console.log(
-      "ShouldComponentUpdateCycleTest, componentWillReceiveProps",
-      nextProps,
-      props
-    );
+    console.log('ShouldComponentUpdateCycleTest, componentWillReceiveProps', nextProps, props);
   }
   // pureComponent是没有这个生命周期的
   // shouldComponentUpdate() {
   //   console.log("ShouldComponentUpdateCycleTest, shouldComponentUpdate");
   // }
   componentDidUpdate() {
-    console.log("ShouldComponentUpdateCycleTest, componentDidUpdate");
+    console.log('ShouldComponentUpdateCycleTest, componentDidUpdate');
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(
-      "GeneralComponent, componentWillReceiveProps",
-      nextProps,
-      prevState
-    );
+    console.log('GeneralComponent, componentWillReceiveProps', nextProps, prevState);
   }
   render() {
-    console.log("ShouldComponentUpdateCycleTest, render");
+    console.log('ShouldComponentUpdateCycleTest, render');
     return [
-      "ShouldComponentUpdateCycleTest",
+      'ShouldComponentUpdateCycleTest',
       <p key="props">{JSON.stringify(this.props)}</p>,
       <GeneralComponent key="GeneralComponent" number={this.state.number} />,
-      <p key="number">number: {this.state.number}</p>
+      <p key="number">number: {this.state.number}</p>,
     ];
   }
 }

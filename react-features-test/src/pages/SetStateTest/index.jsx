@@ -6,117 +6,115 @@ export default class SetStateTest extends Component {
     super(props);
     this.state = {
       count: 1,
+      count2: 1,
+      count3: 1,
+      count4: 1,
+      count5: 1,
     };
-    console.log('constructor:', this.state.count);
+    console.log('constructor this:', this);
     this.btnRef = React.createRef();
   }
-  componentDidMount() {
-    this.addEventListenerTest();
-    const test = 5;
-    // eslint-disable-next-line default-case
-    switch (test) {
-      case 1:
-        this.setState({
-          count: this.state.count + 1,
-        });
-        // 不会立即改变，在render之后执行
-        console.log('componentDidMount:', this.state.count);
-        break;
-      case 2:
-        // 如果需要立即使用count的值，可以声明为一个变量，可以使用，也可以用来赋值
-        // 还可以使用setState的第二个参数
-        this.setState(
-          {
-            count: this.state.count + 1,
-          },
-          () => {
-            // 在render之后调用
-            console.log('componentDidMount:callback:', this.state.count);
-          },
-        );
-        // 但是异步代码和原生事件是可以立马修改的
-        break;
-      case 3:
-        setTimeout(() => {
-          console.log('componentDidMount:setTimeout:', this.state.count);
-          this.setState({
-            count: this.state.count + 1,
-          });
-          // 在render之后，可以拿到准确值
-          console.log('componentDidMount:setTimeout:', this.state.count);
-        }, 20);
-        break;
-      case 4:
-        this.setState({
-          count: this.state.count + 1,
-        });
-        this.setState({
-          count: this.state.count + 1,
-        });
-        // 这个时候合并处理，只会执行一次，一般也不会出现
-        console.log('componentDidMount:同一段代码多次修改:', this.state.count);
-        break;
-      case 5:
-        // 借助回调函数来实现同一段代码多次修改
-        this.setState(
-          (state, props) => ({
-            count: state.count + 1,
-          }),
-          () => {
-            // 在render之后调用，结果都是最后一次的结果，合并了修改
-            console.log('componentDidMount5:callback:', this.state.count);
-          },
-        );
-        this.setState(
-          (state, props) => ({
-            count: state.count + 1,
-          }),
-          () => {
-            // 在render之后调用
-            console.log('componentDidMount5:callback:', this.state.count);
-          },
-        );
-        // 这个时候合并处理，只会执行一次，一般也不会出现
-        console.log('componentDidMount5:同一段代码多次修改:', this.state.count);
-        break;
-    }
-  }
-  // 测试合成事件
-  testSyntheticEvent = () => {
-    console.log('componentDidMount:testSyntheticEvent1:', this.state.count);
-    // 这里只执行了一次
-    this.setState({
-      count: this.state.count + 1,
-    });
-    this.setState({
-      count: this.state.count + 1,
-    });
-    console.log('componentDidMount:testSyntheticEvent2:', this.state.count);
-  };
 
+  changeState2 = () => {
+    console.log('###changeState2执行了');
+    // 两种方式设置state
+    // 在这里连续两次，只会执行一次render，且count2值增加了一次
+    // 请使用 componentDidUpdate 或者 setState 的回调函数（setState(updater, callback)），这两种方式都可以保证在应用更新后触发。
+    this.setState({ count2: this.state.count2 + 1 }, () => {
+      // 在render之后执行
+      console.log('count2修改了');
+    });
+    this.setState({ count2: this.state.count2 + 1 });
+  };
+  changeState3 = () => {
+    console.log('###changeState3执行了');
+    // 两种方式设置state
+    // 在这里连续两次，与别的state一起执行，count3增加了2次
+    this.setState(
+      (state, props) => ({ count3: state.count3 + 1 }),
+      () => {
+        // 在render之后执行
+        console.log('count3修改了');
+      },
+    );
+    this.setState((state, props) => ({ count3: state.count3 + 1 }));
+  };
+  // 在setState外添加setTimeout会执行几次呢？
+  // 设置几次执行几次
+  changeStateWithSetTimeout = () => {
+    setTimeout(() => {
+      console.log('###changeStateWithSetTimeout');
+      // 两种方式设置state
+      // 在这里连续两次，只会执行一次render，且count2值增加了一次
+      this.setState({ count: this.state.count + 1 }, () => {
+        // 在render之后执行
+        console.log('count修改了');
+      });
+      console.log('count', this.state.count);
+      this.setState({ count: this.state.count + 1 });
+      console.log('count', this.state.count);
+    }, 1000);
+  };
+  // 这里可以阻止渲染，但不能阻止修改state，在render前调用
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (nextState.count === 3) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
+  // 测试原生事件绑定，获取元素并且添加原生事件
   addEventListenerTest = () => {
     this.btnRef.current.addEventListener(
       'click',
-      e => {
-        console.log('componentDidMount:addEventListenerTest1:', this.state.count);
+      (e) => {
+        console.log('###componentDidMount:addEventListener，事件被触发了');
         // 这里会执行两次render，与异步操作类似
         this.setState({
-          count: this.state.count + 1,
+          count4: this.state.count4 + 1,
         });
+        console.log('count4', this.state.count4);
         this.setState({
-          count: this.state.count + 1,
+          count4: this.state.count4 + 1,
         });
-        console.log('componentDidMount:addEventListenerTest2:', this.state.count);
+        console.log('count4', this.state.count4);
       },
       false,
     );
   };
+
+  // 测试合成事件
+  testSyntheticEvent = () => {
+    // 这里只执行一次
+    this.setState({
+      count5: this.state.count5 + 1,
+    });
+    console.log('###componentDidMount:testSyntheticEvent:', this.state.count5);
+    this.setState({
+      count5: this.state.count5 + 1,
+    });
+    console.log('componentDidMount:testSyntheticEvent:', this.state.count5);
+  };
+
+  componentDidMount() {
+    // 生命周期函数与setTimeout
+    this.changeState2();
+    this.changeState3();
+    // 原生事件与合成事件
+    this.changeStateWithSetTimeout();
+    this.addEventListenerTest();
+  }
+
   render() {
-    console.log('%crender', 'color:red', this.state.count);
-    console.log('\n');
+    const { count, count2, count3, count4, count5 } = this.state;
+    console.log('%c######render被调用了：', 'color:red', this.state);
     return (
       <div>
         <p>SetStateTest</p>
+        <p>state: {count}</p>
+        <p>state2: {count2}</p>
+        <p>state3: {count3}</p>
+        <p>state4: {count4}</p>
+        <p>state5: {count5}</p>
         <button onClick={this.testSyntheticEvent}>测试合成事件下的setState</button>
         <button ref={this.btnRef}>测试原生事件下的setState</button>
       </div>

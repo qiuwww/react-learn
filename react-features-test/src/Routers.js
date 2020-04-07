@@ -1,19 +1,23 @@
 import React, { Component, Suspense, lazy } from 'react';
+// using ES6 modules
+import { HashRouter, Route, Link, Switch } from 'react-router-dom';
 
-import Feature0_4 from './pages/feature0_4/Feature0_4';
-import Feature4_6 from './pages/feature4_6/Feature4_6';
+// 只有全写作lazy的形式，才能相互无干扰
+const Feature0_4 = lazy(() => import('./pages/feature0_4/Feature0_4'));
+const Feature4_6 = lazy(() => import('./pages/feature4_6/Feature4_6'));
 
-import Hoc from './pages/hoc/index.js';
-import Hooks from './pages/hooks/index.js';
-import FetchRender from './pages/FetchRender/index.jsx';
-import Transitions from './pages/Transitions/index.jsx';
-import AirbnbReact from './pages/AirbnbReact/index.jsx';
+const Hoc = lazy(() => import('./pages/hoc/index.js'));
+const Hooks = lazy(() => import('./pages/hooks/index.js'));
+const Transitions = lazy(() => import('./pages/Transitions/index.jsx'));
+const AirbnbReact = lazy(() => import('./pages/AirbnbReact/index.jsx'));
 
 // import ErrorBoundaryTest from './pages/ErrorBoundaryTest/index.jsx';
 
-import ShouldComponentUpdateCycleTest from './pages/cycle/ShouldComponentUpdateCycleTest.js';
-// using ES6 modules
-import { HashRouter, Route, Link, Switch } from 'react-router-dom';
+const ShouldComponentUpdateCycleTest = lazy(() =>
+  // @ts-ignore
+  import('./pages/cycle/ShouldComponentUpdateCycleTest.js'),
+);
+
 // 这里抽出来就是Layout
 
 // 这里代码，debounce_throttle/index.js文件会被运行，也就是最开始的时候，代码就被加载进来了
@@ -21,16 +25,16 @@ import { HashRouter, Route, Link, Switch } from 'react-router-dom';
 
 // 这里的代码是不会默认不会被加载的，只有用到当前组件的时候，才会去加载'./pages/debounce_throttle/index.js';这个文件，同时生成组件实例。避免了暂时不需要加载的，夹在router中使用非常合适
 // 使用懒加载代码会被切分为多个chunk
+
 const Debounce_throttle = lazy(() => import('./pages/debounce_throttle/index.js'));
-
 const ContextTest = lazy(() => import('./pages/ContextTest/index.jsx'));
-
+const FetchRender = lazy(() => import('./pages/FetchRender/index.jsx'));
 const PerformanceOptimizationTest = lazy(() =>
   import('./pages/PerformanceOptimizationTest/index.jsx'),
 );
-
 const ErrorBoundaryTest = lazy(() => import('./pages/ErrorBoundaryTest/index.jsx'));
 const SetStateTest = lazy(() => import('./pages/SetStateTest/index.jsx'));
+
 class Layout extends Component {
   render() {
     return (
@@ -102,6 +106,9 @@ class Layout extends Component {
           <li>
             <Link to="/ComponentTest">/components/Drawer，自定义组件Drawer</Link>
           </li>
+          <li>
+            <Link to="/DiffingTest">/DiffingTest，协调的过程，测试</Link>
+          </li>
         </ul>
         <div className="wrap" style={{ padding: '20px' }}>
           {this.props.children}
@@ -118,6 +125,9 @@ function Routers() {
       {/* 这里的fallback还是必须的 */}
       <Suspense fallback={<div style={{ color: 'red' }}>Loading...</div>}>
         <Switch>
+          <Route path="/setState-test" component={SetStateTest} />
+          <Route path="/DiffingTest" component={lazy(() => import('./pages/DiffingTest/index'))} />
+          
           <Layout path="/" component={Layout}>
             <Route path="/feature0_4" component={Feature0_4} />
             <Route path="/feature4_6" component={Feature4_6} />
@@ -131,7 +141,6 @@ function Routers() {
             <Route path="/context-test" component={ContextTest} />
             <Route path="/performance-optimization-test" component={PerformanceOptimizationTest} />
             <Route path="/error-boundary-test" component={ErrorBoundaryTest} />
-            <Route path="/setState-test" component={SetStateTest} />
             <Route path="/fetch-render" component={FetchRender} />
             <Route path="/transitions" component={Transitions} />
             <Route path="/Airbnb-React" component={AirbnbReact} />

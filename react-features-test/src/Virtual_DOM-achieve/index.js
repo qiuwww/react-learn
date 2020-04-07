@@ -2,14 +2,17 @@
  * @description 创建一个根节点virtual_root节点，并依照虚拟dom的原理把数据转为虚拟dom再转为真实的dom，插入页面
  */
 
+// 通过修改config/paths来切换入口文件index.js，来查看效果
 import { createElement, convert2RealDom, renderDom } from './element';
 import diff from './diff';
 import patch from './patch';
 // 框架最高级变量
+
 let MyFrame = {};
 const root = document.querySelector('#virtual_root');
 // 定义状态，对应react中的state，与vue中的data
 // 中间变量
+console.log('虚拟dom测试：');
 let state = {
   list: ['a', 'b', 'c', 'd'],
 };
@@ -21,7 +24,7 @@ Object.defineProperty(MyFrame, 'state', {
   get: () => {
     return state;
   },
-  set: newState => {
+  set: (newState) => {
     // 每次的新值都是全新的state来混入当前的值
     state = newState;
   },
@@ -45,7 +48,7 @@ let renderList = (list = []) =>
   createElement(
     'ul',
     { class: 'list' },
-    list.map(item => {
+    list.map((item) => {
       return createElement('li', { class: 'item' }, [item]);
     }),
   );

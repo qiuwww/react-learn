@@ -24,31 +24,6 @@ comments: true
 
 - 无论是使用函数或是类来声明一个组件，**它决不能修改它自己的 props**。所有的 React **组件必须像纯函数那样使用它们的 props**。
 
-## state 和生命周期
-
-- 对于一个组件（函数或者对象），先有 props，再有 state（无状态组件没有内部状态）
-- setState 的可以**接受一个函数来更改 state**的，请**使用第二种形式的 setState() 来接受一个函数而不是一个对象**。该函数将接收先前的状态作为第一个参数，将此次更新被应用时的 props 做为第二个参数：
-
-```js
-// Correct 需要返回一个对象
-this.setState((prevState, props) => ({
-  counter: prevState.counter + props.increment
-}));
-```
-
-- setState 是可以接受**回调函数**的。
-
-```js
-this.state = { foo: 2 };
-// 用来进行一些有副作用的操作，比如打印日志
-this.setState({ foo: 123 }, () => {
-  console.log(foo);
-  // 123
-});
-```
-
-如果某些数据可以由 props 或者 state 提供，那么它很有可能不应该在 state 中出现。
-
 ## 事件处理
 
 通过事件来**添加反向数据流**。
@@ -257,12 +232,6 @@ function ExampleApplication() {
 ## React.Compoment
 
 [生命周期的具体细节](https://react.docschina.org/docs/react-component.html)
-
-## setState
-
-发送了一个数据重新渲染的请求，数据会在下一次rerender之前更新。
-
-React 不会保证在 setState 之后，能够立刻拿到改变的结果。异步处理的过程。
 
 ## 认知程度检测，术语表
 
