@@ -1051,28 +1051,6 @@ static getDerivedStateFromProps(nextProps, prevState) {
 - componentWillUnmount
 - getSnapshotBeforeUpdate(prevProps, prevState)，会在最终的 render 之前被调用，基本用不到
 
-### 最新的功能的使用，最新功能了解，hooks
-
-它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。也就是用在无状态组件中，充当一下简单的 state。
-
-用法参见`react-learn/react-features-test/components/hooks`
-
-```js
-// 声明一个变量count,来保存中间值
-// useState返回两个参数，一个是当前state的值，还有一个其实是一个函数，用来改变state的值，就是setCount。
-// 它不会将旧的state跟新的state合并在一起，而是覆盖式的重写state的值。
-const [count, setCount] = useState(0);
-
-// Similar to componentDidMount and componentDidUpdate:
-// 在hooks里，这些生命周期函数都被统一成一个方法 useEffect。
-useEffect(() => {
-  // Update the document title using the browser API
-  document.title = `You clicked ${count} times`;
-});
-// 需要改变状态的时候
-onClick={() => setCount(count + 1)}
-```
-
 ### 组件的封装
 
 组件允许你将 UI 拆分为独立可复用的代码片段，并对每个片段进行独立构思。

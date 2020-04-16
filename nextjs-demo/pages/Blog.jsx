@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import Header from '../components/Header';
 
 // TODO: 需要获取 `posts`（通过调用 API ）
-//       在此页面被预渲染之前
+// 在此页面被预渲染之前
 function Blog({ posts }) {
   return (
     <div>

@@ -1,6 +1,13 @@
 ---
 title: nextjs
-date: 2020-03-15
+date: 2020-3-15
+tags:
+  - React
+  - 服务端渲染
+  - nextjs
+categories:
+  - [服务端渲染, nextjs]
+  - [React]
 ---
 
 使用 ts，需要添加 ts 支持的包。
@@ -93,3 +100,9 @@ import Link from 'next/link';
   <a>To Hello World Blog post</a>
 </Link>;
 ```
+
+## 主要接口 ｜ 获取数据以及组件生命周期
+
+1. getStaticProps： 此函数在构建时被调用；
+2. getServerSideProps
+3. getInitialProps

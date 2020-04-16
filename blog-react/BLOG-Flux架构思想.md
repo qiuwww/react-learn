@@ -1,15 +1,21 @@
 ---
-title: Flux（单向数据流，事件监听，数据渲染）
+title: Flux架构思想
 date: 2017-3-6
 tags:
+  - Flux（单向数据流，事件监听，数据渲染）
   - flux
+categories:
+  - [设计模式, flux]
+  - [React]
 ---
 
 Flux 是 Facebook 内部与 React 搭配使用的架构。
 
+Flux(Dispatcher-Store-View)。
+
 简单说，**Flux 是一种架构思想**，专门解决软件的结构问题。它跟 MVC 架构是同一类东西，但是更加简单和清晰。
 
-![Flux](./Flux.png)
+![Flux](./imgs/Flux.png)
 
 ## 首先，Flux 将一个应用分成四个部分
 

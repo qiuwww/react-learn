@@ -63,20 +63,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // 高阶组件 contect
-export const connect = (
-  mapStateToProps,
-  mapDispatchToProps
-) => WrappedComponent => {
+export const connect = (mapStateToProps, mapDispatchToProps) => (
+  WrappedComponent
+) => {
   class Connect extends React.Component {
     // 通过对context调用获取store
     static contextTypes = {
-      store: PropTypes.object
+      store: PropTypes.object,
     };
 
     constructor() {
       super();
       this.state = {
-        allProps: {}
+        allProps: {},
       };
     }
 
@@ -96,14 +95,14 @@ export const connect = (
       let dispatchProps = mapDispatchToProps
         ? mapDispatchToProps(store.dispatch, this.props)
         : {
-            dispatch: store.dispatch
+            dispatch: store.dispatch,
           }; // 防止 mapDispatchToProps 没有传入
       this.setState({
         allProps: {
           ...stateProps,
           ...dispatchProps,
-          ...this.props
-        }
+          ...this.props,
+        },
       });
     }
 
@@ -162,7 +161,7 @@ Action 创建函数 就是生成 action 的方法。“action” 和 “action �
 function addTodo(text) {
   return {
     type: ADD_TODO,
-    text
+    text,
   };
 }
 ```
@@ -214,7 +213,7 @@ import todos from './reducers';
 // 每个 middleware 接受 Store 的 dispatch 和 getState 函数作为命名参数，并返回一个函数。
 function logger({ getState }) {
   // 被称为 next 的下一个 middleware 的 dispatch 方法
-  return next => action => {
+  return (next) => (action) => {
     console.log('will dispatch', action);
 
     // 调用 middleware 链中下一个 middleware 的 dispatch。
@@ -232,7 +231,7 @@ const store = createStore(todos, ['Use Redux'], applyMiddleware(logger));
 
 store.dispatch({
   type: 'ADD_TODO',
-  text: 'Understand the middleware'
+  text: 'Understand the middleware',
 });
 // (将打印如下信息:)
 // will dispatch: { type: 'ADD_TODO', text: 'Understand the middleware' }
@@ -275,7 +274,7 @@ const reducer = (state = { count: 0 }, action) => {
 
 const actions = {
   increase: () => ({ type: 'INCREASE' }),
-  decrease: () => ({ type: 'DECREASE' })
+  decrease: () => ({ type: 'DECREASE' }),
 };
 
 const store = createStore(reducer);
@@ -322,3 +321,10 @@ reselect 只要相关的状态没有改变，那么就直接使用上一次的�
 js 在原生创建数据类型即是 mutable，可变的。const 只是浅层次的防篡改，层级一深就没辙了。
 
 相对于 mutable，Immutable 就是在创建变量、赋值后便不可更改，若对其有任何变更,**就会回传一个新值**。
+
+## 为什么从 redux -> dva
+
+简化开发体验。
+
+1. dva 首先是一个基于 redux 和 redux-saga 的**数据流方案**，然后为了**简化开发体验**，
+2. dva 还额外内置了 react-router 和 fetch，所以也可以理解为一个轻量级的应用框架。
