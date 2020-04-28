@@ -33,13 +33,13 @@ Redux 试图让 state 的变化变得可预测。
 
 跨组件状态共享更方便。
 
-## 要点
+## 使用要点
 
 应用中**所有的 state** 都以一个**对象树的形式储存在一个单一的 store 中**。
 **惟一改变 state 的办法是触发 action**，一个描述发生什么的对象。
 为了描述 action 如何改变 state 树，你需要**编写 reducers**。
 
-## 介绍 Redux 数据流的流程
+## 介绍 Redux 数据的流向
 
 严格的单向数据流是 Redux 架构的设计核心。
 
@@ -116,30 +116,33 @@ export const connect = (mapStateToProps, mapDispatchToProps) => (
 
 ## redux 的三大原则
 
-- **单一数据源**: 整个应用的 state 被储存在一棵 object tree 中，并且这个 object tree 只存在于**唯一一个 store 中**。
-- **state 是只读的**: 唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象。这样确保了视图和网络请求都不能直接修改 state，相反它们**只能表达想要修改的意图**。因为所有的修改都被集中化处理，**且严格按照一个接一个的顺序执行**，因此不用担心 race condition(竞争) 的出现。
-- 使用**纯函数来执行修改**（只依赖自己的参数，无副作用）: 为了描述 action 如何改变 state tree ，你需要编写 reducers。
+1. **单一数据源**: 整个应用的 state 被储存在一棵 object tree 中，并且这个 object tree 只存在于**唯一一个 store 中**。
+2. **state 是只读的**: 唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象。这样确保了视图和网络请求都不能直接修改 state，相反它们**只能表达想要修改的意图**。因为所有的修改都被集中化处理，**且严格按照一个接一个的顺序执行**，因此不用担心 race condition(竞争) 的出现。
+3. 使用**纯函数来执行修改**（只依赖自己的参数，无副作用）: 为了描述 action 如何改变 state tree ，你需要编写 reducers。
 
 ## 先前技术
 
 ### 与 flux 的关系
 
-- Redux 的灵感来源于 Flux 的几个重要特性。和 Flux 一样，Redux 规定，**将模型的更新逻辑全部集中于一个特定的层（Flux 里的 store，Redux 里的 reducer）**。
-- Flux 和 Redux 都不允许程序直接修改数据，而是用一个叫作 “action” 的普通对象来对更改进行描述。
-- 而不同于 Flux ，Redux 并没有 dispatcher 的概念。原因是它依赖纯函数来替代事件处理器。
-- 和 Flux 的另一个重要区别，是 Redux 设想你永远不会变动你的数据。
+1. Redux 的灵感来源于 Flux 的几个重要特性。和 Flux 一样，Redux 规定，**将模型的更新逻辑全部集中于一个特定的层（Flux 里的 store，Redux 里的 reducer）**。
+2. Flux 和 Redux 都不允许程序直接修改数据，而是用一个叫作 “action” 的普通对象来对更改进行描述。
+3. 而不同于 Flux ，Redux 并没有 dispatcher 的概念。原因是它依赖纯函数来替代事件处理器。
+4. 和 Flux 的另一个重要区别，是 Redux 设想你永远不会变动你的数据。
 
-## Store
+## 主要概念及接口
 
-我们学会了使用 action 来描述“发生了什么”，和使用 reducers 来根据 action 更新 state 的用法。
+### Store
+
+1. 我们学会了使用 action 来描述“发生了什么”，
+2. 和使用 reducers 来根据 action 更新 state 的用法。
 
 Store 就是把它们联系到一起的对象。
 
-## reducers
+### reducers
 
-对于 reducers 中的 case，可以理解为改变这个变量值的操作类型
+对于 reducers 中的 case，**可以理解为改变这个变量值的操作类型**。
 
-## action
+### action
 
 Action 是把数据从应用（译者注：这里之所以不叫 view 是因为这些数据有可能是服务器响应，用户输入或其它非 view 的数据 ）**传到 store 的有效载荷**。
 
@@ -170,9 +173,9 @@ function addTodo(text) {
 
 在 传统的 Flux 实现中，当调用 action 创建函数时，一般会触发一个 dispatch，直接触发更新 state。
 
-## connect
+### connect
 
-高阶函数。
+高阶函数，React-Redux 提供 connect 方法，用于**从 UI 组件生成容器组件**。
 
 react-redux 提供了两个重要的对象，**Provider 和 connect**，
 
@@ -181,7 +184,7 @@ react-redux 提供了两个重要的对象，**Provider 和 connect**，
 
 Provider 内的任何一个组件（比如这里的 Comp），如果需要使用 state 中的数据，就必须是「被 connect 过的」组件——使用 connect 方法对「你编写的组件（MyComp）」进行包装后的产物。
 
-### connect 详解
+#### connect 详解
 
 究竟 connect 方法到底做了什么，我们来一探究竟。
 
@@ -194,6 +197,34 @@ connect() 接收四个参数，它们分别是 mapStateToProps，mapDispatchToPr
 mapStateToProps(state, ownProps) : stateProps
 
 这个函数允许我们将 store 中的数据作为 props 绑定到组件上。
+
+### Provide
+
+[React-redux 框架之 connect()与 Provider 组件](https://www.jianshu.com/p/5f877993ebcc)
+
+connect 方法生成容器组件以后，**需要让容器组件拿到 state 对象**，才能生成 UI 组件的参数。
+
+1. 一种解决方法是将 state 对象作为参数，**传入容器组件**。但是，**这样做比较麻烦**，尤其是容器组件可能在很深的层级，一级级将 state 传下去就很麻烦。
+2. React-Redux 提供 Provider 组件，可以让容器组件拿到 state。
+
+```js
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import todoApp from './reducers';
+import App from './components/App';
+
+// 情形1，单独引入store的情形就是，需要用到的地方引入store作为参数传递给需要用到的组件，还是需要将store拆开，作为props传递进去
+let store = createStore(todoApp);
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+```
+
+这里的 Provider 的原理是：它的原理是 React 组件的 **context 属性**，store 放在了上下文对象 context 上面。然后，子组件就可以从 context 拿到 store。
 
 ## [中间件](http://cn.redux.js.org/docs/api/applyMiddleware.html)
 
@@ -328,3 +359,11 @@ js 在原生创建数据类型即是 mutable，可变的。const 只是浅层次
 
 1. dva 首先是一个基于 redux 和 redux-saga 的**数据流方案**，然后为了**简化开发体验**，
 2. dva 还额外内置了 react-router 和 fetch，所以也可以理解为一个轻量级的应用框架。
+
+## 深入理解 redux 之 reducer 为什么是纯函数
+
+[参考文章](https://blog.csdn.net/weixin_34056162/article/details/91370744)
+
+1. 纯函数条件之一：不得修改传入的参数
+2. 纯函数条件之二：不得调用非纯函数，如 Date.now() 或 Math.random()
+3. 纯函数条件之二：执行有副作用的操作

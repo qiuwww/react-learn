@@ -40,14 +40,6 @@ categories:
 1. **diff** diff 的实际工作是对比 prevInstance 和 nextInstance 的状态，找出差异及其对应的 VDOM change。**diff 本质上是一些计算（遍历、比较）**，是可拆分的（算一半待会儿接着算）。
 2. **patch** 将 diff 算法计算出来的**差异队列更新到真实的 DOM 节点上**。React 并不是计算出一个差异就执行一次 patch，而是**计算出全部的差异并放入差异队列后，再一次性的去执行 patch 方法完成真实的 DOM 更新**。
 
-### 什么是 Virtual DOM
-
-1. Virtual DOM 是一种**编程概念**。
-2. 在这个概念里， **UI 以一种理想化的，或者说“虚拟的”表现形式被保存于内存中**，并通过如 ReactDOM **等类库**使之与“真实的” **DOM 同步**。这一过程叫做**协调**。
-3. 这种方式**赋予了 React 声明式的 API**：您告诉 React 希望让 UI 是什么状态，React 就确保 DOM 匹配该状态。这使您可以从**属性操作、事件处理和手动 DOM 更新**这些在构建应用程序时必要的操作中**解放出来**。
-
-注意区别于[shadow DOM](https://developer.mozilla.org/zh-CN/docs/Web/Web_Components/Using_shadow_DOM)，Shadow DOM 是一种浏览器技术。
-
 ## React16 版本如何解决这个问题 -> 重写核心算法 ｜ Fiber 为什么会出现 ｜ Fiber reconciler
 
 破解 JavaScript 中同步操作时间过长的方法其实很简单——分片。React Fiber 把更新过程**碎片化**，执行过程如下面的图所示，每执行完一段更新过程，就把控制权交还给 React 负责任务协调的模块，看看有没有其他紧急任务要做，**如果没有就继续去更新，如果有紧急任务，那就去做紧急任务**。
@@ -161,3 +153,5 @@ Fiber 依次通过 return、child 及 sibling 的顺序对 ReactElement 做处�
 2. 经过调和过程，React 会以相对高效的方式根据新的状态**构建 React 元素树并且着手重新渲染整个 UI 界面**。
 3. 在 React 得到**元素树**之后，React 会**自动计算出新的树与老树的节点差异**，然后根据差异对界面进行**最小化重渲染**。
 4. 在差异计算算法中，React 能够相对精确地知道哪些位置发生了改变以及应该如何改变，这就保证了按需更新，而不是全部重新渲染。
+
+## React Fiber 的任务调度过程

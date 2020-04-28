@@ -16,6 +16,8 @@ categories:
 
 [react 组件状态](https://zh-hans.reactjs.org/docs/faq-state.html#what-does-setstate-do)
 
+[【React 深入】setState 的执行机制](https://juejin.im/post/5c71050ef265da2db27938b5)
+
 不同于上述**生命周期方法**（**React 主动调用**），以下方法是**你可以在组件中调用的方法**。
 
 只有两个方法：
@@ -42,7 +44,8 @@ categories:
 
 这里主要区分一下，代码所在的代码块：
 
-1. 在生命周期函数和合成事件(react 会对原生的 dom 事件进行收集拦截合成分发，就是有自己的事件系统，**除了自己手动使用 addeventlistener 或者 on 监听的事件都会走 react 合成事件系统**。)中，会合并多个 setState，合并执行，函数中是“异步”的。
+1. 在**生命周期函数和合成事件**(react 会对原生的 dom 事件进行收集拦截合成分发，就是有自己的事件系统，**除了自己手动使用 addeventlistener 或者 on 监听的事件都会走 react 合成事件系统**。)中，会合并多个 setState，合并执行，函数中是“异步”的。
+   1. 由执行机制看，setState 本身并不是异步的，而是如果在调用 setState 时，**如果 react 正处于更新过程，当前更新会被暂存**，等上一次更新执行后在执行，这个过程给人一种异步的假象。
 2. 在 setTimeout 和原生事件中都是同步的；
 3. **setState 的“异步”并不是说内部由异步代码实现**，其实本身执行的过程和代码都是同步的，**只是合成事件和钩子函数的调用顺序在更新之前**，导致在合成事件和钩子函数中没法立马拿到更新后的值，形式了所谓的“异步”，当然可以通过第二个参数 setState(partialState, callback) 中的 **callback 拿到更新后的结果**；
 4. setState 的**批量更新优化也是建立在“异步”（合成事件、钩子函数）之上**的，**在原生事件和 setTimeout 中不会批量更新**，在“异步”中如果对同一个值进行多次 setState ， setState 的批量更新策略会对其进行覆盖，取最后一次的执行，如果是同时 setState 多个不同的值，在更新时会对其进行合并批量更新。
@@ -77,3 +80,40 @@ function enqueueUpdate(component) {
 如果 isBatchingUpdates 为 false，则对所有队列中的更新执行 batchedUpdates 方法，否则只把当前组件(即调用了 setState 的组件)放入 dirtyComponents 数组中。
 
 连续调用了多次 setState，但是只引发了一次更新生命周期，因为 React 会将多个 this.setState 产生的修改放在一个队列里，缓一缓，攒在一起，觉得差不多了在引发一次更新过程。所以攒的过程中如果你不停的 set 同一个 state 的值，只会触发最后一次，
+
+## setState 的执行流程
+
+[setState 的执行流程](https://user-gold-cdn.xitu.io/2019/2/23/169197bbdc7ae14e?imageslim)
+
+1. partialState：setState 传入的第一个参数，对象或函数
+2. \_pendingStateQueue：当前组件**等待执行更新的 state 队列**
+3. **isBatchingUpdates**：react 用于**标识当前是否处于批量更新状态**，所有组件公用
+4. dirtyComponent：当前所有处于待更新状态的组件队列
+5. transcation：react 的事务机制，在被事务调用的方法外包装 n 个 waper 对象，并一次执行：waper.init、被调用方法、waper.close
+6. FLUSH_BATCHED_UPDATES：用于执行更新的 waper，只有一个 close 方法
+
+### 执行过程
+
+对照上面流程图的文字说明，大概可分为以下几步：
+
+1. 将 setState 传入的**partialState 参数**存储在**当前组件实例的 state 暂存队列**中。
+2. 判断当前**React 是否处于批量更新状态（isBatchingUpdates）**，
+   1. 如果是，将当前组件加入待更新的组件队列中。
+   2. 如果未处于批量更新状态，**将批量更新状态标识设置为 true**，用事务再次调用前一步方法，保证当前组件加入到了待更新组件队列中。
+3. 调用事务的 **waper** 方法，**遍历待更新组件队列依次执行更新**。
+4. 执行生命周期 componentWillReceiveProps。
+5. **将组件的 state 暂存队列中的 state 进行合并，获得最终要更新的 state 对象，并将队列置为空**。
+6. 执行生命周期 componentShouldUpdate，**根据返回值判断是否要继续更新**。
+7. 执行生命周期 componentWillUpdate。
+8. 执行真正的更新，render。
+9. 执行生命周期 componentDidUpdate。
+
+## 是否可以在 componentWillUpdate 中调用 setState
+
+[正确掌握 React 生命周期 (Lifecycle)](https://juejin.im/entry/587de1b32f301e0057a28897)
+
+在更新的这两个生命周期中，都是不能调用 setState 的，会造成死循环。
+
+1. 千万不要在这个函数中调用 this.setState()方法.;
+2. 如果确实需要**响应 props 的改变**，那么你可以在 componentWillReceiveProps(nextProps)中做响应操作;
+3. 如果 shouldComponentUpdate(nextProps, nextState)返回 false，那么 componentWillUpdate()不会被触发;
