@@ -13,10 +13,7 @@ const AirbnbReact = lazy(() => import('./pages/AirbnbReact/index.jsx'));
 
 // import ErrorBoundaryTest from './pages/ErrorBoundaryTest/index.jsx';
 
-const ShouldComponentUpdateCycleTest = lazy(() =>
-  // @ts-ignore
-  import('./pages/cycle/ShouldComponentUpdateCycleTest.js'),
-);
+const CyclePage = lazy(() => import('./pages/cycle/index.jsx'));
 
 // 这里抽出来就是Layout
 
@@ -59,7 +56,9 @@ class Layout extends Component {
             <Link to="/context-test">context-test，16.3，跨组件传递状态api</Link>
           </li>
           <li>
-            <Link to="/cycle/ShouldComponentUpdateCycleTest">生命周期测试</Link>
+            <Link to="/cycle">
+              生命周期测试，父子组件的初始化及更新，以及ShouldComponentUpdate声明周期
+            </Link>
           </li>
           <li>
             <Link to="/performance-optimization-test">
@@ -127,16 +126,13 @@ function Routers() {
         <Switch>
           <Route path="/setState-test" component={SetStateTest} />
           <Route path="/DiffingTest" component={lazy(() => import('./pages/DiffingTest/index'))} />
-          
+
           <Layout path="/" component={Layout}>
             <Route path="/feature0_4" component={Feature0_4} />
             <Route path="/feature4_6" component={Feature4_6} />
             <Route path="/hoc" component={Hoc} />
             <Route path="/hooks" component={Hooks} />
-            <Route
-              path="/cycle/ShouldComponentUpdateCycleTest"
-              component={ShouldComponentUpdateCycleTest}
-            />
+            <Route path="/cycle" component={CyclePage} />
             <Route path="/debounce_throttle" component={Debounce_throttle} />
             <Route path="/context-test" component={ContextTest} />
             <Route path="/performance-optimization-test" component={PerformanceOptimizationTest} />

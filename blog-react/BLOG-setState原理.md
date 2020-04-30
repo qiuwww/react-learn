@@ -117,3 +117,7 @@ function enqueueUpdate(component) {
 1. 千万不要在这个函数中调用 this.setState()方法.;
 2. 如果确实需要**响应 props 的改变**，那么你可以在 componentWillReceiveProps(nextProps)中做响应操作;
 3. 如果 shouldComponentUpdate(nextProps, nextState)返回 false，那么 componentWillUpdate()不会被触发;
+
+## 参考资料
+
+[react 原理剖析](http://deal.kaikeba.com/link/112b8489-0f9e-4c4d-a59f-f0496a920337?share_token=Ao4i2TdC&utm_source=%E8%B5%84%E6%96%99%E9%93%BE%E6%8E%A5%E5%85%A5%E5%BA%93&utm_medium=%E5%BE%AE%E4%BF%A1&utm_content=react%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90)
