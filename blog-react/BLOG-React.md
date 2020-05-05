@@ -864,9 +864,49 @@ PureComponents 负责 shouldComponentUpdate——它对状态和 props 数据进
 
 这里的 PureComponent 对于 class 声明的组件适用，对于 stateLess 组件，使用 React.memo()，功能类似 Ï，React.memo() 和 PureComponent 很相似，它帮助我们控制何时重新渲染组件。
 
-### 2. 懒加载组件
+### 2. 懒加载组件，React 项目中实现懒加载的方式
 
-使用 lazy 与 Suspense，根据具体的条件延迟组件加载，无需一开始就加载两个组件。
+[react 组件懒加载](https://www.cnblogs.com/dshvv/p/11811512.html)
+
+1. 使用 lazy 与 Suspense，根据具体的条件延迟组件加载，无需一开始就加载两个组件。
+2. webpack+require.ensure (高阶组价)；
+3. webpack+es6 的 import 纯粹的高阶组价；
+4. webpack+es6 的 import +async（高阶函数）；
+
+```js
+// 1. 使用 lazy 与 Suspense，根据具体的条件延迟组件加载，无需一开始就加载两个组件。
+const Alert = lazy(() => import('./components/alert'));
+export default function App(props) {
+  return (
+    <div className="App">
+      <Suspense fallback="正在加载中...">
+        <Alert />
+      </Suspense>
+    </div>
+  );
+}
+// 2. bundle-loader
+
+// 添加配置：
+
+// {
+//   loader: 'bundle-loader',
+//   options: {
+//     lazy: true
+//   }
+// }
+
+import bundle from './file.bundle.js'
+bundle((file) => {...})
+
+// 3. import()，符合ECMAScript提议的import()语法，该提案与普通 import 语句或 require 函数的类似，但返回一个 Promise 对象。这意味着模块时异步加载的。
+// webpack率先支持，ES2020也支持这个接口；
+const Baz = () => import(/* webpackChunkName: "group-foo" */ './Baz.vue')
+
+// 4. require.ensure，require.ensure() 是 webpack 特有的，已经被 import() 取代。
+const notFound = r => require.ensure([], () => r(require('@views/common/404')), 'index')
+
+```
 
 #### 这个方法的好处
 

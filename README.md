@@ -17,7 +17,3 @@ react 功能测试，基本 demo。
 ## tables-react
 
 最早的时候的一个 canvas、react、mobx 相关项目。
-
-## react-inline
-
-react 在线引用包的测试页面。
