@@ -868,10 +868,10 @@ PureComponents 负责 shouldComponentUpdate——它对状态和 props 数据进
 
 [react 组件懒加载](https://www.cnblogs.com/dshvv/p/11811512.html)
 
-1. 使用 lazy 与 Suspense，根据具体的条件延迟组件加载，无需一开始就加载两个组件。
+1. 使用 **lazy 与 Suspense**，根据具体的条件延迟组件加载，无需一开始就加载两个组件。
 2. webpack+require.ensure (高阶组价)；
-3. webpack+es6 的 import 纯粹的高阶组价；
-4. webpack+es6 的 import +async（高阶函数）；
+3. **webpack+es6 的 import 纯粹的高阶组价**；
+4. webpack+es6 的 import + async（高阶函数）；
 
 ```js
 // 1. 使用 lazy 与 Suspense，根据具体的条件延迟组件加载，无需一开始就加载两个组件。
@@ -905,12 +905,11 @@ const Baz = () => import(/* webpackChunkName: "group-foo" */ './Baz.vue')
 
 // 4. require.ensure，require.ensure() 是 webpack 特有的，已经被 import() 取代。
 const notFound = r => require.ensure([], () => r(require('@views/common/404')), 'index')
-
 ```
 
 #### 这个方法的好处
 
-1. 主包体积变小，消耗的网络传输时间更少。
+1. **主包体积变小**，消耗的网络传输时间更少，首屏更快。
 2. 动态单独加载的包比较小，可以迅速加载完成。
 
 ### 3. 使用 React Fragments 避免额外标记
@@ -1176,3 +1175,5 @@ import('./math').then((math) => {
 [Drawer](https://blog.csdn.net/KlausLily/article/details/104243437)
 
 ## react 使用过程中遇到的问题，如何解决的
+
+## React 组件懒加载

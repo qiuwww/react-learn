@@ -44,10 +44,13 @@ categories:
 
 ### 1.react Vue angular 对比，简要说明
 
-### 2. React 对比 jQuery
+### 2. React 对比 jQuery ｜ react 的优势表现在哪些方面与传统的 jq，js 手动渲染页面，优势的方面的具体场景，dom 更新过程对比
 
 1. 可以**保证代码效率**，大部分情况下哦，效率都是可以的；
 2. 使您可以从**属性操作、事件处理和手动 DOM 更新**这些在构建应用程序时必要的操作中**解放出来**；
+3. react,vue 组件化开发的优势；
+4. 维护的优势；
+5. jqeury 对比 react vue。好比 c 语言比 java；
 
 ### React 和 Vue 的区别
 
