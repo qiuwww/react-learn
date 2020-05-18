@@ -75,11 +75,6 @@ React 进行开发时所有的 DOM 构造都是通过**虚拟 DOM 进行**，每
 - React 的一大创新，就是**把每一个组件都看成是一个状态机**，组件**内部通过 state 来维护组件状态的变化，这也是 state 唯一的作用**。
 - 你应该在应用中保持 自上而下的数据流，而不是尝试在不同组件中同步状态。
 
-### 3. 纯函数，没有副作用的函数
-
-纯函数是指**不依赖，不改变它作用域之外的变量状态的函数**。
-也就是说，**纯函数的返回值只由它调用时的参数决定**，它的执行不依赖于系统的状态（比如：何时、何处调用它——译者注）。纯函数是函数式编程的一个基础。
-
 ### 4. react 设计理念
 
 1. 组件**单一功能原则**：在理想状况下，一个组件应该只做一件事情。如果这个组件功能不断丰富，它应该被分成更小的组件。
@@ -339,6 +334,26 @@ class Foo extends React.Component {
 ### 2. react 性能优化是哪个周期函数
 
 `shouldComponentUpdate`这个方法用来判断**是否需要调用 render 方法重新描绘 dom**。因为 dom 的描绘非常消耗性能，**如果我们能在 shouldComponentUpdate 方法中能够写出更优化的 dom diff 算法**，可以极大的提高性能。
+
+#### 介绍 Immuable
+
+[immutable 在 redux 中的应用](https://www.jianshu.com/p/3e162080711b)
+
+> React.PureComponent 中的 shouldComponentUpdate() **仅作对象的浅层比较**。**如果对象中包含复杂的数据结构，则有可能因为无法检查深层的差别，产生错误的比对结果**。仅在你的 props 和 state 较为简单时，才使用 React.PureComponent，或者在深层数据结构发生变化时调用 forceUpdate() 来确保组件被正确地更新。**你也可以考虑使用 immutable 对象加速嵌套数据的比较**。
+
+```js
+const { Map } = require('immutable');
+const map1 = Map({ a: 1, b: 2, c: 3 });
+const map2 = Map({ a: 1, b: 2, c: 3 });
+map1.equals(map2); // true
+map1 === map2; // false
+```
+
+[Immutable](https://segmentfault.com/a/1190000017294051)
+
+1. js 在原生创建数据类型即是 mutable，可变的。
+2. const 只是浅层次的防篡改，层级一深就没辙了。
+3. 相对于 mutable，**Immutable 就是在创建变量、赋值后便不可更改**，若对其有任何变更,**就会回传一个新值**。
 
 ### 3. HOC 高阶组件，对应 js 的高阶函数
 

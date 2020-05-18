@@ -27,6 +27,35 @@ categories:
 
 [参见 demo](../react-features-test/src/pages/SetStateTest/index.jsx)
 
+## setState 的主要流程
+
+**setState 的特点是批处理和延迟更新**。
+
+1. props 与 setState 会引起页面**重新渲染**；
+2. setState，主要**在 updater 中操作**，参数首先会被记录下来：
+   1. callback，会被添加到 updater 的**pendingCallbacks**中；
+   2. nextState，会被添加到更新器 updater 的**pendingStates**，并且判断当前是否是正在更新`isPending`：
+      1. 如果不是就去执行自身的`emitUpdate`方法，**开始更新**；
+      2. 如果是的话，就会**被添加到当前更新队列中，当次执行**；
+3. `emitUpdate`更新函数有两种情形会被调用：
+   1. props 改变了，就会把新的 props 传递过来，就会调用`updateComponent`立即更新；
+   2. 否则如果是 state 改变：
+      1. `updateQueue.isPending`，正在更新，就会添加一条；
+      2. 否则就会立即更新；
+4. `updateComponent`，函数**收集**当前的实例、上下文、state、props 等，然后调用`shouldUpdate`去更新；
+5. `shouldUpdate`，会有一个`shouldComponentUpdate`的**调用结果进行判断**，是否需要更新；
+6. 如果需要更新就调用`forceUpdate`，去更新；
+   1. 收集上一次的**虚拟 dom，真实 dom 节点，状态，props** 等；
+   2. 调用 render，生成新的 VNode(js 对象)；
+   3. 使用`compareTwoVnodes`对比两次的 VNode，同时去修改真实的 dom；
+   4. 最后，调用一下 `emitUpdate`，这里是一个递归，一直被调用的，避免前面前面没执行的更新不能映射到页面上。
+7. compareTwoVnodes 对比 vDom，**递归的进行对比组件**，就是对比两个 js 对象，遵循同级比较/不同类型不同节点/key 的原则，对应操作 dom，主要包括增删改；
+8. Fiber 对于对比过程，可以：
+   1. 设计优先级；
+   2. 暂停/恢复执行；
+   3. 删除任务；
+      内部通过 requestIdCallbacks 来实现，这个是在**每次更新完成之后调用**。
+
 ## setState 是什么 ｜ setState 的原理 | setState 实际做了什么 ｜ 调用 setState 的时候都发生了什么
 
 `setState(updater, [callback])`

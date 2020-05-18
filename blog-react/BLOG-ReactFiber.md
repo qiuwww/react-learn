@@ -73,7 +73,11 @@ Fiber 树在首次渲染的时候会一次过生成。在后续需要 Diff 的�
 
 react fiber，算法，可以**暂停，删除，继续任务，避免了阻塞渲染**。使用了时间分片技术。
 
-### requestIdleCallback
+### requestIdleCallback(callback[, options])
+
+1. requestAnimationFrame 每一帧必定会执行不同，
+2. requestIdleCallback 是捡浏览器空闲来执行任务。
+3. timeout。**表示超过这个时间后，如果任务还没执行，则强制执行，不必等待空闲**。
 
 requestIdleCallback **会让一个低优先级的任务在空闲期被调用**，而 requestAnimationFrame **会让一个高优先级的任务在下一个栈帧被调用**，从而保证了主线程按照优先级执行 fiber 单元。
 

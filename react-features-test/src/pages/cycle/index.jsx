@@ -1,5 +1,6 @@
 import React, { Component, PureComponent } from 'react';
 import GeneralComponent from './GeneralComponent';
+import GeneralComponent2 from './GeneralComponent2';
 import ShouldComponentUpdate from './ShouldComponentUpdate';
 // 一般的组件是没有
 
@@ -57,7 +58,11 @@ export default class CyclePage extends Component {
         <button onClick={this.changeObj}>修改CyclePage的state.arr</button>
         <button onClick={this.changeObj}>修改CyclePage的state.obj</button>
         <br />
+        {/* 这里依赖了number */}
         <GeneralComponent number={number} arr={arr}></GeneralComponent>
+        {/* 这里没有依赖number，但是只要组件内不控制，照样是要走render的 */}
+        <GeneralComponent2></GeneralComponent2>
+        {/* 但是使用pureComponent的组件就可以实现，对于浅层嵌套不重新渲染 */}
         <ShouldComponentUpdate number={number} arr={arr}></ShouldComponentUpdate>
       </div>
     );
