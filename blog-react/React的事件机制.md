@@ -20,8 +20,7 @@ categories:
 [React 事件处理](https://react.docschina.org/docs/handling-events.html)
 [React 合成事件](https://react.docschina.org/docs/events.html)
 
-React 中绑定的事件，都会被 React 的事件处理机制，委托到
-SyntheticEvent 实例将被传递给你的事件处理函数，**它是浏览器的原生事件的跨浏览器包装器**。除兼容所有浏览器外，它还拥有和浏览器原生事件相同的接口，包括 stopPropagation() 和 preventDefault()。
+React 中绑定的事件，都会被 React 的事件处理机制，委托到SyntheticEvent 实例将被传递给你的事件处理函数，**它是浏览器的原生事件的跨浏览器包装器**。除兼容所有浏览器外，它还拥有和浏览器原生事件相同的接口，包括 stopPropagation() 和 preventDefault()。
 
 [React 事件池](https://react.docschina.org/docs/events.html#event-pooling)
 

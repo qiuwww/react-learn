@@ -31,6 +31,7 @@ const PerformanceOptimizationTest = lazy(() =>
 );
 const ErrorBoundaryTest = lazy(() => import('./pages/ErrorBoundaryTest/index.jsx'));
 const SetStateTest = lazy(() => import('./pages/SetStateTest/index.jsx'));
+const ComponentComparison = lazy(() => import('./pages/ComponentComparison/index.jsx'));
 
 class Layout extends Component {
   render() {
@@ -108,6 +109,9 @@ class Layout extends Component {
           <li>
             <Link to="/DiffingTest">/DiffingTest，协调的过程，测试</Link>
           </li>
+          <li>
+            <Link to="/Component-Comparison">/Component-Comparison，对比两种类型的组件</Link>
+          </li>
         </ul>
         <div className="wrap" style={{ padding: '20px' }}>
           {this.props.children}
@@ -140,6 +144,7 @@ function Routers() {
             <Route path="/fetch-render" component={FetchRender} />
             <Route path="/transitions" component={Transitions} />
             <Route path="/Airbnb-React" component={AirbnbReact} />
+            <Route path="/Component-Comparison" component={ComponentComparison} />
             {/* ts react实例 */}
             {/* <Route
               path="/TypeScriptDemo/ClassComponent"
