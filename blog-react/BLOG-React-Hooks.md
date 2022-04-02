@@ -9,8 +9,6 @@ categories:
 top: 6
 ---
 
-[Hook 简介](https://zh-hans.reactjs.org/docs/hooks-intro.html)
-
 组件的最佳写法应该是函数，而不是类。
 
 React Hooks 的设计目的，就是**加强版函数组件**，完全不使用"类"，就能写出一个全功能的组件。
@@ -93,7 +91,7 @@ function App() {
   const [state, dispatch] = useReducer(myReducer, { count: 0 });
 
   return (
-    <div className="App">
+    <div className='App'>
       <button onClick={() => dispatch({ type: 'countUp' })}>+1</button>
       <p>Count: {state.count}</p>
     </div>
@@ -273,4 +271,5 @@ onClick={() => setCount(count + 1)}
 
 ## 参考文章
 
-[深入理解：React hooks 是如何工作的](https://zhuanlan.zhihu.com/p/81528320)
+1. [深入理解：React hooks 是如何工作的](https://zhuanlan.zhihu.com/p/81528320)
+2. [Hook 简介](https://zh-hans.reactjs.org/docs/hooks-intro.html)
