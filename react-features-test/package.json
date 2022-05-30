@@ -136,5 +136,8 @@
         }
       ]
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^4.5.0"
   }
 }

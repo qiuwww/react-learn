@@ -3,6 +3,14 @@ import { useState, useEffect } from 'react';
 import GetAsyncData from './GetAsyncData.js';
 import HookCustomize from './HookCustomize.jsx';
 import Count from './Count.jsx';
+
+import UseState from './UseState.jsx';
+import UseEffect from './UseEffect.jsx';
+import UseContext from './UseContext.jsx';
+import UseReducer from './UseReducer.jsx';
+import UseCallback from './UseCallback.jsx';
+import UseMemo from './UseMemo.jsx';
+
 // 无状态组件使用hooks
 function CounterHooksExample() {
   // 声明一个变量count,来保存中间值
@@ -72,6 +80,45 @@ export default class Hooks extends Component {
 
           <HookCustomize />
           <Count />
+
+          <h2>具体测试hooks</h2>
+          {/* https://zhuanlan.zhihu.com/p/60925430?utm_source=wechat_session&utm_medium=social&utm_oi=72254268375040&utm_campaign=shareopn */}
+          <fieldset>
+            <legend>useState 保存组件状态</legend>
+            <UseState />
+          </fieldset>
+          <fieldset>
+            <legend>useEffect 处理副作用</legend>
+            <UseEffect />
+          </fieldset>
+          <fieldset>
+            <legend>useContext 减少组件层级</legend>
+            <UseContext />
+          </fieldset>
+
+          <fieldset>
+            <legend>
+              useReducer useReducer 这个 Hooks 在使用上几乎跟 Redux/React-Redux
+              一模一样，唯一缺少的就是无法使用 redux 提供的中间件。
+            </legend>
+            <UseReducer />
+          </fieldset>
+
+          <fieldset>
+            <legend>useCallback 记忆函数</legend>
+            <UseCallback />
+          </fieldset>
+
+          <fieldset>
+            <legend>useMemo 记忆组件</legend>
+            <UseMemo />
+          </fieldset>
+
+          <fieldset>
+            <legend>useRef 保存引用值</legend>
+            <p>用来保存dom的引用，或者一个闭包变量</p>
+            <p>useImperativeHandle 可以让你在使用 ref 时自定义暴露给父组件的实例值。</p>
+          </fieldset>
         </div>
       </div>,
     ];
