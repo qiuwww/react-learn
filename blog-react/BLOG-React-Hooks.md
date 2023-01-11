@@ -273,3 +273,4 @@ onClick={() => setCount(count + 1)}
 
 1. [深入理解：React hooks 是如何工作的](https://zhuanlan.zhihu.com/p/81528320)
 2. [Hook 简介](https://zh-hans.reactjs.org/docs/hooks-intro.html)
+3. [为什么 vue 和 react 都选择了 hooks](https://juejin.cn/post/7066951709678895141)

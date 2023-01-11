@@ -8,7 +8,7 @@
 
 1. vue3 会去分静态的还是动态的，静态的不进行 diff。
 2. block 的概念，静态标记；
-    1. prepack 理念；
+   1. prepack 理念；
 
 ## composition 和 hooks 区别
 
@@ -44,3 +44,7 @@ vdom: 使用 js 的 object 来描述 dom 节点；
 2. 数据变化，React 手动(setState)，Vue 自动(初始化已响应式处理，Object.defineProperty)
 3. **React 单向绑定，Vue 双向绑定**
 4. React 的 Redux，Vue 的 Vuex
+
+## 参考
+
+1. [为什么 Vue 不需要 Fiber](https://juejin.cn/post/7077545184807878692)；
