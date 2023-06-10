@@ -2,18 +2,12 @@
 
 # dependencies
 /node_modules
-/npm-debug.log*
-/yarn-error.log
-/yarn.lock
-/package-lock.json
+npm-debug.log*
+yarn-error.log
+package-lock.json
 
 # production
 /dist
-/dva-quickstart
-/ant-design/umi-antd-ts-pro
 
 # misc
 .DS_Store
-
-/ant-design/ant-design-master
-/react
