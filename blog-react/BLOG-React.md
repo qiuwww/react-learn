@@ -18,40 +18,40 @@ comments: true
 
 如果你能深入理解 React 的灵魂，包括
 
--   虚拟 DOM，
--   JSX，
--   函数式编程
--   immutable
--   单向数据流，
--   组件化抽象，
--   生命周期等，
+- 虚拟 DOM，
+- JSX，
+- 函数式编程
+- immutable
+- 单向数据流，
+- 组件化抽象，
+- 生命周期等，
 
 在面对其他轮子时你也能做到得心应手。
 
 ## 一、React 的特点
 
--   轻量级 DOM，以获得更好的性能。
--   在 React 中，**一切都被视为组件**。
--   React 使用 **JSX（JavaScript eXtension）**，使我们可以编写类似于 HTML 的 JavaScript，**代码的可读性提高了**。 React 使用 JSX 来替代常规的 JavaScript。JSX 是一个看起来很像 XML 的 JavaScript 语法扩展。。
--   React **不是直接运行在浏览器的文档对象模型（DOM）**上，而是**运行在虚拟 DOM 上**，保证代码不管怎么写，性能都不会太差。
--   ReactJS 遵循**单向数据流**或单向数据绑定。
+- 轻量级 DOM，以获得更好的性能。
+- 在 React 中，**一切都被视为组件**。
+- React 使用 **JSX（JavaScript eXtension）**，使我们可以编写类似于 HTML 的 JavaScript，**代码的可读性提高了**。 React 使用 JSX 来替代常规的 JavaScript。JSX 是一个看起来很像 XML 的 JavaScript 语法扩展。。
+- React **不是直接运行在浏览器的文档对象模型（DOM）**上，而是**运行在虚拟 DOM 上**，保证代码不管怎么写，性能都不会太差。
+- ReactJS 遵循**单向数据流**或单向数据绑定。
 
 ### [JSX 简介](https://react.docschina.org/docs/introducing-jsx.html)
 
 ### 为什么 react 要做成异步的呢
 
--   因为 state 更新会导致组件重新渲染，**在渲染后，才能把新的 props 传递到子组件上**，所以即使 state 做成同步，props 也做不成，为了保证 state 和 props 的一致性。
--   为了**性能优化**，state **会根据不同的优先级进行更新**。
--   为了让 react **更加灵活**，如实现异步过渡，例如页面在切换的时候，如果延时很小，就在后台自动渲染了，渲染好之后再进行跳转；如果延时相对较长，可以加一个 loading。
+- 因为 state 更新会导致组件重新渲染，**在渲染后，才能把新的 props 传递到子组件上**，所以即使 state 做成同步，props 也做不成，为了保证 state 和 props 的一致性。
+- 为了**性能优化**，state **会根据不同的优先级进行更新**。
+- 为了让 react **更加灵活**，如实现异步过渡，例如页面在切换的时候，如果延时很小，就在后台自动渲染了，渲染好之后再进行跳转；如果延时相对较长，可以加一个 loading。
 
 ### React 之所以这么受欢迎，得益于它自身优势
 
--   **灵活性和响应性**：React 提供最大的灵活性和响应能力。
--   **虚拟 DOM**：由于它基于文档对象模型，因此它允许浏览器友好地以 HTML，XHTML 或 XML 格式排列文档。
--   可扩展性：由于其灵活的结构和可扩展性，React 已被证明对大型应用程序更好。
--   不断发展：React 得到了 Facebook 专业开发人员的支持，他们不断寻找改进方法致力于使其更先进。
--   丰富的 JavaScript 库：来自世界各地的贡献者正在努力添加更多功能。
--   Web 或移动平台： React 提供 React Native 平台，可通过相同的 React 组件模型为 iOS 和 Android 开发本机呈现的应用程序。
+- **灵活性和响应性**：React 提供最大的灵活性和响应能力。
+- **虚拟 DOM**：由于它基于文档对象模型，因此它允许浏览器友好地以 HTML，XHTML 或 XML 格式排列文档。
+- 可扩展性：由于其灵活的结构和可扩展性，React 已被证明对大型应用程序更好。
+- 不断发展：React 得到了 Facebook 专业开发人员的支持，他们不断寻找改进方法致力于使其更先进。
+- 丰富的 JavaScript 库：来自世界各地的贡献者正在努力添加更多功能。
+- Web 或移动平台： React 提供 React Native 平台，可通过相同的 React 组件模型为 iOS 和 Android 开发本机呈现的应用程序。
 
 ## 二、基础理论
 
@@ -59,9 +59,9 @@ comments: true
 
 一处开发，多处运行。组件重用。
 
--   每次数据变化 -> 重构虚拟 dom 树。
--   对比之前的虚拟 dom 树。
--   根据差异更新实际的浏览器 dom。
+- 每次数据变化 -> 重构虚拟 dom 树。
+- 对比之前的虚拟 dom 树。
+- 根据差异更新实际的浏览器 dom。
 
 React 进行开发时所有的 DOM 构造都是通过**虚拟 DOM 进行**，每当数据变化时（setState 或者 props 改变的时候），React 都会重新构建整个 虚拟 DOM 树，然后 React 将当前整个 虚拟 DOM 树和上一次的 虚拟 DOM 树进行对比，**得到 虚拟 DOM 结构的区别，然后仅仅将需要变化的部分进行实际的浏览器 DOM 更新。**
 
@@ -69,11 +69,11 @@ React 进行开发时所有的 DOM 构造都是通过**虚拟 DOM 进行**，每
 
 ### 2. react 的数据流
 
--   在 React 中，数据流是**自上而下单向的从父节点传递到子节点**，所以组件是简单且容易把握的，他们只需要从父节点提供的 props 中获取数据并渲染即可。
--   如果顶层组件的某个**props 改变**了，React 会**递归地向下遍历整棵组件数**，重新渲染所有使用这个属性的组件。
--   在组件内部，可以通过 this.props 来访问 props，props 是组件唯一的数据来源，**对于组件来说：props 永远是只读的。**
--   React 的一大创新，就是**把每一个组件都看成是一个状态机**，组件**内部通过 state 来维护组件状态的变化，这也是 state 唯一的作用**。
--   你应该在应用中保持 自上而下的数据流，而不是尝试在不同组件中同步状态。
+- 在 React 中，数据流是**自上而下单向的从父节点传递到子节点**，所以组件是简单且容易把握的，他们只需要从父节点提供的 props 中获取数据并渲染即可。
+- 如果顶层组件的某个**props 改变**了，React 会**递归地向下遍历整棵组件数**，重新渲染所有使用这个属性的组件。
+- 在组件内部，可以通过 this.props 来访问 props，props 是组件唯一的数据来源，**对于组件来说：props 永远是只读的。**
+- React 的一大创新，就是**把每一个组件都看成是一个状态机**，组件**内部通过 state 来维护组件状态的变化，这也是 state 唯一的作用**。
+- 你应该在应用中保持 自上而下的数据流，而不是尝试在不同组件中同步状态。
 
 ### 4. react 设计理念
 
@@ -107,8 +107,8 @@ React 非常灵活，但它也有一个严格的规则：所有 React 组件都�
 
 #### props 与 state 的选择
 
--   State: 如果 UI 需要更改就表示某处肯定会有 state
--   Props: 用来传递数据、传递控制
+- State: 如果 UI 需要更改就表示某处肯定会有 state
+- Props: 用来传递数据、传递控制
 
 ### 3. 为什么 constructor 里要调用 super 和传递 props
 
@@ -178,8 +178,8 @@ React 在组件**加载(mount)和更新(update)时**，将事件通过 addEventL
 
 #### 语法上的差异
 
--   React 事件绑定属性的命名采用**驼峰式写法**，而不是小写。
--   如果采用 JSX 的语法你需要**传入一个函数作为事件处理函数**，而不是一个字符串(DOM 元素的写法)。
+- React 事件绑定属性的命名采用**驼峰式写法**，而不是小写。
+- 如果采用 JSX 的语法你需要**传入一个函数作为事件处理函数**，而不是一个字符串(DOM 元素的写法)。
 
 ```js
 // 向事件处理程序传递参数：this指代当前的组件
@@ -192,8 +192,8 @@ preventPop(name, e){ // 事件对象e要放在最后
 
 值得注意的是，**通过 bind 方式向监听函数传参**，在类组件中定义的监听函数，事件对象 e 要排在所传递参数的后面。
 
--   在 React 中另一个不同是你不能使用返回 false 的方式阻止默认行为。你**必须明确的使用** preventDefault。
--   在这里，e 是一个合成事件对象。
+- 在 React 中另一个不同是你不能使用返回 false 的方式阻止默认行为。你**必须明确的使用** preventDefault。
+- 在这里，e 是一个合成事件对象。
 
 ### 3. 事件调用的时候，回调中的 this
 
@@ -286,38 +286,38 @@ class Foo extends React.Component {
 
 #### 初始化阶段，实例生成到挂载
 
--   `constructor`: 这是给组件“带来生命”时**调用的第一个方法**。通常，你会在 constructor 方法中**初始化 state 和绑定事件处理程序**。
+- `constructor`: 这是给组件“带来生命”时**调用的第一个方法**。通常，你会在 constructor 方法中**初始化 state 和绑定事件处理程序**。
     <!-- - 废弃，`getInitialState`: 获取每个实例的**初始化状态**，React 在 ES6 的实现中去掉了 getInitialState 这个 hook 函数,规定 state 在**constructor 中实现**。 -->
     <!-- - 废弃，`getDefaultProps`: 获取实例的默认属性（ES5 中的语法），改为 `component.defaultProps={}`来设置 -->
     <!-- - 不建议使用，`componentWillMount`：组件即将被装载、渲染到页面上，**调用一次**，相当于 jq 的 ready。**这个方法将要废弃，后续放弃支持**，使用`omponentDidMount`替代。 -->
--   `static getDerivedStateFromProps(props, state)`，在初始化的阶段会使用到，静态方法，没法使用 this。
--   `render`: 组件在这里**生成虚拟的 DOM 节点**。
--   `componentDidMount`: **组件真正在被装载之后**，相当于模板+数据生成代码片段**插入页面之后的操作**。这个阶段可以做如下的操作：
-    -   数据请求（当然不影响页面渲染的部分也可以在 componentWillMount 生命周期请求）
-    -   这个时候，页面已经挂载，可以获取节点，使用 setState()会触发重新渲染(re-render)。
-    -   React 更新 ­D­O­M 和 refs。可以获取 dom 和使用 refs。
+- `static getDerivedStateFromProps(props, state)`，在初始化的阶段会使用到，静态方法，没法使用 this。
+- `render`: 组件在这里**生成虚拟的 DOM 节点**。
+- `componentDidMount`: **组件真正在被装载之后**，相当于模板+数据生成代码片段**插入页面之后的操作**。这个阶段可以做如下的操作：
+  - 数据请求（当然不影响页面渲染的部分也可以在 componentWillMount 生命周期请求）
+  - 这个时候，页面已经挂载，可以获取节点，使用 setState()会触发重新渲染(re-render)。
+  - React 更新 ­D­O­M 和 refs。可以获取 dom 和使用 refs。
 
 #### 更新，运行中状态
 
--   [`static getDerivedStateFromProps(props, state)`](https://zh-hans.reactjs.org/docs/react-component.html#static-getderivedstatefromprops)，会在调用 render 方法之前调用，并且在**初始挂载及后续更新时都会被调用**，state 改变的时候，也会调用，**整合了 willMount 和 willUpdate**。它应返回一个对象来更新 state，如果返回 null 则不更新任何内容。不能使用 this。此方法适用于[罕见的用例](https://zh-hans.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#when-to-use-derived-state)，**即 state 的值在任何时候都取决于 props**。
+- [`static getDerivedStateFromProps(props, state)`](https://zh-hans.reactjs.org/docs/react-component.html#static-getderivedstatefromprops)，会在调用 render 方法之前调用，并且在**初始挂载及后续更新时都会被调用**，state 改变的时候，也会调用，**整合了 willMount 和 willUpdate**。它应返回一个对象来更新 state，如果返回 null 则不更新任何内容。不能使用 this。此方法适用于[罕见的用例](https://zh-hans.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#when-to-use-derived-state)，**即 state 的值在任何时候都取决于 props**。
     <!-- - 废弃，`componentWillReceiveProps`: 组件**将要接收到新的 props 属性**的时候调用，**初始化的时候不调用**，将要废弃。 -->
--   `shouldComponentUpdate(nextProps, nextState)`: 组件**接受到新属性或者新状态的时候**（可以返回 false，接收数据后不更新，阻止`render`调用，后面的函数不会被继续执行了）。在**PrueComponent**中默认有，不能主动添加。
+- `shouldComponentUpdate(nextProps, nextState)`: 组件**接受到新属性或者新状态的时候**（可以返回 false，接收数据后不更新，阻止`render`调用，后面的函数不会被继续执行了）。在**PrueComponent**中默认有，不能主动添加。
     <!-- - 废弃，`componentWillUpdate`: 组件即**将更新**，不能修改属性和状态，首次渲染的时候不调用，能放在这里的都是可以放在 render 函数中的，将要放弃。通常，此方法可以替换为 `componentDidUpdate()`。**如果你在此方法中读取 DOM 信息**（例如，为了保存滚动位置），则可以将此逻辑移至 `getSnapshotBeforeUpdate()` 中。 -->
--   `render`: 组件重新描绘
--   `getSnapshotBeforeUpdate()`: **在最近一次渲染输出（提交到 DOM 节点）之前调用。**它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）。此生命周期的**任何返回值将作为参数传递给 componentDidUpdate()**。不常用。
--   `componentDidUpdate`: 组件已经更新
+- `render`: 组件重新描绘
+- `getSnapshotBeforeUpdate()`: **在最近一次渲染输出（提交到 DOM 节点）之前调用。**它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）。此生命周期的**任何返回值将作为参数传递给 componentDidUpdate()**。不常用。
+- `componentDidUpdate`: 组件已经更新
 
 ##### shouldComponentUpdate(nextProps, nextState): boolean
 
 组件更新: `shouldComponentUpdate(nextProps, nextState): boolean`，在组件**挂载之后**，再接收到**新的 props 或者 state 时被执行**。
 
--   在**初始化时**或者**使用 forceUpdate**时**不被执行**。可以在你确认不需要更新组件时使用。
--   返回 boolean， 当组件做出**是否要更新 DOM 的决定的时候被调用**。
--   如果 shouldComponentUpdate 返回 false, render()则会在**下一个 state change 之前被完全跳过**。(另外 componentWillUpdate 和 componentDidUpdate 也不会被执行)；
+- 在**初始化时**或者**使用 forceUpdate**时**不被执行**。可以在你确认不需要更新组件时使用。
+- 返回 boolean， 当组件做出**是否要更新 DOM 的决定的时候被调用**。
+- 如果 shouldComponentUpdate 返回 false, render()则会在**下一个 state change 之前被完全跳过**。(另外 componentWillUpdate 和 componentDidUpdate 也不会被执行)；
 
 #### 卸载，销毁阶段
 
--   `componentWillUnmount`: 组件即将销毁
+- `componentWillUnmount`: 组件即将销毁
 
 卸载就是真正的移除，所以不存在 DidUnMount。
 
@@ -325,8 +325,8 @@ class Foo extends React.Component {
 
 当渲染过程，生命周期，或子组件的构造函数中**抛出错误时**，会调用如下方法：
 
--   [`static getDerivedStateFromError()`](https://zh-hans.reactjs.org/docs/react-component.html#static-getderivedstatefromerror)，此生命周期会在后代组件抛出错误后被调用。 它将抛出的错误作为参数，并返回一个值以更新。
--   [`componentDidCatch()`](https://zh-hans.reactjs.org/docs/react-component.html#componentdidcatch)。componentDidCatch() 会在“提交”阶段被调用，因此允许执行副作用。它应该用于记录错误之类的情况。
+- [`static getDerivedStateFromError()`](https://zh-hans.reactjs.org/docs/react-component.html#static-getderivedstatefromerror)，此生命周期会在后代组件抛出错误后被调用。 它将抛出的错误作为参数，并返回一个值以更新。
+- [`componentDidCatch()`](https://zh-hans.reactjs.org/docs/react-component.html#componentdidcatch)。componentDidCatch() 会在“提交”阶段被调用，因此允许执行副作用。它应该用于记录错误之类的情况。
 
 ### 2. react 性能优化是哪个周期函数
 
@@ -370,20 +370,20 @@ const EnhancedComponent = higherOrderComponent(WrappedComponent);
 
 `HOC`可以实现的功能：
 
--   组合渲染
--   条件渲染
--   操作 `props`
--   获取 `refs`
--   状态管理
--   操作 `state`
--   渲染劫持
+- 组合渲染
+- 条件渲染
+- 操作 `props`
+- 获取 `refs`
+- 状态管理
+- 操作 `state`
+- 渲染劫持
 
 `HOC`在业务中的**实际应用场景**：
 
--   日志打点
--   权限控制
--   双向绑定
--   表单校验
+- 日志打点
+- 权限控制
+- 双向绑定
+- 表单校验
 
 #### React 高阶组件的写法，通常有哪几种
 
@@ -394,9 +394,9 @@ const EnhancedComponent = higherOrderComponent(WrappedComponent);
 
 Mixin 和 HOC 都可以用来解决 React 的代码复用问题。
 
--   Mixin 可能会相互依赖，相互耦合，不利于代码维护
--   不同的 Mixin 中的方法可能会相互冲突
--   Mixin 非常多时，组件是可以感知到的，甚至还要为其做相关处理，这样会给代码造成滚雪球式的复杂性
+- Mixin 可能会相互依赖，相互耦合，不利于代码维护
+- 不同的 Mixin 中的方法可能会相互冲突
+- Mixin 非常多时，组件是可以感知到的，甚至还要为其做相关处理，这样会给代码造成滚雪球式的复杂性
 
 而 HOC 的出现可以解决这些问题：
 
@@ -408,8 +408,8 @@ Mixin 和 HOC 都可以用来解决 React 的代码复用问题。
 
 与 dva/connect 方法类似。
 
--   @修饰符
--   直接调用函数
+- @修饰符
+- 直接调用函数
 
 [具体 demo，查看](./react-features-test/src/pages/hoc)
 
@@ -505,10 +505,10 @@ const inputClass = classNames(styles.input, {
 
 对于一个组件来说，render 是**唯一一个必须的方法**。render 方法需要满足这几点：
 
--   只能通过 this.props 或 this.state 访问数据
--   只能出现**一个顶级组件**，且必须，或者可用 React。Fragment
--   可以返回 null、false 或任何 React 组件
--   不能对 props、state 或 DOM 进行修改，会造成重复 componentWillUpdate
+- 只能通过 this.props 或 this.state 访问数据
+- 只能出现**一个顶级组件**，且必须，或者可用 React。Fragment
+- 可以返回 null、false 或任何 React 组件
+- 不能对 props、state 或 DOM 进行修改，会造成重复 componentWillUpdate
 
 需要注意的是，render 方法**返回的是虚拟 DOM**。
 
@@ -542,9 +542,9 @@ fallback 属性接受任何在组件加载过程中你想展示的 React 元素�
 
 #### React.lazy 用途
 
--   一般的组件懒加载；
--   异常捕获边界（Error boundaries）；
--   路由组织，加快首次加载速度。
+- 一般的组件懒加载；
+- 异常捕获边界（Error boundaries）；
+- 路由组织，加快首次加载速度。
 
 ### 定义一个组件时候，如何决定要用 Functional(stateLess) 还是 Class
 
@@ -699,11 +699,11 @@ let disabled = isReadonly ? { disabled: 'disabled' } : {};
 
 **非受控组件即组件的状态改变不受 props 与 state 控制**，根据默认行为进行交互动作。
 
--   HTML 表单元素与 React 中的其他 DOM 元素有所不同,因为表单元素**生来就保留一些内部状态**。
--   在 HTML 当中，像`<input>`,`<textarea>`, 和`<select>`这类表单元素**会维持自身状态**，并根据用户输入进行更新。但在 React 中，可变的状态通常保存在组件的状态属性中，并且只能用 setState()，方法进行更新。
--   使用”受控组件”,每个状态的改变**都有一个与之相关的处理函数**。这样就可以直接修改或验证用户输入。
--   非受控表单，设置 ref，便于引用操作。
--   设置 defaultValue || defaultCkecked 来设置初始状态
+- HTML 表单元素与 React 中的其他 DOM 元素有所不同,因为表单元素**生来就保留一些内部状态**。
+- 在 HTML 当中，像`<input>`,`<textarea>`, 和`<select>`这类表单元素**会维持自身状态**，并根据用户输入进行更新。但在 React 中，可变的状态通常保存在组件的状态属性中，并且只能用 setState()，方法进行更新。
+- 使用”受控组件”,每个状态的改变**都有一个与之相关的处理函数**。这样就可以直接修改或验证用户输入。
+- 非受控表单，设置 ref，便于引用操作。
+- 设置 defaultValue || defaultCkecked 来设置初始状态
 
 ```jsx
 <input
@@ -718,10 +718,10 @@ let disabled = isReadonly ? { disabled: 'disabled' } : {};
 
 组件的可更改的位置的状态都保存在 state 与 props 中，每次页面操作都通过`onChange`回传反馈到 state 上。
 
--   初始值在初始 state|props 的时候给出
--   必须有事件来改变状态从而改变显示
--   可以对输入内容进行一些操作，比如**格式化**等
--   受控表单，需要设置 value，并且设置改变状态的函数 onchange
+- 初始值在初始 state|props 的时候给出
+- 必须有事件来改变状态从而改变显示
+- 可以对输入内容进行一些操作，比如**格式化**等
+- 受控表单，需要设置 value，并且设置改变状态的函数 onchange
 
 ```jsx
 <input value={value} onChange={this.handleChange.bind(this)} ref={(ref) => (this.input = ref)} />
@@ -747,9 +747,9 @@ Keys 可以在 DOM 中的某些元素被增加或删除的时候**帮助 React �
 
 #### react 中的遍历操作的时候需要 key 是可变的，不要使用 index 当做 key
 
--   设置 key 与 `new Date().getTime()` 相关就是**每次强制刷新**， 因为每次的 key 肯定不一致。
--   `new Date().toString()` 的差异的时间最小是 1000ms。
--   这里还不能使用 Symbol 类型，**因为 key 需要一个字符串**，生成的 Symbol 转为字符串失去了本身存在的意义。
+- 设置 key 与 `new Date().getTime()` 相关就是**每次强制刷新**， 因为每次的 key 肯定不一致。
+- `new Date().toString()` 的差异的时间最小是 1000ms。
+- 这里还不能使用 Symbol 类型，**因为 key 需要一个字符串**，生成的 Symbol 转为字符串失去了本身存在的意义。
 
 ##### [不要使用 index 当做 key](https://blog.csdn.net/weixin_33836223/article/details/88216949)
 
@@ -763,8 +763,8 @@ Keys 可以在 DOM 中的某些元素被增加或删除的时候**帮助 React �
 
 安全访问 dom。
 
--   Refs 是 React 提供给我们的**安全访问 DOM 元素**或者**某个组件实例的句柄**。
--   可以为元素添加 ref 属性然后**在回调函数中接受该元素在 DOM 树中的句柄**，该值会作为回调函数的第一个参数返回。
+- Refs 是 React 提供给我们的**安全访问 DOM 元素**或者**某个组件实例的句柄**。
+- 可以为元素添加 ref 属性然后**在回调函数中接受该元素在 DOM 树中的句柄**，该值会作为回调函数的第一个参数返回。
 
 直接去引用 react 的元素。
 
@@ -779,19 +779,19 @@ render: function() {
   },
 ```
 
--   当连接一个 ref 到一个 DOM 组件如 `<div />`，你取回 DOM 节点;
--   当连接一个 ref 到一个复合组件如 `<TextInput />`，你会得到 **React 类的实例**。在后一种情况下，你可以调用任何那个组件的类暴露的方法。
--   注意当被引用的组件卸载和每当 ref 变动，旧的 ref 将**会被以`null`做参数调用**。这阻止了在实例被保存的情况下的内存泄露。
+- 当连接一个 ref 到一个 DOM 组件如 `<div />`，你取回 DOM 节点;
+- 当连接一个 ref 到一个复合组件如 `<TextInput />`，你会得到 **React 类的实例**。在后一种情况下，你可以调用任何那个组件的类暴露的方法。
+- 注意当被引用的组件卸载和每当 ref 变动，旧的 ref 将**会被以`null`做参数调用**。这阻止了在实例被保存的情况下的内存泄露。
 
 #### ref String 属性
 
--   赋值`ref`属性为任何从`render` 返回的东西，比如：
+- 赋值`ref`属性为任何从`render` 返回的东西，比如：
 
 ```jsx
 <input ref='myInput' />
 ```
 
--   在其他一些代码中（典型的事件处理代码），通过`this.refs`访问 **支持实例(backing instance)**，如：
+- 在其他一些代码中（典型的事件处理代码），通过`this.refs`访问 **支持实例(backing instance)**，如：
 
 ```jsx
 var input = this.refs.myInput;
@@ -805,16 +805,16 @@ var inputRect = input.getBoundingClientRect();
 
 #### 优点
 
--   你可以在你的组件类里**定义任何的公开方法**（比如在一个 Typeahead 的重置方法）然后通过 `refs` 调用那些公开方法（比如`this.refs.myTypeahead.reset()`）。在大多数情况下，使用内建的 React 数据流更清晰，而不是使用强制的 ref。
--   实行 DOM 测量几乎总是需要接触到 "原生" 组件比如 `<input />` 并且通过 ref 访问它的底层 DOM 节点。 **Refs 是唯一一个可靠的完成这件事的实际方式。**
--   Refs 是为你自动管理的！**如果子级被销毁了，它的 ref 也同样为你销毁了**。这里不用担心内存（除非你做了一些疯狂的事情来自己保持一份引用）。
+- 你可以在你的组件类里**定义任何的公开方法**（比如在一个 Typeahead 的重置方法）然后通过 `refs` 调用那些公开方法（比如`this.refs.myTypeahead.reset()`）。在大多数情况下，使用内建的 React 数据流更清晰，而不是使用强制的 ref。
+- 实行 DOM 测量几乎总是需要接触到 "原生" 组件比如 `<input />` 并且通过 ref 访问它的底层 DOM 节点。 **Refs 是唯一一个可靠的完成这件事的实际方式。**
+- Refs 是为你自动管理的！**如果子级被销毁了，它的 ref 也同样为你销毁了**。这里不用担心内存（除非你做了一些疯狂的事情来自己保持一份引用）。
 
 #### 注意事项
 
--   绝不在任何组件的 **render 方法中**访问 refs 或者当任何组件的 render 方法还在调用栈上的任何地方运行时。
--   如果你想要保留 Google Closure Compiler advanced-mode crushing resilience，**务必不要以属性的方式访问指明为字符串的属性**。这意味这你必须用`this.refs['myRefString']`访问，如果你的 ref 被定义为`ref="myRefString"`。
--   如果你没有用 React 写过数个程序，你的第一反应通常是打算试着用 refs 来在你的应用里"让事情发生"。如果是这样，花一些时间并且更精密的思考`state`应该属于组件层级的哪个位置。常常，这会变得清晰：正确的"拥有"那个属性的地方应该在层级的更高层上。把 state 放在那里 往往消除了任何使用`ref`s 来 "让事情发生"的渴望 - 作为替代，数据流通常将完成你的目标。
--   Refs 不能连接到一个 [stateless function（无状态函数）](https://react-cn.github.io/react/docs/reusable-components.html#stateless-functions)，因为这些组件没有支持实例。你总是可以包装一个无状态组件在一个标准复合组件里并且连接一个 ref 到这个复合组件。
+- 绝不在任何组件的 **render 方法中**访问 refs 或者当任何组件的 render 方法还在调用栈上的任何地方运行时。
+- 如果你想要保留 Google Closure Compiler advanced-mode crushing resilience，**务必不要以属性的方式访问指明为字符串的属性**。这意味这你必须用`this.refs['myRefString']`访问，如果你的 ref 被定义为`ref="myRefString"`。
+- 如果你没有用 React 写过数个程序，你的第一反应通常是打算试着用 refs 来在你的应用里"让事情发生"。如果是这样，花一些时间并且更精密的思考`state`应该属于组件层级的哪个位置。常常，这会变得清晰：正确的"拥有"那个属性的地方应该在层级的更高层上。把 state 放在那里 往往消除了任何使用`ref`s 来 "让事情发生"的渴望 - 作为替代，数据流通常将完成你的目标。
+- Refs 不能连接到一个 [stateless function（无状态函数）](https://react-cn.github.io/react/docs/reusable-components.html#stateless-functions)，因为这些组件没有支持实例。你总是可以包装一个无状态组件在一个标准复合组件里并且连接一个 ref 到这个复合组件。
 
 #### 获取元素引用，使用 ref 获取元素
 
@@ -967,16 +967,16 @@ export default class InlineFunctionComponent extends React.Component {
 
 我们可以在以下场景中使用 index 作为键：
 
--   列表项是静态的，项目不随时间变化。
--   Items 没有唯一 ID。
--   List 永远不会重新排序或过滤。
--   不会从顶部或中间添加或删除项目。
+- 列表项是静态的，项目不随时间变化。
+- Items 没有唯一 ID。
+- List 永远不会重新排序或过滤。
+- 不会从顶部或中间添加或删除项目。
 
 使用 index 作为键会**加大错误率并降低应用的性能**。
 
--   Key 不仅影响性能，更重要的作用是标识。随机分配和更改的值不算是标识。
--   我们得知道数据的建模方式才能提供合适的键值。如果你没有 ID，我建议使用某种哈希函数生成 ID。
--   我们在使用数组时已经有了内部键，但它们是数组中的索引。插入新元素时这些键是错误的。
+- Key 不仅影响性能，更重要的作用是标识。随机分配和更改的值不算是标识。
+- 我们得知道数据的建模方式才能提供合适的键值。如果你没有 ID，我建议使用某种哈希函数生成 ID。
+- 我们在使用数组时已经有了内部键，但它们是数组中的索引。插入新元素时这些键是错误的。
 
 ### 7. 用 CSS 动画代替 JavaScript 动画
 
@@ -1003,9 +1003,9 @@ React 官方正式发布了 v16.3 版本。在这次的更新中，除了前段�
 
 在未来 v17.0 版本中即将被移除的三个生命周期函数
 
--   componentWillMount
--   componentWillReceiveProps
--   componentWillUpdate
+- componentWillMount
+- componentWillReceiveProps
+- componentWillUpdate
 
 ### 方法替代
 
@@ -1049,45 +1049,45 @@ static getDerivedStateFromProps(nextProps, prevState) {
 
 ### 生命周期及其细节，修改了的生命周期过程
 
--   constructor
--   componentWillMount -> componentDidMount
--   componentDidmount
--   componentWillReceiveProps -> getDerivedStateFromProps
--   shouldComponentUpdate
--   componentWillUpdate -> componentDidUpdate
--   componentDidUpdate
--   render
--   componentWillUnmount
--   getSnapshotBeforeUpdate(prevProps, prevState)，会在最终的 render 之前被调用，基本用不到
+- constructor
+- componentWillMount -> componentDidMount
+- componentDidmount
+- componentWillReceiveProps -> getDerivedStateFromProps
+- shouldComponentUpdate
+- componentWillUpdate -> componentDidUpdate
+- componentDidUpdate
+- render
+- componentWillUnmount
+- getSnapshotBeforeUpdate(prevProps, prevState)，会在最终的 render 之前被调用，基本用不到
 
 ### 组件的封装
 
 组件允许你将 UI 拆分为独立可复用的代码片段，并对每个片段进行独立构思。
 
--   复用，考虑可能用到的场景，可扩展性
--   封装性，不影响到别的组件
--   默认值，易用性
--   一个组件只专注于一件事
+- 复用，考虑可能用到的场景，可扩展性
+- 封装性，不影响到别的组件
+- 默认值，易用性
+- 一个组件只专注于一件事
 
 ### 父子组件参数传递 ｜ 父子组件之间如何通信
 
 主要有如下四种方式：
 
--   **props**，父组件向自组件传递参数与事件，子组件**调用父组件的方法**，实现子组件的状态传递，**事件回传状态**
+- **props**，父组件向自组件传递参数与事件，子组件**调用父组件的方法**，实现子组件的状态传递，**事件回传状态**
 
--   **context**，跨组件状态传递，其实就是传了一个变量
+- **context**，跨组件状态传递，其实就是传了一个变量
 
--   **mobx|redux**，全局状态管理，所有的一切都可以认为是状态的表现
+- **mobx|redux**，全局状态管理，所有的一切都可以认为是状态的表现
 
--   **订阅发布模式**，EventEmitter
+- **订阅发布模式**，EventEmitter
 
 ### 怎样避免函数被调用太快或者太多次
 
 [怎样阻止函数被调用太快或者太多次](https://react.docschina.org/docs/faq-functions.html#how-can-i-prevent-a-function-from-being-called-too-quickly-or-too-many-times-in-a-row)
 
--   节流，throttle
--   防抖，debounce
--   requestAnimationFrame 节流
+- 节流，throttle
+- 防抖，debounce
+- requestAnimationFrame 节流
 
 ### redux 相关
 
@@ -1095,9 +1095,9 @@ Redux 是 JavaScript 状态容器，提供可预测化的状态管理。
 
 三大原则
 
--   单一数据源
--   State 是只读的，只能通过 action 来触发，store.dispatch
--   使用纯函数来执行修改，不会产生副作用，reducers
+- 单一数据源
+- State 是只读的，只能通过 action 来触发，store.dispatch
+- 使用纯函数来执行修改，不会产生副作用，reducers
 
 ## SSR，静态站点生成器
 
@@ -1105,10 +1105,10 @@ Redux 是 JavaScript 状态容器，提供可预测化的状态管理。
 
 常见的 ssr 框架：
 
--   [Next](https://www.nextjs.cn/docs/getting-started)（基于 React）
--   Nuxt（基于 Vue）
--   Gatsby（基于 React）
--   Gridsome（基于 Vue）
+- [Next](https://www.nextjs.cn/docs/getting-started)（基于 React）
+- Nuxt（基于 Vue）
+- Gatsby（基于 React）
+- Gridsome（基于 Vue）
 
 ## React 中的安全问题
 
@@ -1118,10 +1118,10 @@ React 已经实现了绝大部分的客户端逻辑（比如说 React 能自动�
 
 然而这些防御措施还是会因为坏的编程习惯而失效，比方说：
 
--   使用客户端提供的对象来创建 React 组件
--   通过用户提供的 href 或者其它可注入的属性来渲染链接
--   在 React 中使用 [dangerouslySetInnerHTML](https://zh-hans.reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
--   把用户提供的数据传给 eval()
+- 使用客户端提供的对象来创建 React 组件
+- 通过用户提供的 href 或者其它可注入的属性来渲染链接
+- 在 React 中使用 [dangerouslySetInnerHTML](https://zh-hans.reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
+- 把用户提供的数据传给 eval()
 
 ## React 组件的最佳实践
 
