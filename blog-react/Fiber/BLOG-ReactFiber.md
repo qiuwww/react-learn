@@ -48,8 +48,8 @@ categories:
 
 重写 reconciler 算法，**从 Stack Reconciler 到 Fiber Reconciler**。
 
-Fiber：纤维，光纤
-Fiber reconciler：光纤调节器
+Fiber：纤维，光纤；
+Fiber reconciler：光纤调节器；
 
 源代码在 `react/packages/react-reconciler` 目录下。
 

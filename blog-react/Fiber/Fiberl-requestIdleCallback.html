@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fiberl-requestIdleCallback</title>
+  </head>
+  <body>
+    <p>
+      当前FPS：
+      <span id="fps"></span>
+    </p>
+    <script>
+      // 使用 JavaScript 获取当前页面帧率 FPS
+      let last = Date.now();
+      let ticks = 0;
+      //循环调用 requestAnimationFrame
+      function rafLoop(timestamp) {
+        ticks += 1;
+        //每30帧统计一次帧率
+        if (ticks >= 30) {
+          const now = Date.now();
+          const diff = now - last;
+          const fps = Math.round(1000 / (diff / ticks));
+          last = now;
+          ticks = 0;
+          renderFps(fps); // 刷新帧率数值
+        }
+        requestAnimationFrame(rafLoop);
+      }
+
+      let fpsEl = document.getElementById('fps');
+      //显示帧率数值到界面上
+      function renderFps(fps) {
+        fpsEl.textContent = fps;
+        console.log('fps', fps);
+      }
+
+      //开始执行
+      rafLoop();
+    </script>
+
+    <script>
+      // https://developers.weixin.qq.com/community/develop/article/doc/0000ee55268a387e202cc210c50013
+      // 这里基本表示了fiber的执行过程，判断当前帧剩余的时间，然后去执行任务队列中的任务；
+      // 这里要放在浏览器中去执行
+
+      const sleep = (delay) => {
+        const start = Date.now();
+        while (Date.now() - start <= delay) {}
+      };
+      // 可以调节这里的sleep的时间观察分别处在哪些执行帧中
+
+      const taskQueue = [
+        () => {
+          console.log('task1 start');
+          sleep(10);
+          console.log('task1 end');
+        },
+        () => {
+          console.log('task2 start');
+          sleep(10);
+          console.log('task2 end');
+        },
+        () => {
+          console.log('task3 start');
+          sleep(10);
+          console.log('task3 end');
+        },
+      ];
+      const performUnitWork = () => {
+        // 取出第一个队列中的第一个任务并执行
+        taskQueue.shift()();
+      };
+      const workloop = (deadline) => {
+        console.log(`此帧的剩余时间为: ${deadline.timeRemaining()}`);
+        // 如果此帧剩余时间大于0或者已经到了定义的超时时间（上文定义了timeout时间为1000，到达时间时必须强制执行），且当时存在任务，则直接执行这个任务
+
+        // 如果没有剩余时间，则应该放弃执行任务控制权，把执行权交还给浏览器
+        while ((deadline.timeRemaining() > 0 || deadline.didTimeout) && taskQueue.length > 0) {
+          performUnitWork();
+        }
+        // 如果还有未完成的任务，继续调用requestIdleCallback申请下一个时间片
+        if (taskQueue.length > 0) {
+          // timeout：如果指定了 timeout，并且有一个正值，而回调在 timeout 毫秒过后还没有被调用，那么回调任务将放入事件循环中排队，即使这样做有可能对性能产生负面影响。
+          window.requestIdleCallback(workloop, { timeout: 1000 });
+        }
+      };
+
+      requestIdleCallback(workloop, { timeout: 1000 });
+    </script>
+  </body>
+</html>

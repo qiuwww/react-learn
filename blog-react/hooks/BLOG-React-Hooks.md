@@ -9,11 +9,9 @@ categories:
 top: 6
 ---
 
-组件的最佳写法应该是函数，而不是类。
-
-React Hooks 的设计目的，就是**加强版函数组件**，完全不使用"类"，就能写出一个全功能的组件。
-
-你可以使用 Hook 从组件中**提取状态逻辑**，**使得这些逻辑可以单独测试并复用**。Hook 使你在无需修改组件结构的情况下复用状态逻辑。 这使得在组件间或社区内共享 Hook 变得更便捷。
+1. 组件的最佳写法应该是函数，而不是类。
+2. React Hooks 的设计目的，就是**加强版函数组件**，完全不使用"类"，就能写出一个全功能的组件。
+3. 你可以使用 Hook 从组件中**提取状态逻辑**，**使得这些逻辑可以单独测试并复用**。Hook 使你在无需修改组件结构的情况下复用状态逻辑。 这使得在组件间或社区内共享 Hook 变得更便捷。
 
 ## 解决的问题
 
@@ -56,6 +54,7 @@ React Hooks 的意思是，**组件尽量写成纯函数**，**如果需要外�
 3. useReducer()，React 本身不提供状态管理功能，通常需要使用**外部库**。这方面最常用的库是 Redux。
    1. **useState 的替代方案**。**它接收一个形如 (state, action) => newState 的 reducer**，并返回当前的 state 以及与其配套的 dispatch 方法。
 4. useEffect()，useEffect()：**副作用钩子**，替代 componentDidMount，每次**组件渲染时**，就会执行 useEffect()。
+   1. 如果想执行只运行一次的 effect（仅在组件挂载和卸载时执行），**可以传递一个空数组（[]）作为第二个参数。这就告诉 React 你的 effect 不依赖于 props 或 state 中的任何值，所以它永远都不需要重复执行**。这并不属于特殊情况 —— 它依然遵循依赖数组的工作方式。
 5. useMemo()，`const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b])`;
    1. **把“创建”函数和依赖项数组作为参数传入 useMemo**，它仅会在某个依赖项改变时才重新计算 memoized 值。**这种优化有助于避免在每次渲染时都进行高开销的计算**。
 6. useCallback，**它将返回该回调函数的 memoized 版本**，该回调函数仅在某个依赖项改变时才会更新。
@@ -274,3 +273,11 @@ onClick={() => setCount(count + 1)}
 1. [深入理解：React hooks 是如何工作的](https://zhuanlan.zhihu.com/p/81528320)
 2. [Hook 简介](https://zh-hans.reactjs.org/docs/hooks-intro.html)
 3. [为什么 vue 和 react 都选择了 hooks](https://juejin.cn/post/7066951709678895141)
+
+## more
+
+1. Hook 使你在非 class 的情况下可以使用更多的 React 特性。
+2. Hook 不能在 class 组件中使用 —— 这使得你不使用 class 也能使用 React。
+3. Hook 就是 JavaScript 函数，但是使用它们会有两个额外的规则：
+    1. 只能在函数最外层调用 Hook。不要在循环、条件判断或者子函数中调用。
+    2. 只能在 React 的函数组件中调用 Hook。不要在其他 JavaScript 函数中调用。（还有一个地方可以调用 Hook —— 就是自定义的 Hook 中，我们稍后会学习到。）

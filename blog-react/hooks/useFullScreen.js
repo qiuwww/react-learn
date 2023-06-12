@@ -12,6 +12,8 @@ function useFullScreen(initFullScreen) {
   //全屏
   function fullScreen() {
     var element = document.documentElement;
+
+    // 这里处理多种浏览器兼容的问题
     if (element.requestFullscreen) {
       element.requestFullscreen();
     } else if (element.msRequestFullscreen) {
