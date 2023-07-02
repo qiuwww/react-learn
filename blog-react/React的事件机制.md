@@ -60,6 +60,12 @@ React 中绑定的事件，都会被 React 的事件处理机制，委托到Synt
 2. 可以自动的移除事件，不像自己绑定的时候，有的时候就容易忘记移除；
 3. 规范化，性能都不会太差；
 
+## React v17 中
+
+React v17 中，React 不会再将事件处理添加到 document 上，而是将事件处理添加到渲染 React 树的根 DOM 容器中。
+
+React v17 开始会通过调用 rootNode.addEventListener() 来代替。
+
 ## 参考文章
 
 [【React 深入】React 事件机制](https://juejin.im/post/5c7df2e7f265da2d8a55d49d)
